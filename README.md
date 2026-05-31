@@ -1,6 +1,6 @@
 # ruiss3au :: tech blog
 
-Static site built with [Hugo](https://gohugo.io), deployed on GitLab Pages.
+Static site built with [Hugo](https://gohugo.io), deployed on GitHub Pages.
 
 ## Prerequisites
 
@@ -15,4 +15,4 @@ hugo              # build to public/
 
 ## CI/CD
 
-Push to `main`. `.gitlab-ci.yml` builds and deploys to GitLab Pages automatically.
+Push to `main`. GitHub Actions builds and deploys to GitHub Pages automatically.
