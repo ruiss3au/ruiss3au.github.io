@@ -1,0 +1,11 @@
+baseURL = 'https://ruiss3au.gitlab.io/'
+languageCode = 'en-us'
+title = 'ruiss3au'
+theme = 'ruiss3au'
+
+[markup.highlight]
+  style = 'monokai'
+
+[privacy]
+  [privacy.youtube]
+    privacyEnhanced = true

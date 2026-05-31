@@ -1,0 +1,13 @@
+image: klakegg/hugo:ext-alpine
+
+variables:
+  HUGO_ENV: production
+
+pages:
+  script:
+    - hugo --minify
+  artifacts:
+    paths:
+      - public
+  only:
+    - main
