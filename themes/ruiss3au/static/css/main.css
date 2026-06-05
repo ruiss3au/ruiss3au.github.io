@@ -20,8 +20,7 @@ body {
   padding: 0 1.5rem;
 }
 
-header {
-  border-bottom: 2px solid var(--fg);
+.site-header {
   padding: 1.5rem 0;
   margin-bottom: 2rem;
 }
@@ -84,7 +83,7 @@ a:hover { background: var(--accent); color: var(--bg); }
   white-space: nowrap;
 }
 
-.post-header { margin-bottom: 2rem; }
+.post-header { margin-bottom: 2rem; border-bottom: none; padding: 0; }
 
 .post-header time {
   color: var(--muted);
@@ -134,7 +133,6 @@ hr {
 .all-posts { margin-top: 1rem; }
 
 footer {
-  border-top: 2px solid var(--fg);
   padding: 1.5rem 0;
   margin-top: 3rem;
   color: var(--muted);
