@@ -91,8 +91,7 @@ Rel-19 MIMO Phase 5 addressed the remaining challenges that earlier phases left
 open: coherent joint transmission from multiple TRPs where Rel-16/17 only
 supported non-coherent schemes, 32-port CSI-RS codebooks for FR1 massive MIMO
 deployments exceeding the previous 16-port limit, unified TCI framework
-extensions for seamless beam switching across component carriers [R1-2400105,
-R1-2400728], and CSI enhancements for high Doppler scenarios up to 500 km/h. The central technical
+extensions for seamless beam switching across component carriers [R1-2400105](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400105.zip), [R1-2400728](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400728.zip), and CSI enhancements for high Doppler scenarios up to 500 km/h. The central technical
 challenge was inter-site phase coherence across non-colocated TRPs, which
 requires tight fronthaul synchronization. Ericsson and Nokia pushed for
 practical implementations using Xn-based coordination rather than ideal
@@ -101,7 +100,7 @@ deployable at scale and that inter-site phase noise would degrade coherent
 combining gain to negligible levels. Samsung and Qualcomm advocated for more
 aggressive multi-panel UE designs and ideal-fronthaul CJT, pointing to
 laboratory demonstrations showing 30-40% throughput gain with phase-coherent
-multi-TRP [R1-2401437, R1-2400753, R1-2400957]. The fight was a proxy for a broader industry split: operators and
+multi-TRP [R1-2401437](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2401437.zip), [R1-2400753](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400753.zip), [R1-2400957](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400957.zip). The fight was a proxy for a broader industry split: operators and
 infrastructure vendors (Ericsson, Nokia) prioritized deployability over
 theoretical gains, while chipset and device vendors (Samsung, Qualcomm) pushed
 the envelope on what UEs could support. Huawei and HiSilicon contributed mostly
@@ -142,14 +141,14 @@ antenna port) was not practically achievable with the ACLR and EVM
 requirements needed for NR, and dynamic TDD with fast slot adaptation already
 captured most of the duplexing gain without requiring new hardware. Huawei and
 CMCC, supported by Chinese operators with large TDD deployments, pushed the
-study item through [R4-2409177, R4-2409178].
+study item through [R4-2409177](https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_111/Docs/R4-2409177.zip), [R4-2409178](https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_111/Docs/R4-2409178.zip).
 
 Once SBFD became a formal work item, Ericsson and Nokia pivoted from opposition
 to specification leadership. Rather than letting competitors define the
 requirements unilaterally, they drove the BS RF conformance framework:
 in-channel blocking requirements for SBFD (TS 38.104), OTA spatial emission
 limits, ACLR and EVM targets for simultaneous DL/UL transmission, and BS
-receiver sensitivity under self-interference [R4-2507728, R4-2507639]. The
+receiver sensitivity under self-interference [R4-2507728](https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_115/Docs/R4-2507728.zip), [R4-2507639](https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_115/Docs/R4-2507639.zip). The
 pattern is classic 3GPP:
 you lose the vote on whether to study something, you lead the specification to
 ensure it is practical and deployable. The result is that SBFD requirements
@@ -165,7 +164,7 @@ array sizes grew and deployment scenarios became more complex. AI/ML offers
 the promise of learning optimal parameterizations from deployment data rather
 than hand-crafting them.
 
-Three use cases were prioritized [R1-2400165, R1-2400795, R1-2400171, R1-2400166]. CSI compression with autoencoders, using
+Three use cases were prioritized [R1-2400165](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400165.zip), [R1-2400795](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400795.zip), [R1-2400171](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400171.zip), [R1-2400166](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400166.zip). CSI compression with autoencoders, using
 neural networks to encode the channel state at the UE and decode it at the gNB,
 potentially replacing the Type-II codebook which scales poorly beyond 32 ports.
 AI-assisted beam prediction in both temporal and spatial domains, predicting
@@ -177,15 +176,14 @@ The main challenges: defining a lifecycle management framework (model
 registration, activation, deactivation, and fallback to classical algorithms),
 ensuring interoperability between UE and gNB implementations from different
 vendors, and managing UE complexity since AI inference adds compute cost
-[R1-2400797, R1-2401006, R1-2503239].
+[R1-2400797](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400797.zip), [R1-2401006](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2401006.zip), [R1-2503239](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_121/Docs/R1-2503239.zip).
 
 The deepest fight in Rel-19 was not technical but philosophical: should 3GPP
 standardize AI/ML model architectures, or only the interfaces around them?
 Ericsson and Qualcomm argued for UE-side model ownership: each vendor ships
 proprietary models, 3GPP standardizes only the activation/deactivation
 signaling, training data interfaces, and performance requirements. This
-preserves vendor differentiation and allows rapid iteration [R1-2400172,
-R1-2401435]. Nokia and Huawei pushed for standardized model architectures, particularly for the
+preserves vendor differentiation and allows rapid iteration [R1-2400172](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400172.zip), [R1-2401435](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2401435.zip). Nokia and Huawei pushed for standardized model architectures, particularly for the
 autoencoder-based CSI compression, arguing that without a common encoder-
 decoder layout, interoperability between different UEs and gNBs is impossible
 and operators face a multivendor nightmare. Apple sided with Ericsson and
@@ -208,7 +206,7 @@ to make a binding decision on the scope.
 Operators demanded concrete gNB power reduction targets: 30% at medium load
 and up to 50% at low load compared to the Rel-18 baseline. These targets were
 set in a dedicated RAN workshop and drove the scope of the normative work
-[R1-2400176, R1-2400335].
+[R1-2400176](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400176.zip), [R1-2400335](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400335.zip).
 
 Rel-19 delivered three key mechanisms. Dynamic SSB periodicity adaptation
 allows the gNB to reduce always-on synchronization signal transmissions from
@@ -226,7 +224,7 @@ DRX. Nokia dominated this work item with 86 proposal TDocs, nearly ten
 times the output of Ericsson (9) and CMCC (9). This asymmetry created tension:
 Nokia effectively drove the technical direction, while Ericsson and CMCC,
 despite setting the original energy-saving targets, played supporting roles in
-the specification phase [R1-2505060]. The dynamic reflected a strategic bet: Nokia had
+the specification phase [R1-2505060](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_121/Docs/R1-2505060.zip). The dynamic reflected a strategic bet: Nokia had
 invested heavily in energy-efficient hardware and saw the Rel-19 normative
 work as a competitive differentiator for their AirScale base station portfolio.
 Operators like CMCC, despite pushing the original KPIs, delegated the detailed
@@ -234,8 +232,7 @@ specification work to the vendors who would implement it.
 
 ### Low-Power Wake-Up Signal (NR_LPWUS-Core)
 
-A separate low-power wake-up receiver (LP-WUR) was specified [R1-2400962,
-R1-2401023], allowing the UE to power down its main receiver chain and listen only on a low-complexity
+A separate low-power wake-up receiver (LP-WUR) was specified [R1-2400962](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400962.zip), [R1-2401023](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2401023.zip), allowing the UE to power down its main receiver chain and listen only on a low-complexity
 wake-up radio. The LP-WUS waveform was designed to match Msg3 PUSCH
 performance: approximately 3-5 dB worse than paging PDCCH but with the WUR
 consuming roughly 1% of the main receiver power, a ~100x reduction in idle-
@@ -243,7 +240,7 @@ mode UE power consumption, extending battery life for IoT and wearable devices
 from days to weeks [R2-2404996]. The main challenge was coexistence: the LP-WUS signal
 must be detectable while the main receiver is off, so it uses a simpler
 modulation (OOK, on-off keying) that lacks the processing gain of NR PDCCH.
-Nokia and Ericsson drove the LP-WUS waveform design [R1-2500113, R1-2400962] and pushed for mandatory
+Nokia and Ericsson drove the LP-WUS waveform design [R1-2500113](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_120/Docs/R1-2500113.zip), [R1-2400962](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400962.zip) and pushed for mandatory
 LP-WUR support across all device classes, arguing that network-level energy
 savings cannot be achieved without widespread UE participation. Apple
 pushed back hard, advocating that LP-WUR should be optional for mid-range and
@@ -266,8 +263,7 @@ and GEO at 35,786 km, and feasibility of NR over satellite links with up to
 satellite access, HARQ process extensions beyond 16 processes to handle the
 long RTT, and support for S-band (2 GHz) and Ka-band (20-30 GHz).
 
-Rel-19 NTN Phase 3 addressed the hardest deployment challenges [R1-2400843,
-R1-2400977, R1-2400132]. UE timing pre-compensation for LEO Doppler shifts, a LEO satellite at 600 km moves at
+Rel-19 NTN Phase 3 addressed the hardest deployment challenges [R1-2400843](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400843.zip), [R1-2400977](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400977.zip), [R1-2400132](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400132.zip). UE timing pre-compensation for LEO Doppler shifts, a LEO satellite at 600 km moves at
 7.5 km/s, creating up to +-48 kHz Doppler shift at 2 GHz that must be
 compensated at the UE to maintain synchronization. Retuning time requirements
 for satellite beam switching as the satellite moves and the UE transitions
@@ -287,7 +283,7 @@ The tension in NTN was between traditional vendors and satellite operators.
 SpaceX and AST SpaceMobile pushed for aggressive direct-to-handset
 requirements: mandatory NTN support in all 5G UEs, relaxed Doppler tolerance
 to accommodate diverse LEO constellations, and shared S-band spectrum with
-terrestrial NR [R1-2604543, R4-2522419]. Their argument: without mandatory support, the NTN ecosystem
+terrestrial NR [R1-2604543](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_125/Docs/R1-2604543.zip), [R4-2522419](https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_117/Docs/R4-2522419.zip). Their argument: without mandatory support, the NTN ecosystem
 would fragment and never reach the scale needed for emergency services and
 rural coverage. Apple, Samsung, and most UE vendors pushed back, arguing that
 adding satellite-capable RF front-ends to every device would increase cost,
@@ -304,7 +300,7 @@ return in Rel-20.
 Rel-19 was the first time 3GPP studied whether 5G NR signals could be reused
 for radar-like sensing: detecting objects, measuring velocity, and imaging
 environments using the same reference signals already transmitted for
-communication [R1-2400529, R1-2400648, R1-2401455]. The study item (FS_Sensing_NR) evaluated waveform designs,
+communication [R1-2400529](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400529.zip), [R1-2400648](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400648.zip), [R1-2401455](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2401455.zip). The study item (FS_Sensing_NR) evaluated waveform designs,
 particularly whether NR CSI-RS and SRS could serve dual purposes, and studied
 sensing resolution trade-offs.
 
@@ -333,13 +329,13 @@ vibration rather than using batteries, a paradigm shift from the 10-year
 battery life targets of NB-IoT to truly maintenance-free operation. The study
 item evaluated device architectures: tag-based (passive backscatter, similar
 to RFID but at cellular range) and self-powered active devices with energy
-storage capacitors [R1-2400075, R1-2400076]. RAN1 studied modulation schemes
+storage capacitors [R1-2400075](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400075.zip), [R1-2400076](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400076.zip). RAN1 studied modulation schemes
 for backscatter communication, waveform design for the carrier wave that
 powers the tag, and coexistence with NR signals in shared spectrum.
 
 Ericsson drove the study from the start, contributing the evaluation
 assumptions, device architectures, and physical layer design framework
-[R1-2400078, R1-2400079]. Nokia pushed for reader sensitivity requirements
+[R1-2400078](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400078.zip), [R1-2400079](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400079.zip). Nokia pushed for reader sensitivity requirements
 that would enable warehouse-scale deployments, while Huawei focused on outdoor
 range extension for agricultural and logistics use cases. The main debate
 was indoor versus outdoor prioritization: indoor supporters (Ericsson, Nokia)
@@ -353,7 +349,7 @@ While not a flashy new feature, EN-DC RF requirements enable the practical
 deployment of 5G non-standalone architectures: LTE anchor plus NR secondary
 cell. Phase 4 addressed advanced antenna configurations, specifically 3T6R
 and 4T6R antenna switching for SRS sounding across multiple UE antennas
-[R1-2403834, R1-2403990]. These configurations allow UEs to switch their
+[R1-2403834](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_117/Docs/R1-2403834.zip), [R1-2403990](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_117/Docs/R1-2403990.zip). These configurations allow UEs to switch their
 transmit chains across up to 6 receive antennas, improving uplink MIMO
 performance and coverage in NSA networks.
 
@@ -366,8 +362,7 @@ specification landed with both options, tiered by device category.
 ### Carrier Aggregation and Supplementary Uplink (NR_CADC_SUL_R19-Core)
 
 Rel-19 extended carrier aggregation to 4 and 5 band combinations (BCS4 and
-BCS5), a significant step from the previous 3-band limit [R4-2411255,
-R4-2411323]. This enables operators to aggregate spectrum across low-band
+BCS5), a significant step from the previous 3-band limit [R4-2411255](https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_112/Docs/R4-2411255.zip), [R4-2411323](https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_112/Docs/R4-2411323.zip). This enables operators to aggregate spectrum across low-band
 (600-900 MHz), mid-band (1.8-2.6 GHz), and high-band (3.5 GHz) simultaneously
 for peak data rates exceeding 4 Gbps. Supplementary Uplink (SUL) work defined
 high-power UE configurations for bands where uplink is the bottleneck.
@@ -386,7 +381,7 @@ Satellite IoT addresses the coverage gap for low-rate, delay-tolerant devices
 in areas without terrestrial coverage: container tracking at sea, pipeline
 monitoring in remote regions, agricultural sensors in unconnected areas.
 The work item focused on uplink capacity and throughput enhancement for NB-IoT
-and eMTC over non-terrestrial links [R1-2400879, R1-2401195, R1-2401461].
+and eMTC over non-terrestrial links [R1-2400879](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400879.zip), [R1-2401195](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2401195.zip), [R1-2401461](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2401461.zip).
 
 The technical challenges were specific to narrowband IoT over satellite:
 contention-based Msg3 transmissions where multiple devices may transmit on the
@@ -407,7 +402,7 @@ Mobility enhancements focused on Layer 1/Layer 2 Triggered Mobility (LTM),
 a fundamental shift from the traditional RRC-based handover. LTM enables the
 network to trigger a handover via MAC CE or DCI rather than RRC
 Reconfiguration, reducing interruption time from 30-50 ms to near-zero, a
-critical requirement for URLLC and XR services [R1-2406860, R1-2406668].
+critical requirement for URLLC and XR services [R1-2406860](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_118/Docs/R1-2406860.zip), [R1-2406668](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_118/Docs/R1-2406668.zip).
 
 The main debate was whether to prioritize inter-CU LTM (handover between
 different centralized units, harder but the common real-world scenario) or
@@ -420,7 +415,7 @@ risk. The Rel-19 outcome deferred inter-CU LTM to Rel-20.
 Measurement enhancements for LTM were also specified: new measurement objects
 and reporting configurations that allow the UE to measure candidate cells
 during the LTM execution phase without interrupting ongoing data transmission
-[R1-2406791, R1-2406861].
+[R1-2406791](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_118/Docs/R1-2406791.zip), [R1-2406861](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_118/Docs/R1-2406861.zip).
 
 ### XR Phase 3 (NR_XR_Ph3-Core)
 
@@ -430,14 +425,13 @@ large downlink data (rendered frames) and smaller uplink data (pose/controller
 information) with end-to-end latency below 10 ms. The key Rel-19 challenge was
 enabling simultaneous transmission and reception of XR traffic during RRM
 measurement gaps: when the UE tunes away to measure neighbor cells, the XR
-flow is interrupted, causing frame drops and motion sickness [R1-2400748,
-R1-2400677, R1-2400921].
+flow is interrupted, causing frame drops and motion sickness [R1-2400748](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400748.zip), [R1-2400677](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400677.zip), [R1-2400921](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400921.zip).
 
 Samsung and Qualcomm proposed reducing measurement gap duration and increasing
 the periodicity to minimize XR interruption. Apple and Ericsson pushed for
 smarter scheduling: aligning measurement gaps with XR traffic periodicity so
 that gaps fall between XR bursts rather than during them. Nokia contributed
-the work plan framework and measurement configurations [R1-2400922]. The
+the work plan framework and measurement configurations [R1-2400922](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400922.zip). The
 solution combined both approaches: configurable measurement gap patterns with
 XR-aware scheduling restrictions, allowing operators to tune the trade-off
 between mobility robustness and XR quality of experience.
@@ -448,12 +442,12 @@ Radio Resource Management Phase 5 addressed practical deployment bottlenecks.
 The flagship feature was fast SCell activation: reducing the delay from SCell
 configuration to usable throughput from hundreds of milliseconds to tens of
 milliseconds, enabling carrier aggregation to respond dynamically to traffic
-bursts rather than being statically configured [R4-2408529, R4-2408439].
+bursts rather than being statically configured [R4-2408529](https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_111/Docs/R4-2408529.zip), [R4-2408439](https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_111/Docs/R4-2408439.zip).
 
 The technical work focused on Layer 3 measurement delay reduction for FR2-1
 (mmWave): improving SSB-based measurement accuracy and reducing the
 measurement period so that SCells can be activated faster based on reliable
-signal quality information [R4-2407312, R4-2409150]. Apple drove the FR2-1
+signal quality information [R4-2407312](https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_111/Docs/R4-2407312.zip), [R4-2409150](https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_111/Docs/R4-2409150.zip). Apple drove the FR2-1
 measurement optimizations, reflecting the importance of mmWave carrier
 aggregation for their devices. Samsung and Qualcomm contributed L3 measurement
 enhancements for both FR1 and FR2.
@@ -465,14 +459,14 @@ A Rel-19 study item exploring carrier aggregation across low bands (below
 bands provide coverage but are fragmented into narrow, non-contiguous
 allocations. Simultaneous transmission across multiple low-band carriers is
 impractical because the antenna separation required to avoid intermodulation
-would exceed the UE form factor [R4-2500139, R4-2500405].
+would exceed the UE form factor [R4-2500139](https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_114/Docs/R4-2500139.zip), [R4-2500405](https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_114/Docs/R4-2500405.zip).
 
 Switching-based CA allows the UE to rapidly toggle between low-band carriers
 rather than aggregating them simultaneously, trading off peak throughput for
 coverage flexibility. The study evaluated switching times, RF front-end impact,
 and network signaling for dynamic carrier selection. HiSilicon proposed the
 switching framework; Nokia contributed feasibility analysis; Apple drove the
-UE RF requirement specifications [R4-2500215, R4-2500313]. The work was purely
+UE RF requirement specifications [R4-2500215](https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_114/Docs/R4-2500215.zip), [R4-2500313](https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_114/Docs/R4-2500313.zip). The work was purely
 a feasibility study in Rel-19, with normative specification deferred to
 Rel-20.
 
@@ -484,7 +478,7 @@ at reduced scale, while a new generation of study items emerged.
 
 **FS_6G_Radio takes over.** The 6G Radio study item, entirely absent from
 Rel-19, became the single most active work item in Rel-20 RAN1/RAN4 meetings
-[R1-2505125, R1-2505127]. The group is defining channel models for the 7-24 GHz
+[R1-2505125](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_122/Docs/R1-2505125.zip), [R1-2505127](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_122/Docs/R1-2505127.zip). The group is defining channel models for the 7-24 GHz
 range, evaluating candidate waveforms beyond OFDM (including OTFS for
 high-Doppler and UFMC for mixed numerologies), studying sub-THz propagation
 characteristics above 100 GHz for extreme data rates, and setting 6G KPI
@@ -503,7 +497,7 @@ performance requirements (Qualcomm, Ericsson, Apple)?
 Rel-20, targeting distributed MIMO with coherent joint transmission across
 more than two TRPs, AI/ML-assisted beam management at scale for massive MIMO
 arrays exceeding 128 antenna elements, and CSI enhancements for high-mobility
-scenarios up to 500 km/h [R1-2505864, R1-2505576].
+scenarios up to 500 km/h [R1-2505864](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_122/Docs/R1-2505864.zip), [R1-2505576](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_122/Docs/R1-2505576.zip).
 
 **Sensing goes normative (FS_Sensing_NR_bis).** The Rel-19 study established
 feasibility. The Rel-20 bis study moves toward specification: defining sensing
@@ -514,12 +508,12 @@ interface procedures for sensing requests and reporting.
 **NTN shifts to resilience and expansion.** FS_NR_NTN_GNSS_resilient addresses
 operation when GNSS is unavailable or compromised: the UE must maintain
 positioning and timing through alternative means including network-based
-assistance and inertial sensors [R1-2505142, R1-2604543]. IoT_NTN_Ph4 continues
+assistance and inertial sensors [R1-2505142](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_122/Docs/R1-2505142.zip), [R1-2604543](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_125/Docs/R1-2604543.zip). IoT_NTN_Ph4 continues
 narrowband NTN for satellite IoT. Ku-band feasibility studies evaluate 12-18
 GHz for higher-capacity NTN links.
 
 **Ambient IoT becomes normative.** The Rel-19 study item splits into indoor and
-outdoor work items in Rel-20 [R1-2400075, R1-2400076]. RAN4 is defining receiver
+outdoor work items in Rel-20 [R1-2400075](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400075.zip), [R1-2400076](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400076.zip). RAN4 is defining receiver
 sensitivity targets for energy-harvesting devices, outdoor backscatter
 modulation ranges up to 100 meters, and coexistence with NR and LTE in shared
 spectrum.
@@ -555,11 +549,12 @@ development.
 
 ## What This Blog Series Covers
 
-Before tracking Rel-21 as it happens, this series reviews each of the
-eleven RAN1 and RAN4 meetings where Rel-20 was discussed, from November 2024
-to May 2026. Each post dissects one meeting: what topics dominated, which
-companies drove the discussion, what concrete outcomes emerged, and how the
-meeting moved Rel-20 forward.
+This series follows the RAN1 and RAN4 meetings where Rel-20 was discussed,
+starting from November 2024. Each post dissects one meeting: what topics
+dominated, which companies drove the discussion, what concrete outcomes emerged,
+and how the meeting moved Rel-20 forward. The first eleven posts cover the
+meetings from November 2024 to May 2026. I will continue writing new posts as
+new meetings take place, through Rel-21 and beyond.
 
 ## Appendix: A Crash Course on 3GPP WG RAN
 
@@ -604,57 +599,31 @@ requirements. Output is Change Requests (CRs) to Technical Specifications (TS).
 3. **Work Item Performance (-Perf)**: Conformance test definition. Output is test
 procedures and performance requirements.
 
-A work item description (WID) is the scoping document that defines what a WI
-covers, its timeline, and its rapporteur (the individual responsible for
-coordinating the work).
-
 ### Meetings and Contributions
 
 Each WG meets roughly six times per year, in sessions lasting one to two weeks.
-A meeting agenda is organized by work items, with dedicated time slots for each.
-Companies submit Technical Documents (TDocs) as contributions: a TDoc can be a
-discussion paper (proposing a technical direction), a draft CR (proposing
-specific specification text), a liaison statement (formal communication to
-another group), or a meeting document (agenda, session notes, moderator
-summary).
-
+Companies submit Technical Documents (TDocs) as contributions to meetings.
 TDocs are identified by a prefix (R1- for RAN1, R4- for RAN4) and a unique
-number. In this series, TDoc references appear inline: `[R4-2417580]`.
+number. In this series, TDoc references appear as clickable links inline.
 
 ### Liaison Statements
 
 Working groups communicate through Liaison Statements (LS). When RAN1 makes a
-decision that affects RAN4's RF requirements, it sends an LS informing RAN4 of
-the decision and requesting action. RAN4 may reply with an LS raising RF
-feasibility concerns or requesting clarification. The LS exchange is the
-mechanism that coordinates the work between groups and ensures that physical
-layer designs are implementable.
+decision that affects RAN4's RF requirements, it sends an LS. RAN4 may reply
+with an LS raising RF feasibility concerns or requesting clarification.
 
 ### Releases
 
-3GPP work is organized into Releases. Each release is a feature-freeze
-milestone. Rel-15 (2018) was the first 5G NR release. Rel-16 and Rel-17 added
-enhancements. Rel-18 (5G-Advanced) introduced AI/ML studies and expanded NR
-into new spectrum. Rel-19 was a refinement cycle for Rel-18 features. Rel-20
-bridges 5G-Advanced and 6G: early meetings focused on Rel-19 closure, later
-meetings introduced 6G study items. Rel-21 is expected to be the first release
+3GPP work is organized into Releases. Rel-15 (2018) was the first 5G NR release.
+Rel-18 (5G-Advanced) introduced AI/ML studies. Rel-19 was a refinement cycle.
+Rel-20 bridges 5G-Advanced and 6G. Rel-21 is expected to be the first release
 with normative 6G specifications.
-
-### RAN Plenaries
-
-TSG RAN holds plenary meetings (RAN#) roughly quarterly. The plenary is where
-binding decisions are made: work item approval, scope freeze, and release
-closure. RAN#112 (June 2026) is the Rel-20 Stage-2 freeze milestone, where the
-feature scope is locked. RAN#115 (March 2027) is the Stage-3 functional freeze.
-RAN#116 (June 2027) is the ASN.1 freeze and release closure.
 
 ### Company Dynamics
 
-Companies participate in 3GPP to influence specifications in ways that align
-with their products. Infrastructure vendors (Ericsson, Nokia, Huawei) drive
-BS-side specifications. UE chipset vendors (Qualcomm, HiSilicon, MediaTek,
-Samsung) drive UE-side specifications. Device vendors (Apple, vivo, OPPO,
-Xiaomi) focus on features that affect user experience: RRM, power consumption,
-form factor constraints. Operators (CMCC, NTT DOCOMO, T-Mobile) set deployment
-requirements and KPI targets. The interplay between these interests is the
-engine of 3GPP standardization.
+Companies participate in 3GPP to influence specifications. Infrastructure
+vendors (Ericsson, Nokia, Huawei) drive BS-side specifications. UE chipset
+vendors (Qualcomm, HiSilicon, MediaTek, Samsung) drive UE-side specifications.
+Device vendors (Apple, vivo, OPPO, Xiaomi) focus on user experience. Operators
+(CMCC, NTT DOCOMO, T-Mobile) set deployment requirements and KPI targets.
+
