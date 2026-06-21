@@ -3,12 +3,50 @@ title: "Tracking and Understanding 3GPP RAN1 and RAN4 Meetings"
 date: 2026-06-05
 tags: ["3GPP"]
 ---
+
 Mobile communications is one of my main areas of interest. 3GPP has established as the main standardization body for mobile communications and that is where the latest 5G standards have been defined.
 The work on the 5G Advanced releases are wrapping up and 3GPP is preparing to start the 6G work. I would like to watch closely the standardization work of this new system, especially what happens in the radio access network. But before that, I have to understand what has happened in the previous releases.
-To this end, I am starting a blog post series on the RAN1 and RAN4 work on 3GPP Release 20. I will highlight the main points discussed in the most important
-work items in each meeting where Rel-20 was discussed. I hope that such a series is a good way to start the work in this blog.
+To this end, I am starting a blog post series on the RAN1 and RAN4 work through
+3GPP Release 20. The series covers both Rel-19 closure and the Rel-20 transition,
+because the two are inseparable: Rel-19 features were still being specified when
+Rel-20 scoping began, and the structural lag between RAN1 (which designs) and
+RAN4 (which specifies conformance tests) means Rel-20 work cascaded into RAN4
+months after it started in RAN1. Following the full arc, from the last fully
+Rel-19 meeting in November 2024 to the first Rel-20-dominated RAN4 meeting in
+May 2026, is the best way to understand how 3GPP actually works.
 
 In this first post, I would like to begin with a quick summary of what happened in Rel. 19 and what was expected to be done in Rel. 20. I would also like to be clear about the methodology I am using to document this. I have basically built a knowledge base of 3GPP tdocs and I interact with it through LLMs. So beware that the analysis here might contain plain mistakes.
+
+## 3GPP Acronyms and Terminology
+
+| Acronym | Meaning |
+|---------|---------|
+| 3GPP | 3rd Generation Partnership Project |
+| TSG | Technical Specification Group (RAN, SA, CT) |
+| WG | Working Group (RAN1, RAN4, etc.) |
+| RAN1 | WG responsible for radio layer 1 (physical layer) |
+| RAN4 | WG responsible for radio performance and protocol aspects (RF, RRM, conformance) |
+| RAN# | TSG RAN plenary meeting (decides scope, approves work items) |
+| WI | Work Item (a feature or task tracked by 3GPP) |
+| SI | Study Item (a feasibility investigation, precedes a WI) |
+| WID | Work Item Description (the scoping document for a WI) |
+| CR | Change Request (a proposed modification to a specification document) |
+| Big CR | A CR that touches multiple specification clauses or sections |
+| LS | Liaison Statement (formal communication between WGs or organizations) |
+| TDoc | Technical Document (a contribution submitted to a meeting) |
+| Rel- | Release (e.g., Rel-19, Rel-20) |
+| TS | Technical Specification (e.g., TS 38.101) |
+| TR | Technical Report (study output, e.g., TR 38.774) |
+| -Core | Work item defining functional/RF requirements |
+| -Perf | Work item defining conformance test procedures |
+| FR1 | Frequency Range 1 (410 to 7,125 MHz in NR) |
+| FR2 | Frequency Range 2 (24,250 to 71,000 MHz in NR) |
+| BS | Base Station (gNB in NR) |
+| UE | User Equipment (device, handset) |
+| MPR | Maximum Power Reduction |
+| ACLR | Adjacent Channel Leakage Ratio |
+| EVM | Error Vector Magnitude |
+| RRM | Radio Resource Management (measurement and mobility procedures) |
 
 ## Table of Contents
 
@@ -523,3 +561,100 @@ to May 2026. Each post dissects one meeting: what topics dominated, which
 companies drove the discussion, what concrete outcomes emerged, and how the
 meeting moved Rel-20 forward.
 
+## Appendix: A Crash Course on 3GPP WG RAN
+
+If you are new to 3GPP, here is a primer on how the RAN working groups function,
+what RAN1 and RAN4 actually do, and how work flows through the standardization
+process.
+
+### The TSG RAN Structure
+
+3GPP is organized into three Technical Specification Groups (TSGs): RAN (Radio
+Access Network), SA (Service and System Aspects), and CT (Core Network and
+Terminals). This series focuses on TSG RAN, and within it two working groups:
+
+**RAN1 (Radio Layer 1)** defines the physical layer: waveforms (OFDM, its
+variants), modulation schemes (QPSK to 1024QAM), channel coding (LDPC, polar),
+MIMO schemes (codebooks, beam management, CSI reporting), frame structure
+(numerology, slot formats), and control channel design (PDCCH, PUCCH). RAN1
+answers the question "how do bits get from the transmitter to the receiver over
+the radio channel?"
+
+**RAN4 (Radio Performance and Protocol Aspects)** defines the RF requirements
+and conformance tests: transmitter power, ACLR, EVM, receiver sensitivity,
+blocking, intermodulation, RRM measurement procedures, and the test
+configurations that certification labs use to verify a device meets the
+specification. RAN4 answers the question "how do we prove the device actually
+works?"
+
+### The Workflow: RAN1 Designs, RAN4 Specifies
+
+The two groups operate in sequence. RAN1 defines a feature (e.g., SBFD slot
+formats, AI/ML CSI compression). Once the physical layer design stabilizes,
+RAN4 defines the RF requirements and conformance tests that ensure the feature
+can be implemented and verified. This sequencing creates a structural lag of
+roughly two to three meetings (four to six months) between RAN1 design and RAN4
+specification.
+
+A work item typically moves through three phases:
+1. **Study Item (SI)**: Feasibility investigation. Output is a Technical Report
+(TR) evaluating whether the feature is viable.
+2. **Work Item (WI) Core (-Core)**: Normative specification of functional and RF
+requirements. Output is Change Requests (CRs) to Technical Specifications (TS).
+3. **Work Item Performance (-Perf)**: Conformance test definition. Output is test
+procedures and performance requirements.
+
+A work item description (WID) is the scoping document that defines what a WI
+covers, its timeline, and its rapporteur (the individual responsible for
+coordinating the work).
+
+### Meetings and Contributions
+
+Each WG meets roughly six times per year, in sessions lasting one to two weeks.
+A meeting agenda is organized by work items, with dedicated time slots for each.
+Companies submit Technical Documents (TDocs) as contributions: a TDoc can be a
+discussion paper (proposing a technical direction), a draft CR (proposing
+specific specification text), a liaison statement (formal communication to
+another group), or a meeting document (agenda, session notes, moderator
+summary).
+
+TDocs are identified by a prefix (R1- for RAN1, R4- for RAN4) and a unique
+number. In this series, TDoc references appear inline: `[R4-2417580]`.
+
+### Liaison Statements
+
+Working groups communicate through Liaison Statements (LS). When RAN1 makes a
+decision that affects RAN4's RF requirements, it sends an LS informing RAN4 of
+the decision and requesting action. RAN4 may reply with an LS raising RF
+feasibility concerns or requesting clarification. The LS exchange is the
+mechanism that coordinates the work between groups and ensures that physical
+layer designs are implementable.
+
+### Releases
+
+3GPP work is organized into Releases. Each release is a feature-freeze
+milestone. Rel-15 (2018) was the first 5G NR release. Rel-16 and Rel-17 added
+enhancements. Rel-18 (5G-Advanced) introduced AI/ML studies and expanded NR
+into new spectrum. Rel-19 was a refinement cycle for Rel-18 features. Rel-20
+bridges 5G-Advanced and 6G: early meetings focused on Rel-19 closure, later
+meetings introduced 6G study items. Rel-21 is expected to be the first release
+with normative 6G specifications.
+
+### RAN Plenaries
+
+TSG RAN holds plenary meetings (RAN#) roughly quarterly. The plenary is where
+binding decisions are made: work item approval, scope freeze, and release
+closure. RAN#112 (June 2026) is the Rel-20 Stage-2 freeze milestone, where the
+feature scope is locked. RAN#115 (March 2027) is the Stage-3 functional freeze.
+RAN#116 (June 2027) is the ASN.1 freeze and release closure.
+
+### Company Dynamics
+
+Companies participate in 3GPP to influence specifications in ways that align
+with their products. Infrastructure vendors (Ericsson, Nokia, Huawei) drive
+BS-side specifications. UE chipset vendors (Qualcomm, HiSilicon, MediaTek,
+Samsung) drive UE-side specifications. Device vendors (Apple, vivo, OPPO,
+Xiaomi) focus on features that affect user experience: RRM, power consumption,
+form factor constraints. Operators (CMCC, NTT DOCOMO, T-Mobile) set deployment
+requirements and KPI targets. The interplay between these interests is the
+engine of 3GPP standardization.
