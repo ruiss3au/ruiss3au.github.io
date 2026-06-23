@@ -1,19 +1,19 @@
 ---
-title: "Tracking and Understanding 3GPP RAN1 and RAN4 Meetings"
+title: "The Transition From Rel-19 to Rel-20"
 date: 2026-06-05
 tags: ["3GPP"]
 ---
 
 Mobile communications is one of my main areas of interest. 3GPP has established as the main standardization body for mobile communications and that is where the latest 5G standards have been defined.
 The work on the 5G Advanced releases are wrapping up and 3GPP is preparing to start the 6G work. I would like to watch closely the standardization work of this new system, especially what happens in the radio access network. But before that, I have to understand what has happened in the previous releases.
-To this end, I am starting a blog post series on the RAN1 and RAN4 work through
-3GPP Release 20. The series covers both Rel-19 closure and the Rel-20 transition,
-because the two are inseparable: Rel-19 features were still being specified when
-Rel-20 scoping began, and the structural lag between RAN1 (which designs) and
-RAN4 (which specifies conformance tests) means Rel-20 work cascaded into RAN4
-months after it started in RAN1. Following the full arc, from the last fully
-Rel-19 meeting in November 2024 to the first Rel-20-dominated RAN4 meeting in
-May 2026, is the best way to understand how 3GPP actually works.
+To this end, I am starting a blog post series on the RAN1, RAN4, and TSG RAN Plenary work through
+3GPP Release 20 and into Rel-21. The series covers both Rel-19 closure and the
+Rel-20 transition, because the two are inseparable: Rel-19 features were still
+being specified when Rel-20 scoping began, and the structural lag between RAN1
+(which designs) and RAN4 (which specifies conformance tests) means Rel-20 work
+cascaded into RAN4 months after it started in RAN1. The series begins in
+November 2024 with the last fully Rel-19 RAN4 meeting and is ongoing: I will
+continue writing new posts as new meetings take place.
 
 In this first post, I would like to begin with a quick summary of what happened in Rel. 19 and what was expected to be done in Rel. 20. I would also like to be clear about the methodology I am using to document this. I have basically built a knowledge base of 3GPP tdocs and I interact with it through LLMs. So beware that the analysis here might contain plain mistakes.
 
@@ -549,12 +549,12 @@ development.
 
 ## What This Blog Series Covers
 
-This series follows the RAN1 and RAN4 meetings where Rel-20 was discussed,
+This series follows the RAN1, RAN4, and TSG RAN Plenary meetings where Rel-20 was discussed and decided,
 starting from November 2024. Each post dissects one meeting: what topics
 dominated, which companies drove the discussion, what concrete outcomes emerged,
-and how the meeting moved Rel-20 forward. The first eleven posts cover the
-meetings from November 2024 to May 2026. I will continue writing new posts as
-new meetings take place, through Rel-21 and beyond.
+and how the meeting moved Rel-20 forward. The series begins with the Rel-19 peak
+and follows the Rel-20 transition as it unfolds meeting by meeting. New posts
+are added as new meetings take place, through Rel-21 and beyond.
 
 ## Appendix: A Crash Course on 3GPP WG RAN
 
@@ -581,6 +581,33 @@ blocking, intermodulation, RRM measurement procedures, and the test
 configurations that certification labs use to verify a device meets the
 specification. RAN4 answers the question "how do we prove the device actually
 works?"
+
+### TSG RAN Plenary: The Decision-Maker
+
+The working groups (RAN1, RAN4, etc.) do the design and specification work. The
+TSG RAN Plenary meetings (numbered RAN# followed by a sequence number, e.g.,
+RAN#110, RAN#112) are where the binding decisions are made. Plenaries meet
+roughly quarterly and bring together all WG chairs. Unlike WG meetings, plenaries
+do not produce detailed technical contributions. They serve four functions:
+
+1. **Work Item Approval**: Only the plenary can create a new study item or work
+item. A company or group brings a Work Item Description (WID) to the plenary,
+which votes on whether to accept it into a specific release. This is how Rel-20's
+scope was defined: feature by feature, plenary by plenary.
+2. **Status Review**: Each WG presents a status report summarizing progress on
+every active work item since the last plenary. This tracks whether the release
+schedule is on track.
+3. **Change Request Approval**: WGs produce specification change requests but
+the plenary must formally approve them, typically in large consent batches.
+This is mostly a rubber-stamp, but contentious CRs can be pulled for debate.
+4. **Scope Decisions**: When a work item is running late, the plenary decides
+whether to extend it, descope it, or defer it to the next release. These are
+the highest-stakes plenary moments.
+
+The release calendar is built around plenary milestones. For Rel-20 the critical
+sequence was RAN#110 (December 2025: WIs proposed), RAN#111 (March 2026: feature
+packs locked), and RAN#112 (June 2026: formal feature freeze). The series covers
+all three, showing how scope hardens from proposal to commitment to closure.
 
 ### The Workflow: RAN1 Designs, RAN4 Specifies
 

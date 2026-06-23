@@ -144,3 +144,26 @@ footer {
   max-width: 100%;
   margin: 1rem 0;
 }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1rem 0;
+  font-size: 0.85rem;
+}
+
+th, td {
+  border: 1px solid var(--border);
+  padding: 0.4rem 0.6rem;
+  text-align: left;
+}
+
+th {
+  background: var(--fg);
+  color: var(--bg);
+  font-weight: 700;
+}
+
+tr:nth-child(even) {
+  background: var(--code-bg);
+}
