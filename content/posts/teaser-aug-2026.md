@@ -2,6 +2,7 @@
 title: "Teaser: August 2026 Meetings"
 date: 2026-06-22
 tags: ["3GPP"]
+featured: true
 ---
 
 RAN1#126 and RAN4#120 are expected in August 2026 (exact dates TBC). These

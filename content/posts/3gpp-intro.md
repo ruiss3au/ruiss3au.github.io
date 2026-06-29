@@ -2,6 +2,7 @@
 title: "The Transition From Rel-19 to Rel-20"
 date: 2026-06-05
 tags: ["3GPP"]
+featured: true
 ---
 
 Mobile communications is one of my main areas of interest. 3GPP has established as the main standardization body for mobile communications and that is where the latest 5G standards have been defined.
