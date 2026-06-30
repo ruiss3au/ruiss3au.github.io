@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ruiss3au.github.io/sitemap.xml
