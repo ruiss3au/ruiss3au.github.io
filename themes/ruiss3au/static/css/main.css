@@ -90,6 +90,14 @@ a:hover { background: var(--accent); color: var(--bg); }
   font-size: 0.9rem;
 }
 
+.llm-badge {
+  margin-top: 0.5rem;
+}
+
+.llm-badge img {
+  image-rendering: pixelated;
+}
+
 .tags { margin-top: 0.5rem; }
 .tag {
   display: inline-block;

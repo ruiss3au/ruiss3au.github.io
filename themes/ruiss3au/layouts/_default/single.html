@@ -3,6 +3,13 @@
   <header class="post-header">
     <h1>{{ .Title }}</h1>
     <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+    {{ if ne .Params.llm false }}
+    <div class="llm-badge">
+      <a href="https://llm-guidelines.org/guidelines/declare-usage/" target="_blank" rel="noopener">
+        <img src="/badge-llm.svg" alt="LLM-assisted post">
+      </a>
+    </div>
+    {{ end }}
     {{ with .Params.tags }}
     <div class="tags">
       {{ range . }}<a class="tag" href="{{ "/tags/" | relURL }}{{ . | urlize }}">{{ . }}</a>{{ end }}

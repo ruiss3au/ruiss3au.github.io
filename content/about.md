@@ -1,5 +1,6 @@
 ---
 title: "about"
+llm: false
 ---
 
 Hi, I'm ruiss3au. Nothing much left to say here, more to come ;)
