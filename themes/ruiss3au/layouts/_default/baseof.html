@@ -3,10 +3,100 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Site.Params.Description }}{{ end }}">
+  <meta name="google-site-verification" content="tQuNQpXBfCRqiK_7pVKCwI3rEoqdwGg1AVUwJ_ZLC54">
+  <meta name="msvalidate.01" content="C728D76FB70B11C72177AE66E0EE89CE">
+  {{- $desc := "" -}}
+  {{- with .Description -}}
+    {{- $desc = . -}}
+  {{- else -}}
+    {{- with .Site.Params.description -}}
+      {{- $desc = . -}}
+    {{- end -}}
+  {{- end -}}
+  <meta name="description" content="{{ $desc }}">
+  <meta name="author" content="{{ .Site.Params.author }}">
   <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}</title>
+  <link rel="canonical" href="{{ .Permalink }}">
+  <link rel="alternate" type="application/rss+xml" href="{{ .Site.BaseURL }}index.xml" title="{{ .Site.Title }}">
+  <meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}">
+  <meta property="og:description" content="{{ $desc }}">
+  <meta property="og:type" content="{{ if .IsHome }}website{{ else }}article{{ end }}">
+  <meta property="og:url" content="{{ .Permalink }}">
+  <meta property="og:site_name" content="{{ .Site.Title }}">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}">
+  <meta name="twitter:description" content="{{ $desc }}">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {{- if .IsHome -}}
+      {
+        "@type": "WebSite",
+        "name": {{ .Site.Title | jsonify }},
+        "url": {{ .Site.BaseURL | jsonify }},
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://www.google.com/search?q=site:ruiss3au.github.io+{search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        }
+      }
+      {{- else if .IsPage -}}
+      {
+        "@type": "BlogPosting",
+        "headline": {{ .Title | jsonify }},
+        "description": {{ $desc | jsonify }},
+        "datePublished": {{ .Date.Format "2006-01-02T15:04:05-07:00" | jsonify }},
+        "dateModified": {{ .Lastmod.Format "2006-01-02T15:04:05-07:00" | jsonify }},
+        "author": {
+          "@type": "Person",
+          "name": {{ .Site.Params.author | jsonify }}
+        },
+        "url": {{ .Permalink | jsonify }},
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": {{ .Permalink | jsonify }}
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {{- $ancestors := .Ancestors.Reverse -}}
+          {"@type": "ListItem", "position": 1, "name": {{ .Site.Title | jsonify }}, "item": {{ .Site.BaseURL | jsonify }}}
+          {{- range $i, $e := $ancestors -}}
+          ,{"@type": "ListItem", "position": {{ add $i 2 }}, "name": {{ $e.Title | jsonify }}, "item": {{ $e.Permalink | jsonify }}}
+          {{- end -}}
+          ,{"@type": "ListItem", "position": {{ add (len $ancestors) 2 }}, "name": {{ .Title | jsonify }}, "item": {{ .Permalink | jsonify }}}
+        ]
+      }
+      {{- else -}}
+      {
+        "@type": "CollectionPage",
+        "name": {{ .Title | jsonify }},
+        "description": {{ $desc | jsonify }},
+        "url": {{ .Permalink | jsonify }}
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {{- $ancestors := .Ancestors.Reverse -}}
+          {"@type": "ListItem", "position": 1, "name": {{ .Site.Title | jsonify }}, "item": {{ .Site.BaseURL | jsonify }}}
+          {{- range $i, $e := $ancestors -}}
+          ,{"@type": "ListItem", "position": {{ add $i 2 }}, "name": {{ $e.Title | jsonify }}, "item": {{ $e.Permalink | jsonify }}}
+          {{- end -}}
+          ,{"@type": "ListItem", "position": {{ add (len $ancestors) 2 }}, "name": {{ .Title | jsonify }}, "item": {{ .Permalink | jsonify }}}
+        ]
+      }
+      {{- end -}}
+    ]
+  }
+  </script>
 </head>
 <body>
   <header class="site-header">
@@ -25,7 +115,7 @@
     {{ block "main" . }}{{ end }}
   </main>
   <footer>
-    <p>&copy; {{ now.Format "2006" }} ruiss3au &middot; built with <a href="https://gohugo.io">Hugo</a></p>
+    <p>&copy; {{ now.Format "2006" }} ruiss3au - built with <a href="https://gohugo.io">Hugo</a></p>
   </footer>
 </body>
 </html>

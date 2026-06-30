@@ -1,0 +1,22 @@
+# ruiss3au's blog
+
+> Security, telecom, and exploits.
+
+## Posts
+
+- [Hello, World](https://ruiss3au.github.io/posts/hello-world/)
+- [3GPP Intro](https://ruiss3au.github.io/posts/3gpp-intro/)
+- [Exploit](https://ruiss3au.github.io/posts/exploit/)
+- [Teaser Aug 2026](https://ruiss3au.github.io/posts/teaser-aug-2026/)
+
+## Sections
+
+- [All Posts](https://ruiss3au.github.io/posts/)
+- [3GPP Meeting Notes](https://ruiss3au.github.io/3gpp/)
+- [Exploit Education](https://ruiss3au.github.io/exploit-edu/)
+- [About](https://ruiss3au.github.io/about/)
+
+## Feeds
+
+- [RSS](https://ruiss3au.github.io/index.xml)
+- [Sitemap](https://ruiss3au.github.io/sitemap.xml)
