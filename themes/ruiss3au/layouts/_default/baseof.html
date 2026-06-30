@@ -29,73 +29,58 @@
   <meta name="twitter:description" content="{{ $desc }}">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  {{- $graph := slice -}}
+  {{- $main := dict -}}
+  {{- if .IsHome -}}
+    {{- $main = dict
+      "@type" "WebSite"
+      "name" .Site.Title
+      "url" .Site.BaseURL
+      "potentialAction" (dict
+        "@type" "SearchAction"
+        "target" (dict
+          "@type" "EntryPoint"
+          "urlTemplate" "https://www.google.com/search?q=site:ruiss3au.github.io+{search_term_string}"
+        )
+        "query-input" "required name=search_term_string"
+      )
+    -}}
+  {{- else if .IsPage -}}
+    {{- $main = dict
+      "@type" "BlogPosting"
+      "headline" .Title
+      "description" $desc
+      "datePublished" (.Date.Format "2006-01-02T15:04:05-07:00")
+      "dateModified" (.Lastmod.Format "2006-01-02T15:04:05-07:00")
+      "author" (dict
+        "@type" "Person"
+        "name" .Site.Params.author
+      )
+      "url" .Permalink
+      "mainEntityOfPage" (dict
+        "@type" "WebPage"
+        "@id" .Permalink
+      )
+    -}}
+  {{- else -}}
+    {{- $main = dict
+      "@type" "CollectionPage"
+      "name" .Title
+      "description" $desc
+      "url" .Permalink
+    -}}
+  {{- end -}}
+  {{- $graph = $graph | append $main -}}
+  {{- if not .IsHome -}}
+    {{- $items := slice (dict "@type" "ListItem" "position" 1 "name" .Site.Title "item" .Site.BaseURL) -}}
+    {{- range $i, $e := .Ancestors.Reverse -}}
+      {{- $items = $items | append (dict "@type" "ListItem" "position" (add $i 2) "name" $e.Title "item" $e.Permalink) -}}
+    {{- end -}}
+    {{- $items = $items | append (dict "@type" "ListItem" "position" (add (len .Ancestors) 2) "name" .Title "item" .Permalink) -}}
+    {{- $graph = $graph | append (dict "@type" "BreadcrumbList" "itemListElement" $items) -}}
+  {{- end -}}
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {{- if .IsHome -}}
-      {
-        "@type": "WebSite",
-        "name": {{ .Site.Title | jsonify }},
-        "url": {{ .Site.BaseURL | jsonify }},
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": {
-            "@type": "EntryPoint",
-            "urlTemplate": "https://www.google.com/search?q=site:ruiss3au.github.io+{search_term_string}"
-          },
-          "query-input": "required name=search_term_string"
-        }
-      }
-      {{- else if .IsPage -}}
-      {
-        "@type": "BlogPosting",
-        "headline": {{ .Title | jsonify }},
-        "description": {{ $desc | jsonify }},
-        "datePublished": {{ .Date.Format "2006-01-02T15:04:05-07:00" | jsonify }},
-        "dateModified": {{ .Lastmod.Format "2006-01-02T15:04:05-07:00" | jsonify }},
-        "author": {
-          "@type": "Person",
-          "name": {{ .Site.Params.author | jsonify }}
-        },
-        "url": {{ .Permalink | jsonify }},
-        "mainEntityOfPage": {
-          "@type": "WebPage",
-          "@id": {{ .Permalink | jsonify }}
-        }
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {{- $ancestors := .Ancestors.Reverse -}}
-          {"@type": "ListItem", "position": 1, "name": {{ .Site.Title | jsonify }}, "item": {{ .Site.BaseURL | jsonify }}}
-          {{- range $i, $e := $ancestors -}}
-          ,{"@type": "ListItem", "position": {{ add $i 2 }}, "name": {{ $e.Title | jsonify }}, "item": {{ $e.Permalink | jsonify }}}
-          {{- end -}}
-          ,{"@type": "ListItem", "position": {{ add (len $ancestors) 2 }}, "name": {{ .Title | jsonify }}, "item": {{ .Permalink | jsonify }}}
-        ]
-      }
-      {{- else -}}
-      {
-        "@type": "CollectionPage",
-        "name": {{ .Title | jsonify }},
-        "description": {{ $desc | jsonify }},
-        "url": {{ .Permalink | jsonify }}
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {{- $ancestors := .Ancestors.Reverse -}}
-          {"@type": "ListItem", "position": 1, "name": {{ .Site.Title | jsonify }}, "item": {{ .Site.BaseURL | jsonify }}}
-          {{- range $i, $e := $ancestors -}}
-          ,{"@type": "ListItem", "position": {{ add $i 2 }}, "name": {{ $e.Title | jsonify }}, "item": {{ $e.Permalink | jsonify }}}
-          {{- end -}}
-          ,{"@type": "ListItem", "position": {{ add (len $ancestors) 2 }}, "name": {{ .Title | jsonify }}, "item": {{ .Permalink | jsonify }}}
-        ]
-      }
-      {{- end -}}
-    ]
-  }
+  {{- (dict "@context" "https://schema.org" "@graph" $graph) | jsonify | safeHTML -}}
   </script>
 </head>
 <body>
