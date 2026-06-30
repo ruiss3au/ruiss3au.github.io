@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="google-site-verification" content="tQuNQpXBfCRqiK_7pVKCwI3rEoqdwGg1AVUwJ_ZLC54">
-  <meta name="msvalidate.01" content="C728D76FB70B11C72177AE66E0EE89CE">
+  {{ safeHTML `<meta name="google-site-verification" content="tQuNQpXBfCRqiK_7pVKCwI3rEoqdwGg1AVUwJ_ZLC54">` }}
+  {{ safeHTML `<meta name="msvalidate.01" content="C728D76FB70B11C72177AE66E0EE89CE">` }}
   {{- $desc := "" -}}
   {{- with .Description -}}
     {{- $desc = . -}}
