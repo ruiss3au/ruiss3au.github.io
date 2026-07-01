@@ -5,11 +5,12 @@ tags: ["3GPP"]
 featured: true
 ---
 
-RAN1#126 and RAN4#120 are expected in August 2026 (exact dates TBC). These
-will be the first meetings after the Rel-20 feature freeze at RAN#112 in
-Singapore, which means the psychological shift from "finish the release" to
-"start the next one" will be complete. Rel-21 studies begin, and the
-unresolved questions that were deferred past Rel-20 will resurface.
+RAN1#126 and RAN4#120 will be held at the MECC Maastricht, Netherlands in
+August 2026 (exact days TBC). These will be the first meetings after the
+Rel-20 feature freeze at RAN#112 in Singapore, which means the
+psychological shift from "finish the release" to "start the next one" will
+be complete. Rel-21 studies begin, and the unresolved questions that were
+deferred past Rel-20 will resurface.
 
 ## What to Watch
 
@@ -22,8 +23,8 @@ framework meets the deadline pressure: companies that have been running
 simulations against the agreed channel models since RAN1#123 will start
 pressing for decisions.
 
-**Watch for**: The first waveform consolidation proposal - likely from OPPO
-or Nokia - attempting to collapse the candidate list to OFDM + one optional
+**Watch for**: The first waveform consolidation proposal — likely from OPPO
+or Nokia — attempting to collapse the candidate list to OFDM + one optional
 waveform. Expect Ericsson to push for OFDM-only as the mandatory baseline
 with optional enhancements defined at a higher layer. HiSilicon (Huawei)
 has been quiet on waveforms since RAN1#122; if they re-enter with a
@@ -59,8 +60,8 @@ cost arguments for IoT device tiers).
 OPPO introduced the Single Cell Multi-Carrier concept at RAN1#122 in
 Bangalore (July 2025). It was nicknamed the "Gothia-cell" at RAN4#118 in
 Gothenburg, and vivo filed a detailed analysis at RAN4#119 in Dalian. The
-concept - a cell that aggregates multiple spectrum blocks across non-contiguous
-carriers - is a 6G enabler for operators with fragmented spectrum
+concept — a cell that aggregates multiple spectrum blocks across non-contiguous
+carriers — is a 6G enabler for operators with fragmented spectrum
 holdings. It is early-stage, not yet a formal work item, and has no
 RAN1 design counterpart beyond RAN1#125 contributions.
 
@@ -83,8 +84,8 @@ in the 7-24 GHz range. Beam sweeping overhead is the dominant bottleneck.
 Companies that have been working on FR2 (mmWave, 24-52 GHz) will bring
 their experience; companies that have not will struggle to catch up.
 
-**Watch for**: Initial BS and UE RF requirement proposals - transmitter
-power, ACLR, EVM, receiver sensitivity - for candidate bands around 7 GHz
+**Watch for**: Initial BS and UE RF requirement proposals — transmitter
+power, ACLR, EVM, receiver sensitivity — for candidate bands around 7 GHz
 and 13-15 GHz. The debate will center on how many antenna elements are
 mandatory (steers the beam sweeping overhead) and whether Relaxed 6G
 device categories with fewer antennas should be allowed.
@@ -96,18 +97,20 @@ HiSilicon (massive MIMO at higher frequencies).
 ### NR NTN and GNSS-Resilient Operation
 
 NR_NTN_Ph3 closed at RAN4#119 with the specification of OCC-based PUSCH
-capacity enhancement and HD-FDD RedCap NTN operation. The GNSS-resilience
-study (SID approved at RAN#111) has its checkpoint at RAN#113 in September
-2026. RAN1#126 will be the last meeting to contribute before that checkpoint.
+capacity enhancement and HD-FDD RedCap NTN operation. GNSS-resilient NTN
+operation was promoted from study item to normative work item at RAN#112
+(agenda 9.4 of RAN1#126), with its first checkpoint at RAN#113 in
+September 2026. RAN1#126 is the inaugural normative meeting.
 
-**Watch for**: Initial access solutions - companies will propose enhancements
+**Watch for**: Initial access solutions — companies will propose enhancements
 to PRACH for operation without GNSS time/frequency synchronization.
-THALES (rapporteur) must consolidate these into TR 38.742 before RAN#113.
-The shift from transparent to regenerative payload architectures (where the
-satellite processes signals on-board rather than bending the pipe) may
-surface as a new dimension.
+THALES (rapporteur) must drive the specification effort toward a working draft
+before RAN#113. The shift from transparent to regenerative payload
+architectures (where the satellite processes signals on-board rather than
+bending the pipe) may surface as a new dimension now that the WI is
+normative.
 
-**Companies to track**: THALES (rapporteur, SID leadership), Ericsson
+**Companies to track**: THALES (rapporteur, WI leadership), Ericsson
 (PUSCH OCC leadership, downlink coverage proposals), HiSilicon (HD-FDD
 RedCap NTN, capacity proposals), ESA (space infrastructure perspective),
 Amazon/AWS (LEO direct-to-device, n254 channel bandwidth push).
@@ -115,14 +118,14 @@ Amazon/AWS (LEO direct-to-device, n254 channel bandwidth push).
 ### NR Mobility Phase 5
 
 Apple and Lenovo's work item on LTM SCell activation improvements was
-approved at RAN#111. RAN4#120 is the first meeting after approval - expect
+approved at RAN#111. RAN4#120 is the first meeting after approval — expect
 the first set of draft CRs defining the test procedures for SCell activation
 as part of LTM cell switching. The RAN1 counterpart (RAN1#126) will begin
 dynamic L1 measurement configuration via MAC CE selection among pre-
 configured RRC configurations.
 
-**Watch for**: The inter-CU case - C-LTM (Conditional LTM) across CU
-boundaries - which was FFS in the WID. If companies press for inclusion
+**Watch for**: The inter-CU case — C-LTM (Conditional LTM) across CU
+boundaries — which was FFS in the WID. If companies press for inclusion
 at RAN1#126, it signals ambition beyond the initial scope. Apple's
 design philosophy (minimize RAN1 impact, reuse Rel-19 LTM framework) will
 collide with companies wanting broader enhancements.
@@ -135,11 +138,11 @@ assessment).
 
 Huawei's revised WID (Device C with active amplification, Topology 2 with
 intermediate UE reader) was approved at RAN#111. RAN1#126 will start the
-normative work on the air interface for Devices 2b and C - power control,
+normative work on the air interface for Devices 2b and C — power control,
 collision handling, D2R signal design. RAN4#120 will begin the RF/RRM
 requirements for active ambient IoT devices.
 
-**Watch for**: Coexistence with NR and LTE in the same band - the most
+**Watch for**: Coexistence with NR and LTE in the same band — the most
 contentious RF issue. Devices transmitting at 5 dBm peak power in bands
 already occupied by macro cells. The RAN4 debate will mirror the LP-WUS
 coexistence fights of Rel-19.
@@ -156,11 +159,11 @@ RedCap UEs. Approved at RAN#111, with rapporteurs from Nokia, Ericsson,
 and CMCC. RAN4#120 will see the first structured wave of proposals via the
 email reflector and Excel template process.
 
-**Watch for**: The PC2 for RedCap debate - applying existing non-RedCap PC2
+**Watch for**: The PC2 for RedCap debate — applying existing non-RedCap PC2
 RF requirements to RedCap UEs on a band-agnostic basis. If companies push
 for band-specific exceptions, the "band-agnostic" principle fractures.
 Also watch for AWS's separate push for a 16.5 MHz channel bandwidth in n254
-for LEO D2D - if it gains co-sponsors at RAN4#120, it could accelerate.
+for LEO D2D — if it gains co-sponsors at RAN4#120, it could accelerate.
 
 **Companies to track**: Nokia (overall rapporteur), Ericsson (channel
 bandwidths rapporteur), CMCC (HPUE rapporteur), AWS (n254 16.5 MHz push),
@@ -174,7 +177,7 @@ evolve through Rel-21 with new deployment scenarios, updated KPIs, and
 alignment with ITU-R IMT-2030. The August meetings mark the start of that
 new phase.
 
-**Watch for**: New deployment scenarios proposed for Rel-21 - candidates
+**Watch for**: New deployment scenarios proposed for Rel-21 — candidates
 include smart factory ultra-dense deployments, maritime coverage, and
 sub-THz indoor scenarios. The 6G KPI targets (60/30 bit/s/Hz peak
 efficiency, 4ms/1ms latency) may be tightened based on evaluation results.
@@ -190,7 +193,7 @@ options).
 RAN1#125 + RAN4#119 contributions. Historically mid-tier contributors,
 their volume increase suggests a strategic push into Rel-21. Watch for
 them co-sponsoring or leading proposals in bands/carrier aggregation and
-RF requirements - areas where they have traditionally followed rather
+RF requirements — areas where they have traditionally followed rather
 than led.
 
 **Apple** maintained high volume (101 contributions) but shifted focus from

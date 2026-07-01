@@ -44,9 +44,9 @@ meeting concludes and analysis is complete.
 
 | Meeting | Date | Location | Status |
 |---------|------|----------|--------|
-| RAN1#126 | Aug 2026 (est.) | TBD | Scheduled |
-| RAN4#120 | Aug 2026 (est.) | TBD | Scheduled |
-| RAN1#127 | Oct 2026 (est.) | TBD | Scheduled |
+| RAN1#126 | Aug 2026 | MECC Maastricht, Netherlands | Scheduled |
+| RAN4#120 | Aug 2026 | MECC Maastricht, Netherlands | Scheduled |
+| RAN1#127 | Oct-Nov 2026 (est.) | TBD | Scheduled |
 | RAN4#121 | Nov 2026 (est.) | TBD | Scheduled |
 | RAN#113 | Sep 2026 (est.) | TBD | Rel-21 Stage-2 freeze |
 | RAN#114 | Dec 2026 (est.) | TBD | Rel-21 checkpoint |
