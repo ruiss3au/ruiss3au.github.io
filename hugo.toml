@@ -3,8 +3,11 @@ languageCode = 'en-us'
 title = 'ruiss3au'
 theme = 'ruiss3au'
 
-[markup.highlight]
-  style = 'monokai'
+[markup]
+  [markup.goldmark.renderer]
+    unsafe = true
+  [markup.highlight]
+    style = 'monokai'
 
 enableRobotsTXT = true
 
