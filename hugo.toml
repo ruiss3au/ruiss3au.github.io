@@ -12,7 +12,7 @@ theme = 'ruiss3au'
 enableRobotsTXT = true
 
 [params]
-  description = "ruiss3au's blog"
+  description = "Analysis of 3GPP standardization and 5G/6G telecommunications, plus notes on Linux, low-level programming, computers, and exploit development."
   author = "ruiss3au"
   mainSections = ["posts"]
 
