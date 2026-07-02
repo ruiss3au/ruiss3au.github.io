@@ -19,7 +19,7 @@ is on which side. It is a companion to [aNB and Xa: The 6G Base Station](/posts/
 which covers the architecture debate at RAN3. MRSS is the RAN1 and RAN4 half of
 the same migration story.
 
-## What MRSS Is
+### What MRSS Is
 
 MRSS is Dynamic Spectrum Sharing (DSS) reborn for the 5G-to-6G transition. It is
 the direct descendant of LTE-NR DSS, but pointed at NR and 6GR sharing the same
@@ -46,7 +46,7 @@ interface, dual connectivity, and inter-gNB aggregation live between base
 stations. The two debates meet only at the migration question they both try to
 answer.
 
-## Why MRSS and Not Something Else
+### Why MRSS and Not Something Else
 
 The 5G migration memory is doing a lot of the arguing here. Operators watched
 Non-Standalone (NSA) and E-UTRA-NR Dual Connectivity (EN-DC) become a long-lived
@@ -93,7 +93,7 @@ while the DC-flavored alternatives pay in architectural complexity and core
 dependency, which is the NSA-to-Standalone (SA) cost operators are trying not to
 pay twice.
 
-## Where the Overhead Comes From
+### Where the Overhead Comes From
 
 The whole MRSS bet hinges on one number: how much spectrum does 6G burn just to
 be present on a 5G carrier? If it is small, MRSS wins. If it is large, the
@@ -152,7 +152,7 @@ design, operators say north of 20 percent if the control region is not shared.
 The number is not yet settled, and the RAN1 template collecting company inputs
 before RAN#113 is where it will converge or fracture.
 
-## The Design Levers
+### The Design Levers
 
 Three RAN1 threads exist to drive the overhead down:
 
@@ -187,7 +187,7 @@ while Boost Mobile weighed in on efficient 5G-6G sharing
 The frame-structure agreement, keeping the NR waveform as baseline, has so far
 kept these proposals at the margins.
 
-## RAN4: Scope and Coexistence
+### RAN4: Scope and Coexistence
 
 RAN4 owns the Radio Frequency (RF) and coexistence side, and its debate has been
 about scope more than overhead. The peak was RAN4#117, where the feature drew a
@@ -222,7 +222,7 @@ existing NR base station hardware
 the hardware-reuse question that decides whether MRSS is a software upgrade or a
 forklift.
 
-## The TDD Problem
+### The TDD Problem
 
 The one place operators are visibly nervous is TDD. Existing LTE-NR DSS
 deployments have mostly been in Frequency Division Duplex (FDD) bands, and
@@ -234,7 +234,7 @@ and FDD MRSS performance evaluated before the migration decision
 This is exactly the gap where, if the answer disappoints, Dual Connectivity comes
 back through the door.
 
-## Company Positions
+### Company Positions
 
 | Position | Companies |
 |----------|-----------|
@@ -247,14 +247,14 @@ back through the door.
 | Hardware reuse feasibility | CHTTL |
 | Architecture-level migration (CN aggregation) | CEWiT |
 
-## The Bet in One Sentence
+### The Bet in One Sentence
 
 MRSS is the industry's attempt to migrate to 6G without repeating NSA-to-SA, by
 trading a few percent of physical-layer efficiency for standalone 6G on existing
 spectrum. Whether that trade holds depends on one unresolved number, the control
 channel overhead in TDD, and the answer is due at RAN#113 in September 2026.
 
-## What to Watch
+### What to Watch
 
 1. **The overhead number.** RAN1 is collecting company inputs into a template
    before RAN#113. Watch whether the vendor 1-2 percent figure or the operator

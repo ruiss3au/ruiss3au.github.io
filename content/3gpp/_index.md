@@ -7,12 +7,12 @@ layout: "landing"
 
 **Start here:** [The Transition From Rel-19 to Rel-20](/posts/3gpp-intro/)
 
-## Meeting Calendar: RAN1 and RAN4
+### Meeting Calendar: RAN1 and RAN4
 
 Covered meetings are linked to their blog post. Future meetings are listed from
 the 3GPP meeting schedule.
 
-## Covered
+### Covered
 
 | Meeting | Date | Location | Post |
 |---------|------|----------|------|
@@ -29,7 +29,7 @@ the 3GPP meeting schedule.
 | RAN4#114 | Jan 29 - Feb 28, 2025 | Athens, Greece | [ran4-114](/3gpp/ran4-114/) |
 | RAN4#113 | Nov 2-30, 2024 | Orlando, FL | [ran4-113](/3gpp/ran4-113/) |
 
-## TSG RAN Plenaries (Covered)
+### TSG RAN Plenaries (Covered)
 
 | Meeting | Date | Location | Post |
 |---------|------|----------|------|
@@ -37,7 +37,7 @@ the 3GPP meeting schedule.
 | RAN#111 | Mar 9-12, 2026 | Fukuoka, Japan | [ran-111](/3gpp/ran-111/) |
 | RAN#110 | Dec 8-11, 2025 | Baltimore, MD | [ran-110](/3gpp/ran-110/) |
 
-## Upcoming
+### Upcoming
 
 Exact dates from the 3GPP meeting calendar. Posts will be written after each
 meeting concludes and analysis is complete.

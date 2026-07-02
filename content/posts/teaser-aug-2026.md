@@ -12,9 +12,9 @@ psychological shift from "finish the release" to "start the next one" will
 be complete. Rel-21 studies begin, and the unresolved questions that were
 deferred past Rel-20 will resurface.
 
-## What to Watch
+### What to Watch
 
-### 6G Radio Waveform (FS_6G_Radio)
+#### 6G Radio Waveform (FS_6G_Radio)
 
 RAN1#125 left us with a narrow set: OFDM as baseline, OTFS as the leading
 high-mobility optional waveform, and UFMC as a mixed-numerology candidate.
@@ -34,7 +34,7 @@ proposal, it reshapes the dynamics.
 papers at RAN1#123-125), Nokia (AI-native PHY framing), Ericsson
 (pragmatic OFDM baseline), HiSilicon (silent lately, may re-engage).
 
-### AI/ML Air Interface Architecture
+#### AI/ML Air Interface Architecture
 
 This is the unresolved question that survived Rel-20. Nokia's AI-native
 vision (AI as the default processing paradigm, classical as fallback) vs
@@ -55,7 +55,7 @@ Ericsson (will counter-propose a UE-capability-framework approach), OPPO
 (modular design, likely to emerge as neutral broker), Qualcomm (implementation-
 cost arguments for IoT device tiers).
 
-### Spectrum Aggregation and Gothia-cell
+#### Spectrum Aggregation and Gothia-cell
 
 OPPO introduced the Single Cell Multi-Carrier concept at RAN1#122 in
 Bangalore (July 2025). It was nicknamed the "Gothia-cell" at RAN4#118 in
@@ -76,7 +76,7 @@ agenda of a joint RAN1/RAN4 session or a RAN1 liaison statement.
 (potential alternative framework, focused on carrier aggregation
 evolution), Nokia (spectrum aggregation through multi-carrier 6G design).
 
-### 7-24 GHz mmWave Framework (FR2-2 / FR3)
+#### 7-24 GHz mmWave Framework (FR2-2 / FR3)
 
 The channel models were defined at RAN1#125. Now the hard part begins:
 RAN4#120 will see the first RF requirement proposals for devices operating
@@ -94,7 +94,7 @@ device categories with fewer antennas should be allowed.
 platforms across bands), Qualcomm (modem/antenna integration cost),
 HiSilicon (massive MIMO at higher frequencies).
 
-### NR NTN and GNSS-Resilient Operation
+#### NR NTN and GNSS-Resilient Operation
 
 NR_NTN_Ph3 closed at RAN4#119 with the specification of OCC-based PUSCH
 capacity enhancement and HD-FDD RedCap NTN operation. GNSS-resilient NTN
@@ -115,7 +115,7 @@ normative.
 RedCap NTN, capacity proposals), ESA (space infrastructure perspective),
 Amazon/AWS (LEO direct-to-device, n254 channel bandwidth push).
 
-### NR Mobility Phase 5
+#### NR Mobility Phase 5
 
 Apple and Lenovo's work item on LTM SCell activation improvements was
 approved at RAN#111. RAN4#120 is the first meeting after approval — expect
@@ -134,7 +134,7 @@ collide with companies wanting broader enhancements.
 (co-rapporteur), Ericsson (inter-CU scenarios), Nokia (RAN3 impact
 assessment).
 
-### Ambient IoT Phase 2
+#### Ambient IoT Phase 2
 
 Huawei's revised WID (Device C with active amplification, Topology 2 with
 intermediate UE reader) was approved at RAN#111. RAN1#126 will start the
@@ -151,7 +151,7 @@ coexistence fights of Rel-19.
 leadership), Ericsson (coexistence requirements), Qualcomm (device complexity
 cost analysis).
 
-### NR Bands, Power Classes, and RedCap Expansion
+#### NR Bands, Power Classes, and RedCap Expansion
 
 Nokia's basket WI (NR_Bands_BW_PC_BC_RedCap_R20) consolidates multiple
 operator-driven requests: new channel bandwidths, HPUE for FR1, PC2 for
@@ -169,7 +169,7 @@ for LEO D2D — if it gains co-sponsors at RAN4#120, it could accelerate.
 bandwidths rapporteur), CMCC (HPUE rapporteur), AWS (n254 16.5 MHz push),
 Anterix (n106 900 MHz), Deutsche Telekom (operator requirements).
 
-### 6G Requirements and Scenarios
+#### 6G Requirements and Scenarios
 
 TR 38.914 v0.4.1 was polished at RAN#112, effectively closing the 6G
 requirements study for Rel-20 purposes. But the document will continue to
@@ -187,7 +187,7 @@ proposal), ZTE (migration architecture, standalone 6G priority), Meta
 (XR wearable device types), Xiaomi (ISAC use case selection, migration
 options).
 
-## Company Posture Changes to Monitor
+### Company Posture Changes to Monitor
 
 **CATT and Spreadtrum** surged to the #4 and #15 positions in combined
 RAN1#125 + RAN4#119 contributions. Historically mid-tier contributors,
@@ -212,7 +212,7 @@ strategy is the open question. Will they pursue AI-native PHY (unlikely,
 given their Rel-20 position) or propose an alternative 6G architecture
 track? Their RAN1#126 submissions will signal their strategy.
 
-## Bottom Line
+### Bottom Line
 
 RAN1#126 and RAN4#120 are the "what's next" meetings. The Rel-20 freeze at
 RAN#112 clears the way for Rel-21 studies, and companies that deferred

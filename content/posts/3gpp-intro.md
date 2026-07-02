@@ -18,7 +18,7 @@ continue writing new posts as new meetings take place.
 
 In this first post, I would like to begin with a quick summary of what happened in Rel. 19 and what was expected to be done in Rel. 20. I would also like to be clear about the methodology I am using to document this. I have basically built a knowledge base of 3GPP tdocs and I interact with it through LLMs. So beware that the analysis here might contain plain mistakes.
 
-## 3GPP Acronyms and Terminology
+### 3GPP Acronyms and Terminology
 
 | Acronym | Meaning |
 |---------|---------|
@@ -49,7 +49,7 @@ In this first post, I would like to begin with a quick summary of what happened 
 | EVM | Error Vector Magnitude |
 | RRM | Radio Resource Management (measurement and mobility procedures) |
 
-## Table of Contents
+### Table of Contents
 
 - [The Transition From Rel-19 to Rel-20](#the-transition-from-rel-19-to-rel-20)
   - [MIMO Phase 5](#mimo-phase-5-nr_mimo_ph5-core)
@@ -71,12 +71,12 @@ In this first post, I would like to begin with a quick summary of what happened 
 - [Release 20 Status](#release-20-status)
 - [What This Blog Series Covers](#what-this-blog-series-covers)
 
-# The Transition From Rel-19 to Rel-20
+## The Transition From Rel-19 to Rel-20
 
 Rel-19 was a refinement cycle for 5G-Advanced (Rel-18). RAN1 and RAN4 delivered
 major enhancements across the radio stack. Key achievements in the most active work/study items are summarized in the following sections.
 
-### MIMO Phase 5 (NR_MIMO_Ph5-Core)
+#### MIMO Phase 5 (NR_MIMO_Ph5-Core)
 
 MIMO has evolved through multiple 3GPP releases. Rel-15 established the NR
 MIMO baseline: up to 32 antenna ports, Type I and Type II codebooks, and basic
@@ -110,7 +110,7 @@ fronthaul debate while ensuring their massive MIMO portfolio would benefit
 from any outcome. The specification landed as a compromise: Xn-based non-coherent
 JT as baseline with optional extensions for ideal-fronthaul deployments.
 
-### Duplex Evolution (NR_duplex_evo-Core)
+#### Duplex Evolution (NR_duplex_evo-Core)
 
 Sub-band full duplex (SBFD) became the flagship Rel-19 feature. The motivation
 was clear: TDD spectrum is underutilized because operators cannot transmit and
@@ -156,7 +156,7 @@ ensure it is practical and deployable. The result is that SBFD requirements
 now reflect European operator constraints on hardware feasibility rather than
 the more aggressive Chinese proposals that initially defined the work item.
 
-### AI/ML for Air Interface (NR_AIML_air-Core)
+#### AI/ML for Air Interface (NR_AIML_air-Core)
 
 AI/ML entered the 3GPP physical layer specification for the first time in
 Rel-19. The motivation: classical signal processing algorithms for CSI
@@ -202,7 +202,7 @@ the architecture question was deferred to Rel-20, where it remains the single
 most contentious issue in RAN1. The RAN#112 plenary in June 2026 is expected
 to make a binding decision on the scope.
 
-### Network Energy Savings (Netw_Energy_NR_enh-Core)
+#### Network Energy Savings (Netw_Energy_NR_enh-Core)
 
 Operators demanded concrete gNB power reduction targets: 30% at medium load
 and up to 50% at low load compared to the Rel-18 baseline. These targets were
@@ -231,7 +231,7 @@ work as a competitive differentiator for their AirScale base station portfolio.
 Operators like CMCC, despite pushing the original KPIs, delegated the detailed
 specification work to the vendors who would implement it.
 
-### Low-Power Wake-Up Signal (NR_LPWUS-Core)
+#### Low-Power Wake-Up Signal (NR_LPWUS-Core)
 
 A separate low-power wake-up receiver (LP-WUR) was specified [R1-2400962](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2400962.zip), [R1-2401023](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_116/Docs/R1-2401023.zip), allowing the UE to power down its main receiver chain and listen only on a low-complexity
 wake-up radio. The LP-WUS waveform was designed to match Msg3 PUSCH
@@ -254,7 +254,7 @@ with technical evidence. The compromise landed as mandatory support for premium
 device categories and optional for reduced-capability devices, a classic 3GPP
 resolution to a classic industry conflict.
 
-### NTN Phase 3 (NR_NTN_Ph3-Core)
+#### NTN Phase 3 (NR_NTN_Ph3-Core)
 
 Non-terrestrial networks progressed through three phases. Rel-17 (NTN
 Solutions) established the basic framework: transparent payload architecture
@@ -296,7 +296,7 @@ deployment assumptions. The compromise was Power Class 3 for NTN as an
 optional UE capability, with the understanding that the mandate question would
 return in Rel-20.
 
-### Integrated Sensing and Communication (FS_Sensing_NR)
+#### Integrated Sensing and Communication (FS_Sensing_NR)
 
 Rel-19 was the first time 3GPP studied whether 5G NR signals could be reused
 for radar-like sensing: detecting objects, measuring velocity, and imaging
@@ -323,7 +323,7 @@ architecture question unresolved. Deferred to FS_Sensing_NR_bis in Rel-20, it
 remains an open fight between the integrated gNB approach (Ericsson, Huawei)
 and the distributed sensing approach (Nokia, Qualcomm).
 
-### Ambient IoT (FS_Ambient_IoT_solutions, Ambient_IoT_Solutions-Core)
+#### Ambient IoT (FS_Ambient_IoT_solutions, Ambient_IoT_Solutions-Core)
 
 Ambient IoT envisions devices that harvest energy from ambient RF, light, or
 vibration rather than using batteries, a paradigm shift from the 10-year
@@ -344,7 +344,7 @@ wanted factory automation first, while Asian operators pushed for outdoor
 agricultural IoT. The compromise split the work into separate indoor and
 outdoor study items in Rel-20.
 
-### EN-DC RF Phase 4 (NR_ENDC_RF_Ph4-Core)
+#### EN-DC RF Phase 4 (NR_ENDC_RF_Ph4-Core)
 
 While not a flashy new feature, EN-DC RF requirements enable the practical
 deployment of 5G non-standalone architectures: LTE anchor plus NR secondary
@@ -360,7 +360,7 @@ pushed for 4T6R as the high-end configuration; Apple and Samsung sought to
 keep 3T6R as the practical baseline to limit RF front-end complexity. The
 specification landed with both options, tiered by device category.
 
-### Carrier Aggregation and Supplementary Uplink (NR_CADC_SUL_R19-Core)
+#### Carrier Aggregation and Supplementary Uplink (NR_CADC_SUL_R19-Core)
 
 Rel-19 extended carrier aggregation to 4 and 5 band combinations (BCS4 and
 BCS5), a significant step from the previous 3-band limit [R4-2411255](https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_112/Docs/R4-2411255.zip), [R4-2411323](https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_112/Docs/R4-2411323.zip). This enables operators to aggregate spectrum across low-band
@@ -376,7 +376,7 @@ conformance test burden. RAN4 defined reduced test configurations to keep
 the work manageable, a long-running tension between specification
 completeness and practical testability.
 
-### IoT over NTN (IoT_NTN_Ph3-Core)
+#### IoT over NTN (IoT_NTN_Ph3-Core)
 
 Satellite IoT addresses the coverage gap for low-rate, delay-tolerant devices
 in areas without terrestrial coverage: container tracking at sea, pipeline
@@ -397,7 +397,7 @@ hard for narrowband NTN, contributing deployment parameters and operational
 requirements. Qualcomm and Ericsson drove the physical layer specifications;
 THALES coordinated the channel models for the NTN IoT bands.
 
-### NR Mobility Phase 4 (NR_Mob_Ph4-Core)
+#### NR Mobility Phase 4 (NR_Mob_Ph4-Core)
 
 Mobility enhancements focused on Layer 1/Layer 2 Triggered Mobility (LTM),
 a fundamental shift from the traditional RRC-based handover. LTM enables the
@@ -418,7 +418,7 @@ and reporting configurations that allow the UE to measure candidate cells
 during the LTM execution phase without interrupting ongoing data transmission
 [R1-2406791](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_118/Docs/R1-2406791.zip), [R1-2406861](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_118/Docs/R1-2406861.zip).
 
-### XR Phase 3 (NR_XR_Ph3-Core)
+#### XR Phase 3 (NR_XR_Ph3-Core)
 
 Extended Reality (XR) workloads, encompassing VR, AR, and cloud-rendered
 gaming, impose stringent requirements on 5G: periodic traffic bursts of
@@ -437,7 +437,7 @@ solution combined both approaches: configurable measurement gap patterns with
 XR-aware scheduling restrictions, allowing operators to tune the trade-off
 between mobility robustness and XR quality of experience.
 
-### RRM Phase 5 (NR_RRM_Ph5-Core)
+#### RRM Phase 5 (NR_RRM_Ph5-Core)
 
 Radio Resource Management Phase 5 addressed practical deployment bottlenecks.
 The flagship feature was fast SCell activation: reducing the delay from SCell
@@ -453,7 +453,7 @@ measurement optimizations, reflecting the importance of mmWave carrier
 aggregation for their devices. Samsung and Qualcomm contributed L3 measurement
 enhancements for both FR1 and FR2.
 
-### Low-Band Carrier Aggregation via Switching (NR_LBCA_Sw-Core)
+#### Low-Band Carrier Aggregation via Switching (NR_LBCA_Sw-Core)
 
 A Rel-19 study item exploring carrier aggregation across low bands (below
 1 GHz) using transmit switching rather than simultaneous transmission. Low
@@ -471,7 +471,7 @@ UE RF requirement specifications [R4-2500215](https://www.3gpp.org/ftp/tsg_ran/W
 a feasibility study in Rel-19, with normative specification deferred to
 Rel-20.
 
-## What Changed in Rel-20
+### What Changed in Rel-20
 
 Rel-20 is fundamentally different. The center of gravity shifted from refining
 5G-Advanced to studying 6G. The work items that defined Rel-19 continued but
@@ -525,7 +525,7 @@ XR Phase 3 (low-latency delivery for immersive applications), and enhanced
 carrier aggregation (NR_CADC_SUL_R20_HPUE with high-power UE for supplementary
 uplink).
 
-## Release 20 Status
+### Release 20 Status
 
 Release 20 is not finished yet. RAN1 and RAN4 work continues through multiple
 plenary milestones. RAN#112 in June 2026 marks the 80% Stage-2 freeze;
@@ -548,7 +548,7 @@ Rel-20 through RAN#115. Implementation teams may actually increase Rel-20
 effort as specifications become stable enough for chipset and gNB
 development.
 
-## What This Blog Series Covers
+### What This Blog Series Covers
 
 This series follows the RAN1, RAN4, and TSG RAN Plenary meetings where Rel-20 was discussed and decided,
 starting from November 2024. Each post dissects one meeting: what topics
@@ -557,13 +557,13 @@ and how the meeting moved Rel-20 forward. The series begins with the Rel-19 peak
 and follows the Rel-20 transition as it unfolds meeting by meeting. New posts
 are added as new meetings take place, through Rel-21 and beyond.
 
-## Appendix: A Crash Course on 3GPP WG RAN
+### Appendix: A Crash Course on 3GPP WG RAN
 
 If you are new to 3GPP, here is a primer on how the RAN working groups function,
 what RAN1 and RAN4 actually do, and how work flows through the standardization
 process.
 
-### The TSG RAN Structure
+#### The TSG RAN Structure
 
 3GPP is organized into three Technical Specification Groups (TSGs): RAN (Radio
 Access Network), SA (Service and System Aspects), and CT (Core Network and
@@ -583,7 +583,7 @@ configurations that certification labs use to verify a device meets the
 specification. RAN4 answers the question "how do we prove the device actually
 works?"
 
-### TSG RAN Plenary: The Decision-Maker
+#### TSG RAN Plenary: The Decision-Maker
 
 The working groups (RAN1, RAN4, etc.) do the design and specification work. The
 TSG RAN Plenary meetings (numbered RAN# followed by a sequence number, e.g.,
@@ -610,7 +610,7 @@ sequence was RAN#110 (December 2025: WIs proposed), RAN#111 (March 2026: feature
 packs locked), and RAN#112 (June 2026: formal feature freeze). The series covers
 all three, showing how scope hardens from proposal to commitment to closure.
 
-### The Workflow: RAN1 Designs, RAN4 Specifies
+#### The Workflow: RAN1 Designs, RAN4 Specifies
 
 The two groups operate in sequence. RAN1 defines a feature (e.g., SBFD slot
 formats, AI/ML CSI compression). Once the physical layer design stabilizes,
@@ -627,27 +627,27 @@ requirements. Output is Change Requests (CRs) to Technical Specifications (TS).
 3. **Work Item Performance (-Perf)**: Conformance test definition. Output is test
 procedures and performance requirements.
 
-### Meetings and Contributions
+#### Meetings and Contributions
 
 Each WG meets roughly six times per year, in sessions lasting one to two weeks.
 Companies submit Technical Documents (TDocs) as contributions to meetings.
 TDocs are identified by a prefix (R1- for RAN1, R4- for RAN4) and a unique
 number. In this series, TDoc references appear as clickable links inline.
 
-### Liaison Statements
+#### Liaison Statements
 
 Working groups communicate through Liaison Statements (LS). When RAN1 makes a
 decision that affects RAN4's RF requirements, it sends an LS. RAN4 may reply
 with an LS raising RF feasibility concerns or requesting clarification.
 
-### Releases
+#### Releases
 
 3GPP work is organized into Releases. Rel-15 (2018) was the first 5G NR release.
 Rel-18 (5G-Advanced) introduced AI/ML studies. Rel-19 was a refinement cycle.
 Rel-20 bridges 5G-Advanced and 6G. Rel-21 is expected to be the first release
 with normative 6G specifications.
 
-### Company Dynamics
+#### Company Dynamics
 
 Companies participate in 3GPP to influence specifications. Infrastructure
 vendors (Ericsson, Nokia, Huawei) drive BS-side specifications. UE chipset

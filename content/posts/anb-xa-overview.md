@@ -12,7 +12,7 @@ RAN3#131 in Gothenburg (February 2026) and codified in TR 38.760-3, the 6G
 RAN architecture study. What follows tracks what has been agreed, what is
 still open, and who is driving each thread.
 
-## The Naming Convention
+### The Naming Convention
 
 ```
 3G: Node B
@@ -21,7 +21,7 @@ still open, and who is driving each thread.
 6G: aNB                    — Xa interface
 ```
 
-## What Has Been Agreed
+### What Has Been Agreed
 
 RAN3#131 (Feb 2026, Gothenburg) adopted the Xa terminology and established
 Higher Layer Split (HLS) as the baseline, carrying the Central Unit /
@@ -60,7 +60,7 @@ TR 38.760-3:
 6. All deployment scenarios (HLS, co-located, disaggregated RAN)
 7. Extensibility for future enhancements
 
-## P2P vs SBI: The RAN-CN Interface
+### P2P vs SBI: The RAN-CN Interface
 
 Xa between aNBs is settled as P2P. The aNB-to-core interface is not.
 Agenda 10.3 in RAN3 is a live fight over whether the 6G RAN-CN interface
@@ -68,7 +68,7 @@ stays P2P (evolved NGAP, the 5G model) or adopts SBI (service-based
 architecture, the 5G core model). The decision shapes whether the aNB is
 an evolved gNB or a new architectural entity.
 
-### What P2P means for the aNB
+#### What P2P means for the aNB
 
 In 5G, the gNB talks to one core entity: the Access and Mobility Management
 Function (AMF). Every other interaction (Session Management Function for
@@ -93,7 +93,7 @@ such as macro site, micro site, pico cite, femto site etc. are encountered and
 well accommodated." CATT adds that "it is easier to upgrade the 5G NG interface
 to 6G if P2P option is leveraged."
 
-### What SBI means for the aNB
+#### What SBI means for the aNB
 
 SBI turns the aNB into a service producer and consumer on the core's bus.
 Instead of routing everything through the AMF, the aNB discovers and talks
@@ -123,7 +123,7 @@ analyses in parallel. They describe two SBI architectures: Full SBA
 high migration cost) and Hybrid (retain P2P for latency-critical mobility
 while introducing SBI for new capabilities).
 
-### Protocol stacks under evaluation
+#### Protocol stacks under evaluation
 
 For P2P, three options are captured in TR 38.760-3:
 
@@ -146,7 +146,7 @@ session state per connection. QUIC/HTTP3 decouples streams from connections,
 which matters when a single aNB needs concurrent sessions with multiple core
 functions during a failover.
 
-### The strategic fault line
+#### The strategic fault line
 
 The debate is not primarily technical. Both can carry control-plane
 messages. The question is who controls the architecture:
@@ -169,14 +169,14 @@ messages. The question is who controls the architecture:
   Now, in 6G, whether to extend SBA to RAN-CN interface or not needs to be
   further studied."
 
-### Evaluation timeline
+#### Evaluation timeline
 
 RAN3 agreed at #131bis that the evaluation should be a single table comparing
 P2P and SBI on deployment, migration, latency, scalability, security, and new
 services [CATT R3-262126](https://www.3gpp.org/ftp/tsg_ran/WG3_Iu/TSGR3_132/Docs/R3-262126.zip).
 Results feed into the milestone at RAN#113 (September 2026).
 
-## Key Documents
+### Key Documents
 
 | TDoc | Title | Company | Meeting |
 |------|-------|---------|---------|
@@ -189,7 +189,7 @@ Results feed into the milestone at RAN#113 (September 2026).
 | [R3-261202](https://www.3gpp.org/ftp/tsg_ran/WG3_Iu/TSGR3_131bis/Docs/R3-261202.zip) | Further discussion on Xa interface | Huawei | #131bis |
 | [R3-262401](https://www.3gpp.org/ftp/tsg_ran/WG3_Iu/TSGR3_132/Docs/R3-262401.zip) | Discussions on 6G Xa interface principles | LG | #132 |
 
-## What to Watch at RAN3#133 (Aug 2026, Maastricht)
+### What to Watch at RAN3#133 (Aug 2026, Maastricht)
 
 1. New services interface decision. Qualcomm will press to resolve the
    "For Further Study: new services" status on Xa with a proposal for AI/ML

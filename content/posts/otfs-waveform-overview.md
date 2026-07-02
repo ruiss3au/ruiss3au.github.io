@@ -48,7 +48,7 @@ and how the optional-deployment model would work. It is a companion to
 [MRSS: Sharing 5G Spectrum with 6G](/posts/mrss-overview/), which covers the core
 MRSS debate.
 
-## What OTFS Claims
+### What OTFS Claims
 
 OTFS modulates symbols in the delay-Doppler domain rather than the time-frequency
 domain. The selling point is that each symbol in the delay-Doppler grid spreads
@@ -86,7 +86,7 @@ Lekha Wireless, Telstra, and Tech Mahindra. A separate operator coalition
 keeping non-OFDM waveforms in scope at the study-item stage
 [RP-251248](https://www.3gpp.org/ftp/tsg_ran/TSG_RAN/TSGR_108/Docs/RP-251248.zip).
 
-## Front 1: MRSS Has Sidelined OTFS for Communications
+### Front 1: MRSS Has Sidelined OTFS for Communications
 
 The MRSS requirement demands that 6G and 5G share a single carrier with the
 scheduler handing time-frequency resources to either radio on a per-slot basis.
@@ -144,7 +144,7 @@ as the 6G starting point
 The scheduler works in time-frequency. Any waveform that does not map cleanly to
 that grid pays a coordination tax.
 
-### The Control Channel Fix
+#### The Control Channel Fix
 
 This is the one part of the MRSS argument that does not land on OTFS. Ericsson's
 overhead assessment at RAN#112 argued that MRSS overhead can be driven to 1-2
@@ -164,7 +164,7 @@ confirmed this boundary: the overhead fight is about sharing the 5G CORESET, not
 about the data waveform
 [R1-2604915](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_125/Docs/R1-2604915.zip).
 
-### Where the MRSS Pressure Lands
+#### Where the MRSS Pressure Lands
 
 The MRSS concern for OTFS is on the data channel. Cohere has not published
 quantitative analysis of the overhead that OTFS-over-OFDM would impose in an
@@ -185,7 +185,7 @@ The operators have not taken a public position on OTFS. Cohere has not yet filed
 an OTFS MRSS overhead analysis in RAN1. Until those numbers exist, the MRSS
 question is an open liability, not a settled verdict.
 
-## Front 2: ISAC Is the Second Life
+### Front 2: ISAC Is the Second Life
 
 While the communications waveform was settling around OFDM, RAN1#124bis carved
 out a separate agreement for ISAC: "CP-OFDM waveform as defined for 6GR is the
@@ -193,7 +193,7 @@ starting point for 6G ISAC waveform study. Study on enhancements on CP-OFDM or
 other waveforms is not precluded." The "not precluded" clause is the pressure
 valve.
 
-### Why ISAC Is Different
+#### Why ISAC Is Different
 
 Sensing and communication have different waveform ideals. Communication needs
 orthogonal subcarriers that isolate data streams. Sensing needs sharp
@@ -214,7 +214,7 @@ discrimination in high-mobility scenarios, which is exactly the ISAC use case:
 Uncrewed Aerial Vehicle (UAV) detection, vehicle tracking, high-speed rail
 sensing.
 
-### Qualcomm's ISAC Rejection
+#### Qualcomm's ISAC Rejection
 
 Qualcomm's RAN1#125 contribution explicitly addressed OTFS for ISAC, arguing the
 "performance gap between OFDM-based waveforms and OTFS significantly narrows when
@@ -225,7 +225,7 @@ outweigh the cost, complexity, and ecosystem disruption associated with deviatin
 from an OFDM-based unified 6G air interface"
 [R1-2604712](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_125/Docs/R1-2604712.zip).
 
-### The OFDM Synthesis Argument
+#### The OFDM Synthesis Argument
 
 Apple, Nokia, and AT&T each filed RAN1#125 contributions on ISAC waveform that
 take CP-OFDM as the starting point and discuss waveform requirements in terms of
@@ -257,7 +257,7 @@ DOCOMO, LGE, Xiaomi, CMCC, OPPO, Lenovo, Qualcomm, and Google. The proposed
 enhancement areas all assume CP-OFDM as the starting point
 [R1-2604763](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_125/Docs/R1-2604763.zip).
 
-### Cohere's ISAC Counter
+#### Cohere's ISAC Counter
 
 Cohere's ISAC strategy is a pivot from the communications waveform fight. Their
 RAN1#125 contribution proposed an ISAC system where "the sensing signal is
@@ -276,13 +276,13 @@ zero-overhead claim directly addresses the operator MRSS concern: if the
 sensing signal is an overlay and costs nothing when idle, it avoids the
 resource-loss problem that made 4G/5G DSS commercially unattractive.
 
-## Front 3: Optional Deployment
+### Front 3: Optional Deployment
 
 Cohere's three-phase plan maps to an optional specification model: define OTFS
 as a UE capability, specify the IDFZT precoder interface, and let OTFS-capable
 UEs decode the precoded signal while legacy UEs see CP-OFDM.
 
-### OTFS as a UE Capability
+#### OTFS as a UE Capability
 
 In wireless specifications, "optional" means a feature that a UE may implement
 but the network may or may not support. Examples from NR: optional dynamic
@@ -305,7 +305,7 @@ baseband processing chain before the Inverse Fast Fourier Transform (IFFT).
 Existing radios, existing power amplifiers, existing antenna arrays. The per-UE
 differentiation is digital.
 
-### What Would Make It Work
+#### What Would Make It Work
 
 The ISAC use case. Cohere's overlay model means a single gNB can do both:
 communications over CP-OFDM and sensing over the OTFS-overlay signal. A
@@ -330,7 +330,7 @@ ones, is the opening OTFS needs: OTFS decouples delay resolution from subcarrier
 spacing entirely
 [R1-2604860](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_125/Docs/R1-2604860.zip).
 
-### What Would Block It
+#### What Would Block It
 
 If Qualcomm's multi-symbol receiver claim holds up under evaluation, the
 performance gap that OTFS is meant to fill disappears, and OTFS becomes
@@ -346,7 +346,7 @@ overhead, OTFS loses the zero-cost migration argument. If Cohere can show
 negligible overhead, or if OTFS is proposed only for new bands where MRSS does
 not apply, that liability is contained.
 
-## Company Positions
+### Company Positions
 
 The following table summarises positions documented in RAN1 contributions. Where
 a position is supported by a single company, the TDoc is cited.
@@ -365,7 +365,7 @@ a position is supported by a single company, the TDoc is cited.
 | Low MRSS overhead essential | Vodafone, Orange, Deutsche Telekom, Bouygues Telecom, Telecom Italia, AT&T, BT | [R1-2604502](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_125/Docs/R1-2604502.zip) |
 | 7.5 kHz SCS to reduce ghost target detection in sensing | CEWiT | [R1-2604860](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_125/Docs/R1-2604860.zip) |
 
-## What to Watch
+### What to Watch
 
 1. **RAN1#126 ISAC waveform agreements.** The LGE moderator summary from RAN1#125
    proposed CP-OFDM enhancements, pulse-type DFT-s-OFDM, and left other waveforms

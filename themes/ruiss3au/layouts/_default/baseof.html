@@ -9,8 +9,12 @@
   {{- with .Description -}}
     {{- $desc = . -}}
   {{- else -}}
-    {{- with .Site.Params.description -}}
-      {{- $desc = . -}}
+    {{- if and .IsPage .Summary -}}
+      {{- $desc = .Summary | plainify | chomp | truncate 157 -}}
+    {{- else -}}
+      {{- with .Site.Params.description -}}
+        {{- $desc = . -}}
+      {{- end -}}
     {{- end -}}
   {{- end -}}
   <meta name="description" content="{{ $desc }}">
