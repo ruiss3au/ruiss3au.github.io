@@ -65,12 +65,14 @@ version of the anchor dependency:
 
 - **Hard spectrum refarming.** Statically carve existing 5G spectrum off for 6G.
   Simple, but it strands 5G users on whatever is left and forfeits the dynamic
-  efficiency of sharing. CEWiT contrasts MRSS against "rigid re-farming"
+  efficiency of sharing. CEWiT frames MRSS as the more efficient alternative,
+  where 6G reuses the existing 5G mid-band via spectrum refarming rather than a
+  static carve-out
   [RP-252371](https://www.3gpp.org/ftp/tsg_ran/TSG_RAN/TSGR_109/Docs/RP-252371.zip).
 - **New-band-only deployment.** Put 6G only in new bands around 7 GHz and leave
   NR untouched in mid-band. Clean, but the around 7 GHz coverage footprint is
   smaller than mid-band, so 6G looks uncompetitive outside dense areas. Vodafone
-  notes that to match "low band + 3.5 GHz" NR performance, the mid-band Time
+  notes that to match "low band +3.5 GHz" NR performance, the mid-band Time
   Division Duplex (TDD) likely "needs to support MRSS"
   [RP-260482](https://www.3gpp.org/ftp/tsg_ran/TSG_RAN/TSGR_111/Docs/RP-260482.zip).
 - **5G-6G Dual Connectivity (DC).** The explicit fallback. Vodafone warns that

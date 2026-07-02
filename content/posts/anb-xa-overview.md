@@ -27,23 +27,23 @@ RAN3#131 (Feb 2026, Gothenburg) adopted the Xa terminology and established
 Higher Layer Split (HLS) as the baseline, carrying the Central Unit /
 Distributed Unit (CU/DU) separation forward from 5G.
 
-RAN3#131bis (Mar 2026) produced the first substantive working assumption
-(WA) driven by Nokia
-[R3-261317](https://www.3gpp.org/ftp/tsg_ran/WG3_Iu/TSGR3_131bis/Docs/R3-261317.zip):
-
-> Working assumption: For connectivity services, the Xa interface is a
-> point-to-point interface between the endpoints; a point-to-point logical
-> interface should be feasible even in the absence of a physical direct
-> connection between the endpoints. For Further Study: new services.
-
-Nokia argued point-to-point (P2P) is the right first choice: it is proven
-for latency critical services and avoids the complexity of Service-Based
+RAN3#131bis (Apr 2026) produced the first substantive working assumption (WA)
+on Xa, with Nokia proposing P2P as the interface design: "P2P interface should
+be the first choice for the interface between aNBs"
+[R3-261317](https://www.3gpp.org/ftp/tsg_ran/WG3_Iu/TSGR3_131bis/Docs/R3-261317.zip).
+Nokia argued point-to-point (P2P) is the right first choice: it is proven for
+latency critical services and avoids the complexity of Service-Based
 Architecture (SBA) inside the RAN.
-Ericsson, Huawei, LG, InterDigital, Ofinno, China Telecom, Rakuten Mobile,
-and CATT all contributed. No company dissented. Xa is P2P.
 
-RAN3#132 (May 2026, Dalian) consolidated. Nokia reaffirmed P2P
-[R3-262284](https://www.3gpp.org/ftp/tsg_ran/WG3_Iu/TSGR3_132/Docs/R3-262284.zip).
+RAN3#132 (May 2026, Dalian) consolidated. Nokia carried the working assumption
+forward and proposed elevating it to an agreement
+[R3-262284](https://www.3gpp.org/ftp/tsg_ran/WG3_Iu/TSGR3_132/Docs/R3-262284.zip):
+
+> For connectivity services, the Xa interface is a point-to-point interface
+> between the endpoints; a point-to-point logical interface should be feasible
+> even in the absence of a physical direct connection between the endpoints.
+> Editor's note: FFS for new services.
+
 Qualcomm entered with a new dimension: what interface type for new services
 such as AI/ML data collection?
 [R3-262168](https://www.3gpp.org/ftp/tsg_ran/WG3_Iu/TSGR3_132/Docs/R3-262168.zip).
@@ -87,10 +87,11 @@ with operators T-Mobile, Verizon, NTT Docomo, Boost, Jio, FiberCop, Charter,
 Telstra, and Google co-sponsoring.
 
 CATT's evaluation at RAN3#132 [R3-262126](https://www.3gpp.org/ftp/tsg_ran/WG3_Iu/TSGR3_132/Docs/R3-262126.zip)
-found P2P wins on deployment maturity and latency but loses on extensibility:
-"P2P option is leveraged for RAN-CN interface through 2G to 5G. Multiple
-deployment scenarios such as many-to-many are supported through additional
-elementary procedures defined with each new feature."
+argues P2P is the proven, mature path: "For connectivity services, P2P option is
+leveraged for RAN-CN interface through 2G to 5G. Multiple deployment scenarios
+such as macro site, micro site, pico cite, femto site etc. are encountered and
+well accommodated." CATT adds that "it is easier to upgrade the 5G NG interface
+to 6G if P2P option is leveraged."
 
 ### What SBI means for the aNB
 
@@ -100,10 +101,11 @@ directly to AMF, SMF, an AI-training network function (NF), a sensing-fusion
 NF, and a policy NF without an intermediary.
 
 Seoul National University [R3-260136](https://www.3gpp.org/ftp/tsg_ran/WG3_Iu/TSGR3_131/Docs/R3-260136.zip)
-argued the necessity: "6G evolves into a multi-service platform supporting
+argued the necessity: "As 6G evolves into a multi-service platform supporting
 AI/ML, Integrated Sensing and Communication (ISAC), and cloud-native
-deployments. These services necessitate RAN interactions with diverse Core
-Network Functions beyond traditional AMF anchoring." They continued
+deployments, architectural requirements are fundamentally shifting. These
+services necessitate RAN interactions with diverse Core Network Functions (NFs)
+beyond traditional AMF anchoring." They continued
 [R3-260139](https://www.3gpp.org/ftp/tsg_ran/WG3_Iu/TSGR3_131/Docs/R3-260139.zip):
 "Relying on legacy Control Plane and User Plane architectures introduces
 significant intrinsic protocol bottlenecks and procedural latencies."
@@ -163,9 +165,9 @@ messages. The question is who controls the architecture:
   (latency-critical, well-understood), SBI for AI/ML, sensing, and new
   services. OPPO [R3-260090](https://www.3gpp.org/ftp/tsg_ran/WG3_Iu/TSGR3_131/Docs/R3-260090.zip):
   "During the migration of core network from 4G to 5G, one of the important
-  evolutions was to transit to service-based architecture. Now, in 6G,
-  whether to extend SBA to RAN-CN interface or not needs to be further
-  studied."
+  evolutions of core network is to transit to service-based architecture...
+  Now, in 6G, whether to extend SBA to RAN-CN interface or not needs to be
+  further studied."
 
 ### Evaluation timeline
 
