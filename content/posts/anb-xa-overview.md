@@ -16,9 +16,9 @@ still open, and who is driving each thread.
 
 ```
 3G: Node B
-4G: eNB (evolved Node B)  — X2 interface
-5G: gNB                    — Xn interface
-6G: aNB                    — Xa interface
+4G: eNB (evolved Node B)  -- X2 interface
+5G: gNB                    -- Xn interface
+6G: aNB                    -- Xa interface
 ```
 
 ### What Has Been Agreed
