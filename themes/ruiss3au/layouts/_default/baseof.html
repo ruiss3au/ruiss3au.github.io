@@ -84,7 +84,7 @@
     {{- $graph = $graph | append (dict "@type" "BreadcrumbList" "itemListElement" $items) -}}
   {{- end -}}
   <script type="application/ld+json">
-  {{- (dict "@context" "https://schema.org" "@graph" $graph) | jsonify | safeHTML -}}
+  {{- (dict "@context" "https://schema.org" "@graph" $graph) | jsonify | safeJS -}}
   </script>
 </head>
 <body>
