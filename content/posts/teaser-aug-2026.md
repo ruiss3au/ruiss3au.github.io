@@ -1,5 +1,6 @@
 ---
 title: "Teaser: August 2026 Meetings"
+description: "Preview of RAN1#126 and RAN4#120 in Maastricht: the first meetings after the Rel-20 feature freeze, where Rel-21 studies begin."
 date: 2026-06-22
 tags: ["3GPP"]
 featured: true

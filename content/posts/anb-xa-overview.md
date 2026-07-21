@@ -1,5 +1,6 @@
 ---
 title: "aNB and Xa: The 6G Base Station"
+description: "RAN3 named the 6G base station aNB and its interface Xa. Tracking the architectural debate over point-to-point vs service-based interfaces for the 6G RAN."
 date: 2026-07-01
 tags: ["3GPP", "RAN3", "6G", "Rel-20"]
 featured: true

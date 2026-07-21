@@ -1,5 +1,6 @@
 ---
 title: "OTFS and 6G: The Waveform Question"
+description: "OTFS challenges OFDM as the 6G waveform. Why MRSS sidelined it for communications, why ISAC gives it a second life, and how optional deployment would work."
 date: 2026-07-02
 tags: ["3GPP", "RAN1", "6G", "Rel-20"]
 featured: true

@@ -1,5 +1,6 @@
 ---
 title: "MRSS: Sharing 5G Spectrum with 6G"
+description: "How Multi-RAT Spectrum Sharing lets operators put 6G on existing 5G spectrum without stranding their 5G investment, and why the control channel overhead number is the fight."
 date: 2026-07-01
 tags: ["3GPP", "RAN1", "RAN4", "6G", "Rel-20"]
 featured: true

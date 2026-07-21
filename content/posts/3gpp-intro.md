@@ -1,5 +1,6 @@
 ---
 title: "The Transition From Rel-19 to Rel-20"
+description: "A primer on the 3GPP RAN working groups, the transition from 5G-Advanced to 6G, and what to expect in the Release 20 blog post series."
 date: 2026-06-05
 tags: ["3GPP"]
 featured: true
