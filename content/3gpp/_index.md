@@ -12,6 +12,12 @@ layout: "landing"
 Covered meetings are linked to their blog post. Future meetings are listed from
 the 3GPP meeting schedule.
 
+### August reports in review
+
+RAN1#126 and RAN4#120 met in Maastricht on 24-28 August 2026. Updated
+reports and a SpaceX companion article are in editorial review. They are
+available in the draft preview and will be linked here after review.
+
 ### Covered
 
 | Meeting | Date | Location | Post |
@@ -39,14 +45,14 @@ the 3GPP meeting schedule.
 
 ### Upcoming
 
-Exact dates from the 3GPP meeting calendar. Posts will be written after each
-meeting concludes and analysis is complete.
+The RAN1 dates below are listed in the outgoing August liaison
+[R1-2606930](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_126/Docs/R1-2606930.zip).
+Other entries remain provisional; they do not establish a release freeze.
 
 | Meeting | Date | Location | Status |
 |---------|------|----------|--------|
-| RAN1#126 | Aug 2026 | MECC Maastricht, Netherlands | Scheduled |
-| RAN4#120 | Aug 2026 | MECC Maastricht, Netherlands | Scheduled |
-| RAN1#127 | Oct-Nov 2026 (est.) | TBD | Scheduled |
-| RAN4#121 | Nov 2026 (est.) | TBD | Scheduled |
-| RAN#113 | Sep 2026 (est.) | TBD | Rel-21 Stage-2 freeze |
-| RAN#114 | Dec 2026 (est.) | TBD | Rel-21 checkpoint |
+| RAN1#126bis | Oct 12-16, 2026 | Jeju, South Korea | Tracking-signal follow-up; dates listed in August liaison |
+| RAN1#127 | Nov 16-20, 2026 | Calgary, Canada | Listed in August liaison |
+| RAN4#121 | Nov 2026 (est.) | TBD | Provisional; dates to verify |
+| RAN#113 | Sep 2026 (est.) | TBD | Plenary follow-up; details to verify |
+| RAN#114 | Dec 2026 (est.) | TBD | Provisional; agenda to verify |
