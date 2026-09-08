@@ -11,7 +11,7 @@ RAN1#126 and RAN4#120 took place in Maastricht on 24-28 August 2026.
 The earlier preview has been superseded. Its unsupported predictions about
 company positions and completed 6G decisions have been withdrawn.
 
-The follow-up reports are in editorial review. The RAN1 report examines
+The follow-up reports are now available. The RAN1 report examines
 modulation disagreements, recorded control and channel-state-information
 study agreements, tracking signals, wake-up operation and satellite access
 when positioning becomes unreliable. The RAN4 report examines spectrum
@@ -28,5 +28,7 @@ The attachment containing the performance results is not yet available in
 the reviewed extraction, so no numerical result is asserted here.
 
 The revised articles distinguish recorded agreements from proposals and
-identify gaps in the final outcome evidence. They will be linked from the
-[meeting series](/3gpp/) after review.
+identify gaps in the final outcome evidence. Read the
+[RAN1#126 report](/3gpp/ran1-126/),
+[RAN4#120 report](/3gpp/ran4-120/), and the
+[SpaceX companion analysis](/posts/nr-femto-starlink-small-cells/).

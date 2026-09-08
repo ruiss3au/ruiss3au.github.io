@@ -12,16 +12,12 @@ layout: "landing"
 Covered meetings are linked to their blog post. Future meetings are listed from
 the 3GPP meeting schedule.
 
-### August reports in review
-
-RAN1#126 and RAN4#120 met in Maastricht on 24-28 August 2026. Updated
-reports and a SpaceX companion article are in editorial review. They are
-available in the draft preview and will be linked here after review.
-
 ### Covered
 
 | Meeting | Date | Location | Post |
 |---------|------|----------|------|
+| RAN4#120 | Aug 24-28, 2026 | Maastricht, Netherlands | [ran4-120](/3gpp/ran4-120/) |
+| RAN1#126 | Aug 24-28, 2026 | Maastricht, Netherlands | [ran1-126](/3gpp/ran1-126/) |
 | RAN4#119 | May 6-15, 2026 | Dalian, China | [ran4-119](/3gpp/ran4-119/) |
 | RAN1#125 | Apr 27 - May 17, 2026 | Dalian, China | [ran1-125](/3gpp/ran1-125/) |
 | RAN4#118 | Feb 27, 2026 | Gothenburg, Sweden | [ran4-118](/3gpp/ran4-118/) |
