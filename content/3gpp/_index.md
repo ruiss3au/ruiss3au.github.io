@@ -35,6 +35,7 @@ the 3GPP meeting schedule.
 
 | Meeting | Date | Location | Post |
 |---------|------|----------|------|
+| RAN#113 | Sep 14-17, 2026 | Madrid, Spain | [ran-113](/3gpp/ran-113/) |
 | RAN#112 | Jun 8-11, 2026 | Singapore | [ran-112](/3gpp/ran-112/) |
 | RAN#111 | Mar 9-12, 2026 | Fukuoka, Japan | [ran-111](/3gpp/ran-111/) |
 | RAN#110 | Dec 8-11, 2025 | Baltimore, MD | [ran-110](/3gpp/ran-110/) |
@@ -43,12 +44,13 @@ the 3GPP meeting schedule.
 
 The RAN1 dates below are listed in the outgoing August liaison
 [R1-2606930](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_126/Docs/R1-2606930.zip).
-Other entries remain provisional; they do not establish a release freeze.
+The RAN#114 dates are listed in the September outgoing liaison
+[RP-262264](https://www.3gpp.org/ftp/tsg_ran/TSG_RAN/TSGR_113/Docs/RP-262264.zip).
+The RAN4 estimate remains provisional; these dates do not establish a release freeze.
 
 | Meeting | Date | Location | Status |
 |---------|------|----------|--------|
 | RAN1#126bis | Oct 12-16, 2026 | Jeju, South Korea | Tracking-signal follow-up; dates listed in August liaison |
 | RAN1#127 | Nov 16-20, 2026 | Calgary, Canada | Listed in August liaison |
 | RAN4#121 | Nov 2026 (est.) | TBD | Provisional; dates to verify |
-| RAN#113 | Sep 2026 (est.) | TBD | Plenary follow-up; details to verify |
-| RAN#114 | Dec 2026 (est.) | TBD | Provisional; agenda to verify |
+| RAN#114 | Dec 7-11, 2026 | Boston, USA | Migration feasibility, device types and satellite compensation follow-up |

@@ -2,7 +2,7 @@
 title: "SpaceX's terrestrial ambitions meet the interference test"
 description: "What the August 3GPP documents establish about SpaceX's terrestrial spectrum work, satellite coexistence and the small-cell hypothesis."
 date: 2026-08-24
-lastmod: 2026-09-06
+lastmod: 2026-09-28
 tags: ["3GPP", "SpaceX", "Starlink", "NTN", "Small Cells"]
 featured: true
 ---
@@ -34,6 +34,7 @@ technical obstacles to a hybrid service is SpaceX actually trying to remove?
 
 ## Table of contents
 
+- [September follow-up: compatibility before convergence](#september-follow-up-compatibility-before-convergence)
 - [A terrestrial band with its own engineering case](#a-terrestrial-band-with-its-own-engineering-case)
   - [The filter matters as much as the frequency allocation](#the-filter-matters-as-much-as-the-frequency-allocation)
 - [The satellite condition: protect the phone at the coverage edge](#the-satellite-condition-protect-the-phone-at-the-coverage-edge)
@@ -43,6 +44,49 @@ technical obstacles to a hybrid service is SpaceX actually trying to remove?
 - [What the Femto record actually establishes](#what-the-femto-record-actually-establishes)
 - [The deployment questions the band work cannot answer](#the-deployment-questions-the-band-work-cannot-answer)
 - [The next documents that would change the assessment](#the-next-documents-that-would-change-the-assessment)
+
+## September follow-up: compatibility before convergence
+
+Reviewed 28 September 2026. SpaceX's September moderator summary says
+companies remain divided on how 3GPP should address satellite operation in
+terrestrial bands. It is explicitly informational. The extracted company
+position table is missing, so neither a winner nor a detailed coalition can
+be inferred from it
+[RP-262246](https://www.3gpp.org/ftp/tsg_ran/TSG_RAN/TSGR_113/Docs/RP-262246.zip).
+
+A separate proposal provides stronger evidence of the integration problem
+SpaceX is pursuing. Qualcomm's moderator summary describes a joint
+SpaceX/Apple/operator/vendor initiative to serve ordinary devices that do
+not perform satellite uplink pre-compensation alongside standardized NR
+satellite devices in one cell. It identifies both compensation and access
+control as obstacles, and attributes mid-2027 deployment urgency to the
+proponents
+[RP-262224](https://www.3gpp.org/ftp/tsg_ran/TSG_RAN/TSGR_113/Docs/RP-262224.zip).
+
+The later work-item description proposes a study checkpoint at RAN#114,
+before deciding normative scope. It treats timing-and-frequency compensation
+and frequency-only compensation with equal priority. The submitted limits
+include quasi-earth-fixed cells, the specified lower-frequency satellite
+bands, and continued mandatory support for the Rel-17 satellite baseline
+in devices supporting the optional enhancement
+[RP-262263](https://www.3gpp.org/ftp/tsg_ran/TSG_RAN/TSGR_113/Docs/RP-262263.zip).
+
+This is a concrete device-compatibility objective. It still does not prove
+a terminal-hosted terrestrial small-cell architecture. It also does not
+settle whether satellite operation in terrestrial bands receives normative
+support: compensation and spectrum coexistence are separate problems.
+
+For capacity, September's RAN4-led candidate discussion attributes to
+SpaceX an inter-band aggregation request with one uplink and two downlink
+carriers, using n255+n256 as an example. The moderator asks proponents to
+show what existing specifications cannot deliver and quantify the penalty
+of existing mechanisms. These are candidate requirements and requests for
+justification, not an approved Rel-21 feature package
+[RP-262245](https://www.3gpp.org/ftp/tsg_ran/TSG_RAN/TSGR_113/Docs/RP-262245.zip).
+
+The [RAN#113 report](/3gpp/ran-113/) puts these developments
+alongside terrestrial migration, device types, Ambient IoT and the continued
+Gothia-cell debate.
 
 ## A terrestrial band with its own engineering case
 
