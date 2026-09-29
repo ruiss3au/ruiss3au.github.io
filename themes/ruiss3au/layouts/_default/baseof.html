@@ -32,7 +32,7 @@
   <meta name="twitter:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}">
   <meta name="twitter:description" content="{{ $desc }}">
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=glasses">
   {{- $graph := slice -}}
   {{- $main := dict -}}
   {{- if .IsHome -}}
@@ -90,7 +90,10 @@
 <body>
   <header class="site-header">
     <nav>
-      <a class="logo" href="/">ruiss3au's blog</a>
+      <a class="logo" href="/">
+        <img class="logo-icon" src="/images/ruisseau/glasses.svg" alt="" aria-hidden="true">
+        <span>ruiss3au's blog</span>
+      </a>
       <div class="nav-links">
         <a href="/posts/">posts</a>
         <a href="/3gpp/">3gpp</a>
