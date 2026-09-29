@@ -94,8 +94,10 @@ a:hover { background: var(--accent); color: var(--bg); }
   margin-top: 0.5rem;
 }
 
-.llm-badge img {
-  image-rendering: pixelated;
+.llm-badge-img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
 }
 
 .tags { margin-top: 0.5rem; }

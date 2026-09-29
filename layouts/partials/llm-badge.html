@@ -1,0 +1,15 @@
+{{- $labels := dict "generated" "LLM-generated" "assisted" "LLM-assisted" "none" "No LLM used" "unspecified" "LLM usage unspecified" -}}
+{{- $usage := "unspecified" -}}
+{{- if isset .Params "llm" -}}
+  {{- $value := .Params.llm -}}
+  {{- if eq (printf "%T" $value) "bool" -}}
+    {{- if not $value -}}
+      {{- $usage = "none" -}}
+    {{- end -}}
+  {{- else if and (eq (printf "%T" $value) "string") (isset $labels (printf "%v" $value)) -}}
+    {{- $usage = $value -}}
+  {{- else -}}
+    {{- warnf "Unknown llm value %v on %s; using unspecified" $value .RelPermalink -}}
+  {{- end -}}
+{{- end -}}
+<a href="{{ "/about/#llm-usage" | relURL }}"><img src="{{ printf "/badge-llm-%s.svg" $usage | relURL }}" alt="{{ index $labels $usage }}" class="llm-badge-img"></a>
