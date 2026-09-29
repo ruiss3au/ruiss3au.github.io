@@ -2,7 +2,11 @@
 <h1>{{ .Title }}</h1>
 {{ .Content }}
 <ul class="post-list">
-  {{ range .Pages }}
+  {{ $pages := .Pages }}
+  {{ if and .IsSection (eq .Section "posts") }}
+    {{ $pages = (where .Site.RegularPages "Section" "in" (slice "posts" "3gpp")).ByDate.Reverse }}
+  {{ end }}
+  {{ range $pages }}
   <li>
     <span class="post-date">{{ .Date.Format "2006-01-02" }}</span>
     <a href="{{ .RelPermalink }}">{{ .Title }}</a>
