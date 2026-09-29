@@ -5,6 +5,7 @@ date: 2026-08-24
 lastmod: 2026-09-28
 tags: ["3GPP", "SpaceX", "Starlink", "NTN", "Small Cells"]
 featured: true
+llm: generated
 ---
 
 Could a Starlink terminal become a cellular site? The attractive part of that

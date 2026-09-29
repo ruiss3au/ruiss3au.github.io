@@ -5,6 +5,7 @@ date: 2026-06-22
 lastmod: 2026-09-06
 tags: ["3GPP"]
 featured: false
+llm: generated
 ---
 
 RAN1#126 and RAN4#120 took place in Maastricht on 24-28 August 2026.

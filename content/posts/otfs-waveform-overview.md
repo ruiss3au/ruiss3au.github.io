@@ -4,6 +4,7 @@ description: "OTFS challenges OFDM as the 6G waveform. Why MRSS sidelined it for
 date: 2026-07-02
 tags: ["3GPP", "RAN1", "6G", "Rel-20"]
 featured: true
+llm: generated
 ---
 
 The 6G waveform debate looked settled at RAN1#122: the moderator summaries recorded

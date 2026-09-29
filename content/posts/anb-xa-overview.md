@@ -4,6 +4,7 @@ description: "RAN3 named the 6G base station aNB and its interface Xa. Tracking 
 date: 2026-07-01
 tags: ["3GPP", "RAN3", "6G", "Rel-20"]
 featured: true
+llm: generated
 ---
 
 RAN3 is building the 6G base station. It named the node **aNB**, the next

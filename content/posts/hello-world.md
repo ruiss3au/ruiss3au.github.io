@@ -4,6 +4,7 @@ description: "This is the start of something. A new blog covering 3GPP standardi
 date: 2026-05-31
 tags: ["meta"]
 featured: true
+llm: none
 ---
 
 This is the start of something. More to come.

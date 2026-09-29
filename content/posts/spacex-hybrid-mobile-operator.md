@@ -4,6 +4,7 @@ description: "How handset link budgets, beam capacity, and the EchoStar spectrum
 date: 2026-08-03
 tags: ["Starlink", "NTN", "D2D", "Mobile Networks", "Spectrum"]
 featured: true
+llm: generated
 ---
 
 SpaceX's agreement to acquire EchoStar spectrum creates the foundation for a

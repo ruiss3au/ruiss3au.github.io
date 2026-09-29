@@ -4,6 +4,7 @@ description: "A primer on the 3GPP RAN working groups, the transition from 5G-Ad
 date: 2026-06-05
 tags: ["3GPP"]
 featured: true
+llm: generated
 ---
 
 Mobile communications is one of my main areas of interest. 3GPP has established as the main standardization body for mobile communications and that is where the latest 5G standards have been defined.

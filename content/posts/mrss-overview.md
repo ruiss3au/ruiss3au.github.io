@@ -4,6 +4,7 @@ description: "How Multi-RAT Spectrum Sharing lets operators put 6G on existing 5
 date: 2026-07-01
 tags: ["3GPP", "RAN1", "RAN4", "6G", "Rel-20"]
 featured: true
+llm: generated
 ---
 
 The 6G Radio study asks a hard commercial question before it asks any technical
