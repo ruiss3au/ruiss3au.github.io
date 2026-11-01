@@ -3,3 +3,5 @@ public/
 resources/
 .DS_Store
 AGENTS.md
+
+__pycache__/
