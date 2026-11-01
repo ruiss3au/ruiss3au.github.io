@@ -1,0 +1,69 @@
+{
+  "claims": [
+    {
+      "claim": "RAN2 asks RAN4 to check measurement reporting for configured candidate secondary cells even when deactivated.",
+      "tdoc_id": "R4-2630011",
+      "passage": "1. Overall Description:\nDuring the discussion on LTM SCell activation, RAN2 understands the UE can send L1 measurement report for LTM candidate SCells as in the LTM configuration, whether the candidate happens to be a deactivated SCell or not has not impact on this. \nRAN2 would like to check whether it is OK with RAN4. \n2. Actions:\nTo RAN WG 4:\nRAN2 kindly request RAN4 to take the above information into account during the future work, and provide feedback, if any.\n"
+    },
+    {
+      "claim": "The request concerns secondary-cell activation during LTM under Release 20 mobility enhancements Phase 5.",
+      "tdoc_id": "R4-2630011",
+      "passage": "Title:\tLS on deactivated SCell measurement report in SCell activation during LTM\nResponse to:\t-\nRelease:\tRel-20\nWork Item:\tNR_Mob_Ph5\nSource:\tRAN2\nTo:\tRAN4\n"
+    },
+    {
+      "claim": "LTM means Layer 1/Layer 2 Triggered Mobility.",
+      "tdoc_id": "RP-260232",
+      "passage": "As part of Rel-18, enhanced mobility feature: Layer1/Layer2 Triggered Mobility (LTM) was introduced with the aim of reducing interruption time and latency from handovers due to mobility."
+    },
+    {
+      "claim": "RAN2 understands that UE measurement reporting for LTM candidate secondary cells follows the configuration regardless of deactivation.",
+      "tdoc_id": "R4-2630011",
+      "passage": "During the discussion on LTM SCell activation, RAN2 understands the UE can send L1 measurement report for LTM candidate SCells as in the LTM configuration, whether the candidate happens to be a deactivated SCell or not has not impact on this. \nRAN2 would like to check whether it is OK with RAN4. \n"
+    },
+    {
+      "claim": "RAN2 requests RAN4 feedback for future work; the liaison does not establish RAN4 agreement.",
+      "tdoc_id": "R4-2630011",
+      "passage": "RAN2 would like to check whether it is OK with RAN4. \n2. Actions:\nTo RAN WG 4:\nRAN2 kindly request RAN4 to take the above information into account during the future work, and provide feedback, if any.\n"
+    },
+    {
+      "claim": "RAN2 asks RAN1 and RAN4 to confirm reuse of relevant Release 18 and 19 LTM UE capabilities.",
+      "tdoc_id": "R4-2630009",
+      "passage": "The highlighted agreements above are relevant to RAN1/RAN4, as these agreements assume reuse of the relevant R18/R19 LTM UE capabilities defined by RAN1/RAN4. In addition, the candidate cell scope under these capabilities is extended to include both LTM candidate SpCell and LTM candidate SCell. For these reasons, RAN2 considers it necessary to align with RAN1/RAN4 regarding such reuse.\n2. Actions:\nTo RAN WG 1 and WG 4:\nRAN2 kindly request RAN1 and RAN4 to confirm the reuse of the relevant R18/R19 LTM UE capabilities as stated in the RAN2 agreements, and provide feedback if there is any concern.\n"
+    },
+    {
+      "claim": "RAN2 extends the candidate-cell scope to both candidate special cells and candidate secondary cells and identifies this as a reason for alignment on reuse.",
+      "tdoc_id": "R4-2630009",
+      "passage": "The highlighted agreements above are relevant to RAN1/RAN4, as these agreements assume reuse of the relevant R18/R19 LTM UE capabilities defined by RAN1/RAN4. In addition, the candidate cell scope under these capabilities is extended to include both LTM candidate SpCell and LTM candidate SCell. For these reasons, RAN2 considers it necessary to align with RAN1/RAN4 regarding such reuse.\n"
+    },
+    {
+      "claim": "Some other capabilities remain under discussion in RAN2 and will be finalized at future meetings.",
+      "tdoc_id": "R4-2630009",
+      "passage": "Some other capabilities remain under discussion in RAN2 and will be finalized in future meetings.\n"
+    },
+    {
+      "claim": "The open confirmation request asks whether RAN1 and RAN4 have concerns about reuse.",
+      "tdoc_id": "R4-2630009",
+      "passage": "RAN2 kindly request RAN1 and RAN4 to confirm the reuse of the relevant R18/R19 LTM UE capabilities as stated in the RAN2 agreements, and provide feedback if there is any concern.\n"
+    },
+    {
+      "claim": "The liaison originates from RAN2 in Jeju on 12-16 October 2026 and is incoming to RAN4 in Calgary on 16-20 November 2026; it does not establish November outcomes.",
+      "tdoc_id": "R4-2630009",
+      "passage": "3GPP TSG RAN WG4 Meeting #121\tR4-2630009\nCalgary, Canada, 16 - 20 November, 2026\n3GPP TSG-RAN WG2 Meeting #135bis\t\t\t\t\t\t\t\t\t\tR2-2607807\nJeju, Korea, 12th – 16th Oct., 2026\n"
+    },
+    {
+      "claim": "The liaison originates from RAN2 in Jeju on 12-16 October 2026 and is incoming to RAN4 in Calgary on 16-20 November 2026; it does not establish November outcomes.",
+      "tdoc_id": "R4-2630011",
+      "passage": "3GPP TSG RAN WG4 Meeting #121\tR4-2630011\nCalgary, Canada, 16 - 20 November, 2026\n3GPP TSG-RAN WG2 Meeting #135bis\t\t\t\t\t\t\t\t\t\tR2-2607816\nJeju, Korea, 12th – 16th Oct., 2026\n"
+    },
+    {
+      "claim": "The extracted capability-reuse liaison references detailed agreements that are absent between its introduction and following discussion.",
+      "tdoc_id": "R4-2630009",
+      "passage": "In the RAN2#135bis meeting, UE capabilities for Mobility Enh Ph5 were discussed and agreements were reached as follows:\nSome other capabilities remain under discussion in RAN2 and will be finalized in future meetings.\n"
+    }
+  ],
+  "coverage_gaps": [
+    "The extracted text of R4-2630009 omits the detailed capability agreements referenced in its prose.",
+    "No RAN4 response or November meeting outcome is established by these incoming RAN2 liaisons.",
+    "The supplied extraction is partial; this article makes no claim of complete meeting coverage."
+  ]
+}
