@@ -88,6 +88,7 @@ def evidence(database):
 def select_candidates(rows, state, existing, now):
     seen = state.get('seen', {})
     candidates = []
+    initial_since = timestamp(state.get('initial_since')) if state.get('initial_since') else timestamp(state.get('scan_cutoff', now.isoformat())) - dt.timedelta(days=7)
     for row in rows:
         key, fingerprint = row['key'], row['fingerprint']
         if seen.get(key) == fingerprint:
@@ -95,7 +96,7 @@ def select_candidates(rows, state, existing, now):
         # First-run bootstrap avoids republishing sources already used by the blog.
         if not state and row['tdoc_id'] in existing:
             continue
-        if not state and timestamp(row['latest']) < now - dt.timedelta(days=7):
+        if key not in seen and timestamp(row['latest']) < initial_since:
             continue
         candidates.append(row)
     return candidates
@@ -220,7 +221,7 @@ def run(repo, base, check_only=False, resume=None):
         candidates = select_candidates(rows, state, existing, now)
         if not state and not check_only:
             candidate_keys = {row['key'] for row in candidates}
-            state = {'schema_version': 2, 'seen': {row['key']: row['fingerprint'] for row in rows if row['key'] not in candidate_keys}}
+            state = {'schema_version': 2, 'initial_since': (now - dt.timedelta(days=7)).isoformat(), 'seen': {row['key']: row['fingerprint'] for row in rows if row['key'] not in candidate_keys}}
             write_json(baseline, state)
         with sqlite3.connect(database.as_uri() + '?mode=ro', uri=True) as conn:
             for item in candidates:
@@ -292,7 +293,7 @@ def run(repo, base, check_only=False, resume=None):
             if row['tdoc_id'] in used or row['key'] not in candidate_keys:
                 seen[row['key']] = row['fingerprint']
         write_json(work / STATE, {'schema_version': 2, 'scan_cutoff': now.isoformat(),
-                                  'seen': seen, 'last_article': article_rel})
+                                  'initial_since': state.get('initial_since', (timestamp(state.get('scan_cutoff', now.isoformat())) - dt.timedelta(days=7)).isoformat()), 'seen': seen, 'last_article': article_rel})
         command([str(repo.parent / 'hugo'), '--minify', '--noBuildLock',
                  '--destination', str(run_dir / 'preview')], cwd=work)
         git(work, 'diff', '--check')

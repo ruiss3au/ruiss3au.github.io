@@ -32,6 +32,11 @@ class EvidenceTests(unittest.TestCase):
         state = {'seen': {'2': 'old', '3': 'same'}}
         self.assertEqual([x['key'] for x in r.select_candidates(rows, state, set(), NOW)], ['1', '2'])
 
+    def test_new_source_scope_does_not_backfill_old_material(self):
+        state = {'seen': {}, 'initial_since': (NOW - dt.timedelta(days=14)).isoformat()}
+        self.assertEqual(r.select_candidates([row(days=30)], state, set(), NOW), [])
+        self.assertEqual(len(r.select_candidates([row(days=10)], state, set(), NOW)), 1)
+
     def test_snapshot_and_partial_failure_diagnostics(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / 'source.db'
