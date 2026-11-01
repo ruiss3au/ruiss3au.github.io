@@ -43,6 +43,9 @@ class EvidenceTests(unittest.TestCase):
                 CREATE TABLE crawl_log(source,source_key,last_fetched_at,status);
                 CREATE TABLE meeting_analysis_status(status);
                 INSERT INTO meetings VALUES(1,'RAN4','121');
+                INSERT INTO meetings VALUES(2,'Plenary','111');
+                INSERT INTO tdocs VALUES(2,'RP-260232','Mobility','RAN2','https://www.3gpp.org/context.zip',2);
+                INSERT INTO tdoc_content VALUES(2,'Layer 1 Layer 2 Triggered Mobility definition','2026-11-06T23:00:00Z');
                 INSERT INTO tdocs VALUES(1,'R1-2609005','Reply','RAN4','https://www.3gpp.org/test.zip',1);
                 INSERT INTO tdoc_content VALUES(1,'Verified raw evidence','2026-11-06T23:00:00Z');
                 INSERT INTO crawl_log VALUES('tdoc-content','Rel-20','2026-11-06','Extracted 45, failed 222');
@@ -50,10 +53,10 @@ class EvidenceTests(unittest.TestCase):
             target = Path(tmp) / 'snapshot.db'
             r.snapshot(path, target)
             rows, health = r.evidence(target)
-            self.assertEqual(len(rows), 1)
+            self.assertEqual(len(rows), 2)
             self.assertEqual(health['pending_analysis_batches'], 1)
             self.assertIn('222', health['crawl_log'][0]['status'])
-            self.assertEqual(len(r.select_candidates(rows, {}, set(), NOW)), 1)
+            self.assertEqual(len(r.select_candidates(rows, {}, set(), NOW)), 2)
 
 
 class ValidationTests(unittest.TestCase):
@@ -209,6 +212,24 @@ class PublishingTests(unittest.TestCase):
         self.assertEqual(r.git(repo, 'rev-parse', 'HEAD'), initial)
         self.assertNotIn('1', json.loads((logs / 'bootstrap-state.json').read_text())['seen'])
         self.assertEqual(json.loads((logs / 'latest-status.json').read_text())['status'], 'no_news')
+
+    def test_resume_revalidates_failed_draft_without_model_call(self):
+        repo, logs, initial, code = self.exercise(build_ok=False)
+        self.assertEqual(code, 1)
+        saved = json.loads((logs / 'latest-status.json').read_text())['run_directory']
+        original_command = r.command
+        source = row()
+        source['latest'] = dt.datetime.now(dt.timezone.utc).isoformat()
+        def no_model(args, **kwargs):
+            if 'codex' in args:
+                raise AssertionError('Resume must not invoke a model')
+            if args[0] == str(repo.parent / 'hugo'):
+                return subprocess.CompletedProcess(args, 0)
+            return original_command(args, **kwargs)
+        with patch.object(r, 'command', side_effect=no_model), patch.object(r, 'snapshot', side_effect=lambda source, dest: sqlite3.connect(dest).close()), patch.object(r, 'evidence', return_value=([source], {})):
+            self.assertEqual(r.run(repo, logs, resume=saved), 0)
+        self.assertNotEqual(r.git(repo, 'rev-parse', 'HEAD'), initial)
+        self.assertEqual(json.loads((logs / 'latest-status.json').read_text())['status'], 'committed')
 
 
 if __name__ == '__main__':

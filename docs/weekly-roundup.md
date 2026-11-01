@@ -29,7 +29,7 @@ Status lives in `~/.local/state/ruisseau-roundup/latest-status.json` (or beneath
 - `committed`: inspect `git show`, the JSON claim ledger and the preview. Push `main` yourself to publish.
 - `already_prepared`, `no_candidates`, `no_news`: successful skip with a recorded reason. No duplicate or empty commit.
 - `deferred`: clean or commit your checkout before rerunning. User changes are never reset or stashed.
-- `failed`: inspect the reason and run logs. Failed drafts remain in their isolated worktree; `main` and committed coverage stay unchanged. Fix the cause and rerun. Authentication and sandbox failures are reported, never bypassed.
+- `failed`: inspect the reason and run logs. Failed drafts remain in their isolated worktree; `main` and committed coverage stay unchanged. Fix the cause and rerun. To reuse a completed editorial draft after a validation or build failure, run `bash scripts/weekly-roundup.sh --resume <timestamped-run-directory>`. This copies only its article, ledger and result into a fresh worktree and revalidates them against a new snapshot without another model call. Authentication and sandbox failures are reported, never bypassed.
 - `needs_review`: a validated commit is recorded in `pending-commit.json`. Once your checkout is clean, rerunning fast-forwards it if possible without another model call. If `main` diverged, review and merge the recorded branch manually, then rerun to acknowledge recovery. Do not delete a pending branch before recovery.
 - `recovered`: an earlier validated commit was recovered; no text was regenerated.
 
@@ -37,4 +37,4 @@ Retained failed worktrees can be inspected with `git worktree list`. Remove one 
 
 ## Verification
 
-`python3 -m unittest discover -s tests -v` runs hermetic tests with temporary databases and Git repositories. Coverage includes partial extraction and pending analysis, first-run exclusions, delayed/changed evidence, exact evidence checks, dirty checkouts, failed builds, publication commits, duplicate runs, no-news retention, edits during drafting, and validated-commit recovery. LLM output is stubbed; test runs do not call a provider.
+`python3 -m unittest discover -s tests -v` runs hermetic tests with temporary databases and Git repositories. Coverage includes partial extraction and pending analysis, first-run exclusions, delayed/changed evidence, exact evidence checks, dirty checkouts, failed builds, publication commits, duplicate runs, no-news retention, edits during drafting, validated-commit recovery, and resuming a failed build without another model call. LLM output is stubbed; test runs do not call a provider.

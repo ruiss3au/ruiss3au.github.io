@@ -66,7 +66,7 @@ def evidence(database):
                 JOIN meetings m ON m.id=t.meeting_id
                 WHERE trim(COALESCE(c.raw_text,'')) != '' '''):
             item = dict(row)
-            if item['wg_name'] not in ('RAN', 'RAN1', 'RAN4'):
+            if item['wg_name'] not in ('RAN', 'RAN1', 'RAN4') and not (item['wg_name'] == 'Plenary' and item['tdoc_id'].startswith('RP-')):
                 continue
             if not item['tdoc_url'] or not item['tdoc_url'].startswith('https://www.3gpp.org/'):
                 continue
@@ -154,11 +154,22 @@ def validate(work, article, ledger, candidates, result, context=None):
     return sorted(set(doc for doc, _ in citations))
 
 
-def run(repo, base, check_only=False):
+def run(repo, base, check_only=False, resume=None):
     now = dt.datetime.now(UTC)
     saturday = now.astimezone(ZoneInfo('Europe/Berlin')).date()
     saturday -= dt.timedelta(days=(saturday.weekday() - 5) % 7)
     label = saturday.isoformat()
+    saved_draft = None
+    if resume:
+        resume = Path(resume).resolve()
+        if not resume.is_relative_to(base.resolve()) or not (resume / 'result.json').is_file():
+            raise ValueError('Resume requires a saved editorial result within the state directory')
+        draft_paths = [p for p in git(resume / 'worktree', 'ls-files', '--others', '--exclude-standard').splitlines()
+                       if re.fullmatch(r'content/posts/3gpp-weekly-\d{4}-\d{2}-\d{2}\.md', p)]
+        if len(draft_paths) != 1:
+            raise ValueError('Resume requires exactly one uncommitted roundup draft')
+        saved_draft = resume / 'worktree' / draft_paths[0]
+        label = saved_draft.stem.removeprefix('3gpp-weekly-')
     run_dir = base / now.strftime('%Y%m%dT%H%M%S.%fZ')
     run_dir.mkdir(parents=True)
     report = {'started_at': now.isoformat(), 'status': 'running', 'run_directory': str(run_dir)}
@@ -177,6 +188,9 @@ def run(repo, base, check_only=False):
         pending = base / 'pending-commit.json'
         if pending.exists():
             saved = json.loads(pending.read_text())
+            if check_only:
+                status('recovery_pending', **saved)
+                return 0
             commit = saved['commit']
             if git(repo, 'rev-parse', saved['branch']) != commit:
                 raise ValueError('Recovery branch changed; inspect pending-commit.json')
@@ -227,6 +241,12 @@ def run(repo, base, check_only=False):
         ledger_rel = f'docs/weekly-roundup-ledgers/{label}.json'
         article, ledger = work / article_rel, work / ledger_rel
         result_path = run_dir / 'result.json'
+        if resume:
+            article.parent.mkdir(parents=True, exist_ok=True)
+            ledger.parent.mkdir(parents=True, exist_ok=True)
+            article.write_text(saved_draft.read_text())
+            ledger.write_text((resume / 'worktree' / ledger_rel).read_text())
+            result_path.write_text((resume / 'result.json').read_text())
         prompt = (repo / 'scripts/weekly-roundup-prompt.md').read_text()
         prompt += '\n\nRun parameters (absolute paths):\n' + json.dumps({
             'date': label, 'database': str(database), 'candidates': str(run_dir / 'candidates.json'),
@@ -236,11 +256,12 @@ def run(repo, base, check_only=False):
         # AGENTS.md is locally ignored; carry its editorial rules into the isolated run.
         prompt += '\nPublication repository editorial rules:\n' + (repo / 'AGENTS.md').read_text()
         status('drafting', candidates=len(candidates), branch=branch)
-        with (run_dir / 'codex.log').open('w') as log:
-            command(['timeout', '--kill-after=30s', '3h', 'codex', 'exec', '-C', str(work), '--add-dir', str(run_dir),
-                     '-s', 'workspace-write', '-c', 'approval_policy="never"',
-                     '-o', str(run_dir / 'summary.txt'), '-'], input=prompt,
-                    timeout=10900, stdout=log, stderr=subprocess.STDOUT)
+        if not resume:
+            with (run_dir / 'codex.log').open('w') as log:
+                command(['timeout', '--kill-after=30s', '3h', 'codex', 'exec', '-C', str(work), '--add-dir', str(run_dir),
+                         '-s', 'workspace-write', '-c', 'approval_policy="never"',
+                         '-o', str(run_dir / 'summary.txt'), '-'], input=prompt,
+                        timeout=10900, stdout=log, stderr=subprocess.STDOUT)
         if git(work, 'rev-parse', 'HEAD') != head:
             raise ValueError('Editorial process committed unexpectedly; main left unchanged')
         result = json.loads(result_path.read_text())
@@ -298,7 +319,9 @@ def run(repo, base, check_only=False):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--check', action='store_true', help='Snapshot and select evidence without invoking Codex')
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument('--check', action='store_true', help='Snapshot and select evidence without invoking Codex')
+    group.add_argument('--resume', metavar='RUN_DIRECTORY', help='Revalidate a saved draft without another model call')
     args = parser.parse_args()
     repo = Path(__file__).resolve().parents[1]
     base = Path(os.environ.get('XDG_STATE_HOME', str(Path.home() / '.local/state'))) / 'ruisseau-roundup'
@@ -313,7 +336,7 @@ def main():
         with (base / 'runner.log').open('a', buffering=1) as log:
             os.dup2(log.fileno(), 1)
             os.dup2(log.fileno(), 2)
-            return run(repo, base, args.check)
+            return run(repo, base, args.check, args.resume)
 
 
 if __name__ == '__main__':
