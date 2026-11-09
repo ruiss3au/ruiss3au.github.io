@@ -22,6 +22,16 @@ Codex drafts in a dedicated Git worktree. It cannot decide which files to commit
 
 The runner creates a local commit after validation. It advances `main` only if the checkout is still clean and its original HEAD is unchanged. If you edit during the run, your work stays intact and the validated commit remains on its review branch. No pushes or deployments occur.
 
+## Editorial publication threshold
+
+Saturday schedules research; it does not promise a post. The writer compares promising technical questions, researches the earlier baseline and related documents, and chooses an angle with a defensible argument. Procedural requests and proposal summaries alone should be held, even when new and accurately cited. Sources can accumulate across weeks without being consumed by a skip.
+
+A ready article must explain a mechanism, a tradeoff, a conditional practical consequence and the evidence that could change its argument. The source ledger now includes an `editorial` assessment recording the question, answer, mechanism, tradeoff, consequence, novelty, uncertainty, verified source IDs and an exact excerpt of the reasoning in the published prose. At least two distinct cited primary documents must support that assessment. A table of proposed values is not enough; the prose must explain the assumptions behind the alternatives.
+
+The runner rejects missing assessments, unverified assessment sources and excerpts absent from the article. These are auditable requirements, not a machine test for interesting writing: field completion, citation totals and length do not prove insight. The prompt requires a reader-focused editorial revision and explicitly permits `no_news` for weak angles. Typical developed analyses may need 1,200-2,000 words; there is no hard length rule and padding is prohibited. You still review the argument before pushing.
+
+Old saved drafts without this assessment cannot be committed through `--resume` until editorially reworked. Already committed articles are not automatically rewritten or withdrawn by this change.
+
 ## Logs and recovery
 
 Status lives in `~/.local/state/ruisseau-roundup/latest-status.json` (or beneath `$XDG_STATE_HOME`). `runner.log` captures runner errors. Each timestamped run directory contains coverage diagnostics, selected evidence, `codex.log`, the editorial summary and, when drafted, a preview. Database snapshots are deleted after the run. Model execution is limited to three hours; validation and Git commands also have timeouts.
@@ -37,4 +47,4 @@ Retained failed worktrees can be inspected with `git worktree list`. Remove one 
 
 ## Verification
 
-`python3 -m unittest discover -s tests -v` runs hermetic tests with temporary databases and Git repositories. Coverage includes partial extraction and pending analysis, first-run exclusions, delayed/changed evidence, exact evidence checks, dirty checkouts, failed builds, publication commits, duplicate runs, no-news retention, edits during drafting, validated-commit recovery, and resuming a failed build without another model call. LLM output is stubbed; test runs do not call a provider.
+`python3 -m unittest discover -s tests -v` runs hermetic tests with temporary databases and Git repositories. Coverage includes partial extraction and pending analysis, first-run exclusions, delayed/changed evidence, exact evidence checks, dirty checkouts, failed builds, publication commits, duplicate runs, no-news retention, edits during drafting, validated-commit recovery, and resuming a failed build without another model call. Additional cases reject a verified summary without an editorial assessment, a single-source argument, missing practical consequences and reasoning that exists only in the private ledger. LLM output is stubbed; test runs do not call a provider.

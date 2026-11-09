@@ -23,6 +23,27 @@ def row(key='1', doc='R1-2609005', fingerprint='new', days=1):
             'raw_text': PASSAGE}
 
 
+ANALYSIS = 'Receiver performance remains unresolved, so the transmitter results alone cannot establish the net gain.'
+
+
+def source_ledger():
+    return {
+        'editorial': {
+            'decision': 'publish', 'question': 'Does the evaluation establish a net gain?',
+            'answer': 'Receiver effects still need to be evaluated.',
+            'mechanism': 'A transmit power gain can be offset by a receiver penalty.',
+            'tradeoff': 'Transmitter output and receiver performance require joint evaluation.',
+            'consequence': 'Waveform selection needs a net-gain comparison.',
+            'novelty': 'Connects the new request to the earlier evaluation baseline.',
+            'uncertainty': 'The receiver evaluation could change the result.',
+            'source_ids': ['R1-2609005', 'R1-2609006'],
+            'analysis_excerpt': ANALYSIS,
+        },
+        'claims': [{'claim': 'Receiver evaluation requested', 'tdoc_id': doc, 'passage': PASSAGE}
+                   for doc in ('R1-2609005', 'R1-2609006')],
+    }
+
+
 class EvidenceTests(unittest.TestCase):
     def test_bootstrap_excludes_published_and_old_evidence(self):
         self.assertEqual(r.select_candidates([row(), row('2', 'R1-2609006', days=20)], {}, {'R1-2609005'}, NOW), [])
@@ -72,14 +93,16 @@ class ValidationTests(unittest.TestCase):
         self.article = self.work / 'article.md'
         self.ledger = self.work / 'ledger.json'
         self.source = row()
+        self.context = row('2', 'R1-2609006')
         self.article.write_text('---\ntitle: Radio study\ndescription: Receiver work\ndate: 2026-11-07\ntags: [3GPP]\ndraft: false\nfeatured: true\nllm: generated\n---\nRAN4 requested receiver evaluation [R1-2609005](' + self.source['tdoc_url'] + ').\n')
-        self.ledger.write_text(json.dumps({'claims': [{'claim': 'RAN4 requested receiver evaluation', 'tdoc_id': 'R1-2609005', 'passage': PASSAGE}]}))
+        self.article.write_text(self.article.read_text() + ANALYSIS + ' [R1-2609006](' + self.context['tdoc_url'] + ').\n')
+        self.ledger.write_text(json.dumps(source_ledger()))
 
     def validate(self):
-        return r.validate(self.work, self.article, self.ledger, [self.source], {'status': 'ready'})
+        return r.validate(self.work, self.article, self.ledger, [self.source, self.context], {'status': 'ready'})
 
     def test_verified_citation(self):
-        self.assertEqual(self.validate(), ['R1-2609005'])
+        self.assertEqual(self.validate(), ['R1-2609005', 'R1-2609006'])
 
     def test_wrong_url_rejected(self):
         self.article.write_text(self.article.read_text().replace('/ftp/test/', '/wrong/'))
@@ -93,7 +116,7 @@ class ValidationTests(unittest.TestCase):
 
     def test_old_context_alone_cannot_make_new_post(self):
         with self.assertRaisesRegex(ValueError, 'no new candidate'):
-            r.validate(self.work, self.article, self.ledger, [row('2', 'R1-2609006')], {'status': 'ready'}, [self.source])
+            r.validate(self.work, self.article, self.ledger, [row('3', 'R1-2609007')], {'status': 'ready'}, [self.source, self.context])
 
     def test_no_news_must_not_leave_article(self):
         with self.assertRaisesRegex(ValueError, 'unexpectedly includes'):
@@ -102,6 +125,35 @@ class ValidationTests(unittest.TestCase):
     def test_non_verbatim_quote_rejected(self):
         self.article.write_text(self.article.read_text() + '\n“Agreed and adopted by all.”\n')
         with self.assertRaisesRegex(ValueError, 'quotation'):
+            self.validate()
+
+
+    def test_verified_summary_without_editorial_argument_rejected(self):
+        data = source_ledger()
+        del data['editorial']
+        self.ledger.write_text(json.dumps(data))
+        with self.assertRaisesRegex(ValueError, 'editorial publish decision'):
+            self.validate()
+
+    def test_single_source_argument_rejected(self):
+        data = source_ledger()
+        data['editorial']['source_ids'] = ['R1-2609005']
+        self.ledger.write_text(json.dumps(data))
+        with self.assertRaisesRegex(ValueError, 'two distinct verified'):
+            self.validate()
+
+    def test_private_analysis_missing_from_article_rejected(self):
+        data = source_ledger()
+        data['editorial']['analysis_excerpt'] = 'A conclusion that appears only in the private memo.'
+        self.ledger.write_text(json.dumps(data))
+        with self.assertRaisesRegex(ValueError, 'excerpt must appear'):
+            self.validate()
+
+    def test_missing_consequence_rejected(self):
+        data = source_ledger()
+        data['editorial']['consequence'] = ''
+        self.ledger.write_text(json.dumps(data))
+        with self.assertRaisesRegex(ValueError, 'Missing editorial reasoning: consequence'):
             self.validate()
 
 
@@ -140,7 +192,7 @@ class RunnerTests(unittest.TestCase):
 
 
 class PublishingTests(unittest.TestCase):
-    def exercise(self, build_ok=True, change_main=False, no_news=False):
+    def exercise(self, build_ok=True, change_main=False, no_news=False, summary_only=False):
         tmp = tempfile.TemporaryDirectory()
         self.addCleanup(tmp.cleanup)
         root = Path(tmp.name)
@@ -158,6 +210,8 @@ class PublishingTests(unittest.TestCase):
         original_command = r.command
         source = row()
         source['latest'] = dt.datetime.now(dt.timezone.utc).isoformat()
+        context_source = row('2', 'R1-2609006')
+        context_source['latest'] = source['latest']
         def fake_command(args, **kwargs):
             if 'codex' in args and 'exec' in args:
                 prompt = kwargs['input']
@@ -169,7 +223,11 @@ class PublishingTests(unittest.TestCase):
                 article = work / params['article']
                 article.parent.mkdir(parents=True, exist_ok=True)
                 article.write_text('---\ntitle: Radio study\ndescription: Receiver work\ndate: ' + params['date'] + '\ntags: [3GPP]\ndraft: false\nfeatured: true\nllm: generated\n---\nRAN4 requested receiver evaluation [R1-2609005](' + source['tdoc_url'] + ').\n')
-                r.write_json(work / params['ledger'], {'claims': [{'claim': 'RAN4 requested receiver evaluation', 'tdoc_id': source['tdoc_id'], 'passage': PASSAGE}]})
+                article.write_text(article.read_text() + ANALYSIS + ' [R1-2609006](' + row('2', 'R1-2609006')['tdoc_url'] + ').\n')
+                ledger = source_ledger()
+                if summary_only:
+                    ledger.pop('editorial')
+                r.write_json(work / params['ledger'], ledger)
                 r.write_json(Path(params['result']), {'status': 'ready'})
                 return subprocess.CompletedProcess(args, 0)
             if args[0] == str(root / 'hugo'):
@@ -179,7 +237,7 @@ class PublishingTests(unittest.TestCase):
                     (repo / 'user-draft.md').write_text('User work created during drafting')
                 return subprocess.CompletedProcess(args, 0)
             return original_command(args, **kwargs)
-        with patch.object(r, 'command', side_effect=fake_command), patch.object(r, 'snapshot', side_effect=lambda source, dest: sqlite3.connect(dest).close()), patch.object(r, 'evidence', return_value=([source], {'partial_failures': 222})):
+        with patch.object(r, 'command', side_effect=fake_command), patch.object(r, 'snapshot', side_effect=lambda source, dest: sqlite3.connect(dest).close()), patch.object(r, 'evidence', return_value=([source, context_source], {'partial_failures': 222})):
             code = r.run(repo, logs)
         return repo, logs, initial, code
 
@@ -193,6 +251,14 @@ class PublishingTests(unittest.TestCase):
         with patch.object(r, 'snapshot', side_effect=AssertionError('must not rescan same week')):
             self.assertEqual(r.run(repo, logs), 0)
         self.assertEqual(json.loads((logs / 'latest-status.json').read_text())['status'], 'already_prepared')
+
+    def test_summary_without_editorial_case_cannot_commit(self):
+        repo, logs, initial, code = self.exercise(summary_only=True)
+        self.assertEqual(code, 1)
+        self.assertEqual(r.git(repo, 'rev-parse', 'HEAD'), initial)
+        status = json.loads((logs / 'latest-status.json').read_text())
+        self.assertIn('editorial publish decision', status['reason'])
+        self.assertFalse(r.git(repo, 'status', '--porcelain'))
 
     def test_failed_build_preserves_draft_without_committing_main(self):
         repo, logs, initial, code = self.exercise(build_ok=False)
@@ -225,13 +291,15 @@ class PublishingTests(unittest.TestCase):
         original_command = r.command
         source = row()
         source['latest'] = dt.datetime.now(dt.timezone.utc).isoformat()
+        context_source = row('2', 'R1-2609006')
+        context_source['latest'] = source['latest']
         def no_model(args, **kwargs):
             if 'codex' in args:
                 raise AssertionError('Resume must not invoke a model')
             if args[0] == str(repo.parent / 'hugo'):
                 return subprocess.CompletedProcess(args, 0)
             return original_command(args, **kwargs)
-        with patch.object(r, 'command', side_effect=no_model), patch.object(r, 'snapshot', side_effect=lambda source, dest: sqlite3.connect(dest).close()), patch.object(r, 'evidence', return_value=([source], {})):
+        with patch.object(r, 'command', side_effect=no_model), patch.object(r, 'snapshot', side_effect=lambda source, dest: sqlite3.connect(dest).close()), patch.object(r, 'evidence', return_value=([source, context_source], {})):
             self.assertEqual(r.run(repo, logs, resume=saved), 0)
         self.assertNotEqual(r.git(repo, 'rev-parse', 'HEAD'), initial)
         self.assertEqual(json.loads((logs / 'latest-status.json').read_text())['status'], 'committed')

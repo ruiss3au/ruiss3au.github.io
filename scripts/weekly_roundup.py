@@ -147,6 +147,23 @@ def validate(work, article, ledger, candidates, result, context=None):
     for doc, url in citations:
         if doc not in sources or sources[doc]['tdoc_url'].strip() != url or doc not in supported:
             raise ValueError(f'Unverified citation: {doc}')
+    # Require an auditable editorial argument, not merely valid citations.
+    # These checks establish provenance/completeness; they cannot judge prose quality.
+    editorial = verified.get('editorial', {})
+    if not isinstance(editorial, dict) or editorial.get('decision') != 'publish':
+        raise ValueError('Source ledger requires an editorial publish decision')
+    for field in ('question', 'answer', 'mechanism', 'tradeoff', 'consequence', 'novelty', 'uncertainty'):
+        if not isinstance(editorial.get(field), str) or not editorial[field].strip():
+            raise ValueError(f'Missing editorial reasoning: {field}')
+    cited_ids = {doc for doc, _ in citations}
+    analysis_sources = editorial.get('source_ids', [])
+    if not isinstance(analysis_sources, list) or not all(isinstance(doc, str) for doc in analysis_sources):
+        raise ValueError('Invalid editorial source IDs')
+    if len(set(analysis_sources)) < 2 or not set(analysis_sources) <= (cited_ids & supported):
+        raise ValueError('Editorial argument requires two distinct verified cited sources')
+    excerpt = editorial.get('analysis_excerpt', '')
+    if not isinstance(excerpt, str) or not excerpt.strip() or excerpt not in body:
+        raise ValueError('Editorial analysis excerpt must appear verbatim in the article')
     # Quotes are optional; if used they must be an exact contiguous source substring.
     for quote in re.findall(r'“([^”]+)”|"([^"\n]+)"', body):
         value = next(part for part in quote if part)
