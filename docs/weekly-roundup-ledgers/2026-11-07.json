@@ -1,64 +1,254 @@
 {
+  "editorial": {
+    "question": "Which transmitter EVM allowance gives a useful 1024-QAM uplink advantage after practical hardware and receiver constraints?",
+    "answer": "A looser allowance helps only if recovered power compensates its link-performance penalty; the 7 GHz submissions need aligned hardware assumptions and success criteria.",
+    "mechanism": "An EVM allowance changes the amplifier error budget and back-off, while distortion changes the SNR required for useful throughput. Oscillator error and receiver configuration affect that balance.",
+    "tradeoff": "One error limit simplifies MPR sets and testing; frequency-dependent allowances can accommodate different amplifier/oscillator budgets. The published evaluation metrics also differ.",
+    "consequence": "An evaluator needs matched receiver/impairment conditions and practical output power, not just a comparison of proposed percentages.",
+    "novelty": "Identifies the metric mismatch and missing common hardware budget, and connects the proposals to LG receiver-dependency evidence.",
+    "uncertainty": "Referenced simulation reports not independently reviewed; extracted Ericsson setup/result channel labels differ and evaluation-set membership is unresolved.",
+    "source_ids": [
+      "R4-2630294",
+      "R4-2631347",
+      "R4-2605706"
+    ],
+    "analysis_excerpt": "If the stricter limit delivers a useful throughput advantage at the output power that a practical 7 GHz transmitter can sustain, the single-limit approach avoids an additional requirements split. If its amplifier and oscillator budget forces enough power reduction to erase that advantage, an allowance for 7 GHz hardware has a stronger case. The common comparison still needed is useful throughput at a practical transmit-power operating point, with matched receiver and impairment assumptions.",
+    "decision": "publish"
+  },
   "claims": [
     {
-      "claim": "Samsung proposes transmitter error vector magnitude (EVM) limits of 2.5% at 4 GHz and 2.8% at 7 GHz for fixed wireless access (FWA) uplink 1024-point quadrature amplitude modulation (1024-QAM).",
+      "claim": "A transmitter can send a cleaner radio signal by reducing its output power. It can also send a stronger signal with more distortion. The 6G fixed-wireless uplink question is which choice leaves the base station with more useful throughput. Samsung and Ericsson's November submissions propose different error limits at 7 GHz, but their more important disagreement concerns how to judge that balance.",
       "tdoc_id": "R4-2630294",
-      "passage": "Based on the above, 2.5% for 4GHz and 2.8% for 7GHz should be agreed as the Tx EVM for FWA UL 1024QAM, including LO phase noise, IQ imbalance and carrier leakage. Both values are proven in the RAN4 LLS, can be supported with a practical back-off, and are aligned with the BS Tx EVM for DL 1024QAM.\nProposal 1: The Tx EVM for FWA 4GHz UL 1024QAM is 2.5%, including LO phase noise, IQ imbalance and carrier leakage.\nProposal 2: The Tx EVM for FWA 7GHz UL 1024QAM is 2.8%, including LO phase noise, IQ imbalance and carrier leakage.\n"
+      "passage": "For the Tx EVM, the following agreements were made for 4GHz and 7GHz in RAN4#120bis [2]:"
     },
     {
-      "claim": "Ericsson instead proposes 2.5% at both frequencies. Its submission puts a competing option before Radio Access Network Working Group 4 (RAN4): one transmitter-error limit across both frequencies.",
+      "claim": "A transmitter can send a cleaner radio signal by reducing its output power. It can also send a stronger signal with more distortion. The 6G fixed-wireless uplink question is which choice leaves the base station with more useful throughput. Samsung and Ericsson's November submissions propose different error limits at 7 GHz, but their more important disagreement concerns how to judge that balance.",
+      "tdoc_id": "R4-2630294",
+      "passage": "In RAN4#120bis, it was agreed that IQ imbalance and carrier leakage are considered as part of the Tx EVM requirement, without dedicated requirements [2]. For the down-selection, two aspects need to be considered together. The first is the gain of UL 1024QAM shown in the RAN4 LLS, i.e., the SNR (or SINR) at which UL 1024QAM starts to outperform UL 256QAM (crossover SNR). The second is the output power cost of the Tx EVM. Although the MPR is postponed to the WI phase, the Tx EVM agreed in the SI sets the PA linearity needed and hence the MPR to be specified later. As shown in [5], only the PA part of the Tx EVM changes with output power, by about 2dB for each 1dB of back-off, while the other parts, e.g., LO phase noise, do not. In other words, a tighter PA contribution costs about 1dB of back-off per 2dB of EVM, and a relaxed PA contribution saves back-off at the same rate. Therefore, each Tx EVM candidate should be judged by comparing the change in the crossover SNR with the change in back-off."
+    },
+    {
+      "claim": "A transmitter can send a cleaner radio signal by reducing its output power. It can also send a stronger signal with more distortion. The 6G fixed-wireless uplink question is which choice leaves the base station with more useful throughput. Samsung and Ericsson's November submissions propose different error limits at 7 GHz, but their more important disagreement concerns how to judge that balance.",
       "tdoc_id": "R4-2631347",
-      "passage": "Based on the discussion in the previous sections we propose the following:\nProposal 1\tAdopt a UE Tx EVM of 2.5% for UL 1024QAM for FWA for both 4 GHz and 7 GHz.\nProposal 2\tUL 1024QAM for FWA is supported without a restriction on the number of MIMO layers.\n"
+      "passage": "9-4.0 dB above UL 256QAM MCS22, at 23.7-29.2 dB in TDL-A for Rank 1 and for Rank 2 with 8Rx. 2.5% Tx EVM supports UL 1024QAM at both 4 GHz and 7 GHz.\nSingle Tx EVM value and MPR"
     },
     {
-      "claim": "Samsung\u2019s paper is a discussion submission for Calgary on 16-20 November 2026.",
+      "claim": "Samsung proposes 2.5% transmitter error vector magnitude at 4 GHz and 2.8% at 7 GHz. Ericsson proposes 2.5% for both. These are discussion papers for the 16-20 November Calgary meeting of Radio Access Network Working Group 4 (RAN4). They give enough evidence to examine the competing choices, but do not establish an adopted 6G requirement.",
       "tdoc_id": "R4-2630294",
-      "passage": "3GPP TSG-RAN WG4 Meeting #121\t\t\t\t\t\t\t\t\t\t\t\t\t\t    \tR4-2630294\nCalgary, Canada, 16th \u2013 20th November, 2026\nAgenda item:\t\t\t8.2.3.1\nSource:\tSamsung\nTitle:\tDiscussion on Tx EVM for UL 1024QAM\nDocument for:\tDiscussion\n"
+      "passage": "Proposal 1: The Tx EVM for FWA 4GHz UL 1024QAM is 2.5%, including LO phase noise, IQ imbalance and carrier leakage."
     },
     {
-      "claim": "Ericsson\u2019s paper is also a discussion submission for that meeting. These are proposals for the forthcoming meeting, not agreed November outcomes.",
+      "claim": "Samsung proposes 2.5% transmitter error vector magnitude at 4 GHz and 2.8% at 7 GHz. Ericsson proposes 2.5% for both. These are discussion papers for the 16-20 November Calgary meeting of Radio Access Network Working Group 4 (RAN4). They give enough evidence to examine the competing choices, but do not establish an adopted 6G requirement.",
+      "tdoc_id": "R4-2630294",
+      "passage": "Proposal 2: The Tx EVM for FWA 7GHz UL 1024QAM is 2.8%, including LO phase noise, IQ imbalance and carrier leakage."
+    },
+    {
+      "claim": "Samsung proposes 2.5% transmitter error vector magnitude at 4 GHz and 2.8% at 7 GHz. Ericsson proposes 2.5% for both. These are discussion papers for the 16-20 November Calgary meeting of Radio Access Network Working Group 4 (RAN4). They give enough evidence to examine the competing choices, but do not establish an adopted 6G requirement.",
       "tdoc_id": "R4-2631347",
-      "passage": "3GPP TSG-RAN WG4 Meeting #121\tR4-2631347\nCalgary, Canada, Nov. 16\u201320, 2026\nAgenda Item:\t8.2.3.1\nSource:\tEricsson\nTitle:\tDiscussion on EVM for UL 1024QAM for 6G\nDocument for:\tDiscussion\n"
+      "passage": "Adopt a UE Tx EVM of 2.5% for UL 1024QAM for FWA for both 4 GHz and 7 GHz."
     },
     {
-      "claim": "Samsung compares the signal-to-noise ratio (SNR) at which 1024-QAM begins to outperform 256-QAM with the output power recovered by relaxing transmitter EVM. It argues that each candidate limit should be judged by comparing the change in crossover SNR with the change in power back-off.",
+      "claim": "Samsung proposes 2.5% transmitter error vector magnitude at 4 GHz and 2.8% at 7 GHz. Ericsson proposes 2.5% for both. These are discussion papers for the 16-20 November Calgary meeting of Radio Access Network Working Group 4 (RAN4). They give enough evidence to examine the competing choices, but do not establish an adopted 6G requirement.",
       "tdoc_id": "R4-2630294",
-      "passage": "For the down-selection, two aspects need to be considered together. The first is the gain of UL 1024QAM shown in the RAN4 LLS, i.e., the SNR (or SINR) at which UL 1024QAM starts to outperform UL 256QAM (crossover SNR). The second is the output power cost of the Tx EVM. Although the MPR is postponed to the WI phase, the Tx EVM agreed in the SI sets the PA linearity needed and hence the MPR to be specified later. As shown in [5], only the PA part of the Tx EVM changes with output power, by about 2dB for each 1dB of back-off, while the other parts, e.g., LO phase noise, do not. In other words, a tighter PA contribution costs about 1dB of back-off per 2dB of EVM, and a relaxed PA contribution saves back-off at the same rate. Therefore, each Tx EVM candidate should be judged by comparing the change in the crossover SNR with the change in back-off.\n"
+      "passage": "Calgary, Canada, 16th – 20th November, 2026"
     },
     {
-      "claim": "For 4 GHz, Samsung reports that relaxing transmitter EVM from 2.5% to 2.8% raises the crossover SNR by about 3 decibels in the single-layer cases it discusses. Under its assumed distortion budget, it estimates only about 0.9 decibels of recovered output power, and argues that the relaxation reduces the net gain.",
-      "tdoc_id": "R4-2630294",
-      "passage": "For 4GHz, the averaged LLS results from companies in RAN4#119 are shown in Figure 1 [3]. Between 2.5%+2.5% and 2.8%+2.5% (Tx EVM + Rx EVM), only the Tx EVM is changed, so this pair directly shows the impact of the Tx EVM. For all Rank 1 cases, the crossover SNR increases by about 3dB (2.7dB to 3.7dB) when the Tx EVM is relaxed from 2.5% to 2.8%, e.g., from 23.7dB to 26.7dB for MCS23 in TDL-D. For Rank 2 in TDL-A, the crossover SNR increases from about 31dB to about 46dB, which is beyond the practical SNR range of FWA. A similar trend is shown in [4], where the crossover SNR for MCS24 increases by 1.5dB to 2.8dB from 2.5%+2.5% to 3%+2.3%. In other words, at 4GHz the crossover SNR is very sensitive to the Tx EVM, and the gain of UL 1024QAM is clearly achieved within a practical SNR range with 2.5% Tx EVM.\nFigure 1: Averaged crossover SINR of UL 1024QAM over UL 256QAM (MCS22), 4GHz, 1T4R [3]\nOn the other hand, the back-off saved by relaxing the 4GHz Tx EVM from 2.5% to 2.8% is small. Assuming about 1% each for the transceiver non-linearity, LO phase noise and IQ imbalance at 4GHz, the PA contribution is about 1.8% for 2.5% Tx EVM and grows only to about 2.2% for 2.8% Tx EVM, i.e., by about 1.7dB. At the rate of about 1dB of back-off per 2dB of EVM, this saves only about 0.9dB of back-off. A 0.9dB higher output power can give at most a 0.9dB higher SNR at the BS, which is much smaller than the about 3dB increase of the crossover SNR. Therefore, relaxing the 4GHz Tx EVM from 2.5% to 2.8% reduces the net gain of UL 1024QAM rather than making UL 1024QAM easier to use.\n"
-    },
-    {
-      "claim": "At 7 GHz, Samsung argues for 2.8% to accommodate larger power-amplifier and local-oscillator contributions while preserving more modulation gain than 3%. Its calculation assumes about 1.2% local-oscillator phase noise.",
-      "tdoc_id": "R4-2630294",
-      "passage": "At 7GHz, both the PA and LO contributions are larger than at 4GHz. PA gain and linearity generally degrade at higher frequency, so more PA distortion is expected at the same output power, and LO phase noise also increases with the carrier frequency. Assuming about 1.2% LO phase noise at 7GHz, compared with about 1% at 4GHz, and the same transceiver non-linearity and IQ imbalance as at 4GHz, a 2.5% Tx EVM at 7GHz would require the PA contribution to be reduced to about 1.7%. This is even tighter than about 1.8% at 4GHz despite the worse PA linearity, and costs about 1dB more back-off than 2.8% Tx EVM. With 2.8% Tx EVM, the PA contribution is about 2.1%, so the higher LO contribution is covered and some margin is also given to the PA. In other words, 2.8% for 7GHz covers the higher PA and LO contributions, while it keeps the MPR at about the same level as at 4GHz. A further relaxation to 3% saves only about 0.5dB of back-off, since the PA contribution grows only to about 2.36%, i.e., by about 1dB. Even if a larger LO contribution of about 1.5% is assumed at 7GHz, the back-off saved by the relaxation to 3% is only about 0.6dB. This is smaller than the about 1dB or more increase of the crossover SNR. Therefore, 2.8% is a reasonable Tx EVM for 7GHz.\n"
-    },
-    {
-      "claim": "Ericsson argues that one EVM limit avoids separate maximum power reduction (MPR) sets and a frequency boundary. It says a frequency-dependent limit would require two MPR sets and corresponding conformance tests, whereas one limit would allow a single set per device power class and waveform.",
+      "claim": "Samsung proposes 2.5% transmitter error vector magnitude at 4 GHz and 2.8% at 7 GHz. Ericsson proposes 2.5% for both. These are discussion papers for the 16-20 November Calgary meeting of Radio Access Network Working Group 4 (RAN4). They give enough evidence to examine the competing choices, but do not establish an adopted 6G requirement.",
       "tdoc_id": "R4-2631347",
-      "passage": "In NR, the UE MPR is specified per power class and waveform and does not depend on the operating band. For higher-order modulation, the MPR is driven by the Tx EVM requirement. A frequency-dependent UE Tx EVM, e.g. following the BS DL 1024QAM split at 4.2 GHz in TS 38.104 [8], would require two sets of MPR for UL 1024QAM and the corresponding conformance tests. It would also require a frequency boundary: with 4.2 GHz, the 4400-4800 MHz range studied in TR 38.922 would fall in a different category than the 4 GHz evaluations. A single value avoids these issues and results in one MPR set per power class and waveform for all bands. Furthermore, four sources show that the MPR increase for 2.5% Tx EVM is limited to 0.5-1.5 dB, whether compared with the existing NR 256QAM MPR or with a more relaxed 1024QAM Tx EVM [3]-[6].\nNR UE MPR is specified per power class and waveform, independent of the operating band. A single UL 1024QAM Tx EVM for 4 GHz and 7 GHz results in a single MPR set per power class and waveform, whereas a frequency-dependent Tx EVM requires two MPR sets and a frequency boundary.\n"
+      "passage": "AN WG4 Meeting #121\tR4-2631347\nCalgary, Canada, Nov. 16–20, 2026\nAgenda Item:\t8.2.3.1\nSource:\tEricsson\nTitle:\tDiscussion on EVM for UL 1024QAM for 6G\nDocument for:\tDiscussion"
     },
     {
-      "claim": "Ericsson also proposes leaving the number of multiple-input multiple-output (MIMO) layers unrestricted. It argues that link adaptation selects transmission rank and modulation together, so multilayer transmission need not be scheduled when the channel or base-station configuration cannot support it.",
+      "claim": "For this decision, the distortion budget includes more than the power amplifier. Samsung discusses amplifier distortion, transceiver nonlinearity, local-oscillator phase noise and in-phase/quadrature imbalance. Its argument is that reducing output power mainly improves the amplifier contribution; it does not remove the other errors at the same rate. A looser overall EVM limit therefore cannot be translated directly into an equally large improvement in received signal quality.",
+      "tdoc_id": "R4-2630294",
+      "passage": "In RAN4#120bis, it was agreed that IQ imbalance and carrier leakage are considered as part of the Tx EVM requirement, without dedicated requirements [2]. For the down-selection, two aspects need to be considered together. The first is the gain of UL 1024QAM shown in the RAN4 LLS, i.e., the SNR (or SINR) at which UL 1024QAM starts to outperform UL 256QAM (crossover SNR). The second is the output power cost of the Tx EVM. Although the MPR is postponed to the WI phase, the Tx EVM agreed in the SI sets the PA linearity needed and hence the MPR to be specified later. As shown in [5], only the PA part of the Tx EVM changes with output power, by about 2dB for each 1dB of back-off, while the other parts, e.g., LO phase noise, do not. In other words, a tighter PA contribution costs about 1dB of back-off per 2dB of EVM, and a relaxed PA contribution saves back-off at the same rate. Therefore, each Tx EVM candidate should be judged by comparing the change in the crossover SNR with the change in back-off."
+    },
+    {
+      "claim": "For this decision, the distortion budget includes more than the power amplifier. Samsung discusses amplifier distortion, transceiver nonlinearity, local-oscillator phase noise and in-phase/quadrature imbalance. Its argument is that reducing output power mainly improves the amplifier contribution; it does not remove the other errors at the same rate. A looser overall EVM limit therefore cannot be translated directly into an equally large improvement in received signal quality.",
+      "tdoc_id": "R4-2630294",
+      "passage": "On the other hand, the back-off saved by relaxing the 4GHz Tx EVM from 2.5% to 2.8% is small. Assuming about 1% each for the transceiver non-linearity, LO phase noise and IQ imbalance at 4GHz, the PA contribution is about 1.8% for 2.5% Tx EVM and grows only to about 2.2% for 2.8% Tx EVM, i.e., by about 1.7dB. At the rate of about 1dB of back-off per 2dB of EVM, this saves only about 0.9dB of back-off. A 0.9dB higher output power can give at most a 0.9dB higher SNR at the BS, which is much smaller than the about 3dB increase of the crossover SNR. Therefore, relaxing the 4GHz Tx EVM from 2.5% to 2.8% reduces the net gain of UL 1024QAM rather than making UL 1024QAM easier to use."
+    },
+    {
+      "claim": "Power back-off is the reduction in amplifier operating power used to meet the signal-quality constraint. The requirements discussion expresses this power cost through maximum power reduction (MPR). Samsung argues that choosing EVM during the study already constrains the amplifier linearity and the MPR that will be specified later. Deferring the final power requirement does not make the current distortion decision independent of power.",
+      "tdoc_id": "R4-2630294",
+      "passage": "In RAN4#120bis, it was agreed that IQ imbalance and carrier leakage are considered as part of the Tx EVM requirement, without dedicated requirements [2]. For the down-selection, two aspects need to be considered together. The first is the gain of UL 1024QAM shown in the RAN4 LLS, i.e., the SNR (or SINR) at which UL 1024QAM starts to outperform UL 256QAM (crossover SNR). The second is the output power cost of the Tx EVM. Although the MPR is postponed to the WI phase, the Tx EVM agreed in the SI sets the PA linearity needed and hence the MPR to be specified later. As shown in [5], only the PA part of the Tx EVM changes with output power, by about 2dB for each 1dB of back-off, while the other parts, e.g., LO phase noise, do not. In other words, a tighter PA contribution costs about 1dB of back-off per 2dB of EVM, and a relaxed PA contribution saves back-off at the same rate. Therefore, each Tx EVM candidate should be judged by comparing the change in the crossover SNR with the change in back-off."
+    },
+    {
+      "claim": "Power back-off is the reduction in amplifier operating power used to meet the signal-quality constraint. The requirements discussion expresses this power cost through maximum power reduction (MPR). Samsung argues that choosing EVM during the study already constrains the amplifier linearity and the MPR that will be specified later. Deferring the final power requirement does not make the current distortion decision independent of power.",
+      "tdoc_id": "R4-2630294",
+      "passage": "The remaining question is whether 2.5% can be supported with a practical MPR. In [5], the PC2 MPR was evaluated with 2.5% Tx EVM over the full RB allocation space. The resulting MPR is 8dB for CP-OFDM and 5dB for DFT-s-OFDM. This means that the PC2 MPR evaluated with 2.5% Tx EVM without DPD is only 0.5dB to 1.5dB larger than the existing NR 256QAM MPR. The exact MPR will be decided in the WI phase. However, this result shows that 2.5% does not need DPD and can be supported with an MPR close to the 256QAM level. Therefore, for the feasibility conclusion of the SI, 2.5% Tx EVM, which is proven in the LLS, can be agreed for 4GHz."
+    },
+    {
+      "claim": "Samsung uses crossover signal-to-noise ratio (SNR) as its link-performance test: the point where uplink 1024-QAM starts to deliver more throughput than 256-QAM. A higher crossover means the link needs better conditions before the higher-order modulation earns its place. In the single-layer results Samsung discusses at 4 GHz, relaxing transmitter EVM from 2.5% to 2.8% raises that crossover by roughly 3 decibels.",
+      "tdoc_id": "R4-2630294",
+      "passage": "In RAN4#120bis, it was agreed that IQ imbalance and carrier leakage are considered as part of the Tx EVM requirement, without dedicated requirements [2]. For the down-selection, two aspects need to be considered together. The first is the gain of UL 1024QAM shown in the RAN4 LLS, i.e., the SNR (or SINR) at which UL 1024QAM starts to outperform UL 256QAM (crossover SNR). The second is the output power cost of the Tx EVM. Although the MPR is postponed to the WI phase, the Tx EVM agreed in the SI sets the PA linearity needed and hence the MPR to be specified later. As shown in [5], only the PA part of the Tx EVM changes with output power, by about 2dB for each 1dB of back-off, while the other parts, e.g., LO phase noise, do not. In other words, a tighter PA contribution costs about 1dB of back-off per 2dB of EVM, and a relaxed PA contribution saves back-off at the same rate. Therefore, each Tx EVM candidate should be judged by comparing the change in the crossover SNR with the change in back-off."
+    },
+    {
+      "claim": "Samsung uses crossover signal-to-noise ratio (SNR) as its link-performance test: the point where uplink 1024-QAM starts to deliver more throughput than 256-QAM. A higher crossover means the link needs better conditions before the higher-order modulation earns its place. In the single-layer results Samsung discusses at 4 GHz, relaxing transmitter EVM from 2.5% to 2.8% raises that crossover by roughly 3 decibels.",
+      "tdoc_id": "R4-2630294",
+      "passage": "For 4GHz, the averaged LLS results from companies in RAN4#119 are shown in Figure 1 [3]. Between 2.5%+2.5% and 2.8%+2.5% (Tx EVM + Rx EVM), only the Tx EVM is changed, so this pair directly shows the impact of the Tx EVM. For all Rank 1 cases, the crossover SNR increases by about 3dB (2.7dB to 3.7dB) when the Tx EVM is relaxed from 2.5% to 2.8%, e.g., from 23.7dB to 26.7dB for MCS23 in TDL-D. For Rank 2 in TDL-A, the crossover SNR increases from about 31dB to about 46dB, which is beyond the practical SNR range of FWA. A similar trend is shown in [4], where the crossover SNR for MCS24 increases by 1.5dB to 2.8dB from 2.5%+2.5% to 3%+2.3%. In other words, at 4GHz the crossover SNR is very sensitive to the Tx EVM, and the gain of UL 1024QAM is clearly achieved within a practical SNR range with 2.5% Tx EVM."
+    },
+    {
+      "claim": "Its hardware calculation gives only about 0.9 decibels of recovered output power for the same relaxation. Using Samsung's estimates, the roughly 3-decibel increase in required SNR exceeds the potential 0.9-decibel received-SNR benefit by about 2.1 decibels. This subtraction illustrates the disadvantage under those assumptions; it is not a universal margin for every channel or transmitter.",
+      "tdoc_id": "R4-2630294",
+      "passage": "On the other hand, the back-off saved by relaxing the 4GHz Tx EVM from 2.5% to 2.8% is small. Assuming about 1% each for the transceiver non-linearity, LO phase noise and IQ imbalance at 4GHz, the PA contribution is about 1.8% for 2.5% Tx EVM and grows only to about 2.2% for 2.8% Tx EVM, i.e., by about 1.7dB. At the rate of about 1dB of back-off per 2dB of EVM, this saves only about 0.9dB of back-off. A 0.9dB higher output power can give at most a 0.9dB higher SNR at the BS, which is much smaller than the about 3dB increase of the crossover SNR. Therefore, relaxing the 4GHz Tx EVM from 2.5% to 2.8% reduces the net gain of UL 1024QAM rather than making UL 1024QAM easier to use."
+    },
+    {
+      "claim": "That example explains why allowing a less accurate transmitter can make a higher modulation order harder to exploit. The link gets somewhat more power, but its throughput advantage begins at a substantially better channel condition. Both November papers support 2.5% at 4 GHz. Their proposed limits diverge at 7 GHz.",
+      "tdoc_id": "R4-2630294",
+      "passage": "On the other hand, the back-off saved by relaxing the 4GHz Tx EVM from 2.5% to 2.8% is small. Assuming about 1% each for the transceiver non-linearity, LO phase noise and IQ imbalance at 4GHz, the PA contribution is about 1.8% for 2.5% Tx EVM and grows only to about 2.2% for 2.8% Tx EVM, i.e., by about 1.7dB. At the rate of about 1dB of back-off per 2dB of EVM, this saves only about 0.9dB of back-off. A 0.9dB higher output power can give at most a 0.9dB higher SNR at the BS, which is much smaller than the about 3dB increase of the crossover SNR. Therefore, relaxing the 4GHz Tx EVM from 2.5% to 2.8% reduces the net gain of UL 1024QAM rather than making UL 1024QAM easier to use."
+    },
+    {
+      "claim": "That example explains why allowing a less accurate transmitter can make a higher modulation order harder to exploit. The link gets somewhat more power, but its throughput advantage begins at a substantially better channel condition. Both November papers support 2.5% at 4 GHz. Their proposed limits diverge at 7 GHz.",
+      "tdoc_id": "R4-2630294",
+      "passage": "Proposal 1: The Tx EVM for FWA 4GHz UL 1024QAM is 2.5%, including LO phase noise, IQ imbalance and carrier leakage."
+    },
+    {
+      "claim": "That example explains why allowing a less accurate transmitter can make a higher modulation order harder to exploit. The link gets somewhat more power, but its throughput advantage begins at a substantially better channel condition. Both November papers support 2.5% at 4 GHz. Their proposed limits diverge at 7 GHz.",
       "tdoc_id": "R4-2631347",
-      "passage": "Furthermore, the aNB selects UL rank and MCS together through link adaptation, therefore multi-layer is simply not scheduled when channel condition or the BS configuration do not support it. Therefore, it is proposed not to restrict MIMO layers to UL 1024QAM.\nUL 1024QAM for FWA is supported without a restriction on the number of MIMO layers.\n"
+      "passage": "Adopt a UE Tx EVM of 2.5% for UL 1024QAM for FWA for both 4 GHz and 7 GHz."
     },
     {
-      "claim": "Samsung says that choosing transmitter EVM during the study sets the power-amplifier linearity needed and hence constrains the power reduction to be specified later.",
+      "claim": "Samsung assumes a larger local-oscillator phase-noise contribution at 7 GHz: about 1.2%, compared with about 1% at 4 GHz. In its calculation, holding overall EVM at 2.5% leaves an amplifier contribution of about 1.7%, tighter than its roughly 1.8% allowance at 4 GHz. It estimates about one decibel of additional back-off compared with a 2.8% limit. Its proposed 2.8% consequently makes room for both oscillator and amplifier impairments.",
       "tdoc_id": "R4-2630294",
-      "passage": "Although the MPR is postponed to the WI phase, the Tx EVM agreed in the SI sets the PA linearity needed and hence the MPR to be specified later. "
+      "passage": "At 7GHz, both the PA and LO contributions are larger than at 4GHz. PA gain and linearity generally degrade at higher frequency, so more PA distortion is expected at the same output power, and LO phase noise also increases with the carrier frequency. Assuming about 1.2% LO phase noise at 7GHz, compared with about 1% at 4GHz, and the same transceiver non-linearity and IQ imbalance as at 4GHz, a 2.5% Tx EVM at 7GHz would require the PA contribution to be reduced to about 1.7%. This is even tighter than about 1.8% at 4GHz despite the worse PA linearity, and costs about 1dB more back-off than 2.8% Tx EVM. With 2.8% Tx EVM, the PA contribution is about 2.1%, so the higher LO contribution is covered and some margin is also given to the PA. In other words, 2.8% for 7GHz covers the higher PA and LO contributions, while it keeps the MPR at about the same level as at 4GHz. A further relaxation to 3% saves only about 0.5dB of back-off, since the PA contribution grows only to about 2.36%, i.e., by about 1dB. Even if a larger LO contribution of about 1.5% is assumed at 7GHz, the back-off saved by the relaxation to 3% is only about 0.6dB. This is smaller than the about 1dB or more increase of the crossover SNR. Therefore, 2.8% is a reasonable Tx EVM for 7GHz."
     },
     {
-      "claim": "The exact MPR, Samsung says, will be decided in the work-item phase.",
+      "claim": "Ericsson supplies a different part of the evidence. It reports a 7 GHz evaluation with 2.5% transmitter and receiver EVM, explicitly without phase noise. It says the higher modulation reaches 90% of its maximum throughput in the configurations identified in its text. That establishes a reported link-level result under the stated simulation assumptions. It does not, by itself, close Samsung's question about output power with a practical oscillator and amplifier budget.",
+      "tdoc_id": "R4-2631347",
+      "passage": "Table 1: Required SNR (dB) at 90% of maximum throughput, 7 GHz, Tx/Rx EVM 2.5%/2.5%, without phase noise [2]."
+    },
+    {
+      "claim": "Ericsson supplies a different part of the evidence. It reports a 7 GHz evaluation with 2.5% transmitter and receiver EVM, explicitly without phase noise. It says the higher modulation reaches 90% of its maximum throughput in the configurations identified in its text. That establishes a reported link-level result under the stated simulation assumptions. It does not, by itself, close Samsung's question about output power with a practical oscillator and amplifier budget.",
+      "tdoc_id": "R4-2631347",
+      "passage": "At 7 GHz with 2.5%/2.5%, MCS24 reaches 90% of its maximum throughput 2.9-4.0 dB above MCS22 for all Rank 1 configurations and for Rank 2 with 8Rx, i.e. at 21.7-24.8 dB in AWGN and 23.7-29.2 dB in TDL-A. With 4Rx, Rank 2 operates at MCS23 in TDL-A. These results show that 2.5% has been evaluated at 7 GHz and that UL 1024QAM MCS24 is reachable with 2.5% Tx EVM."
+    },
+    {
+      "claim": "Ericsson supplies a different part of the evidence. It reports a 7 GHz evaluation with 2.5% transmitter and receiver EVM, explicitly without phase noise. It says the higher modulation reaches 90% of its maximum throughput in the configurations identified in its text. That establishes a reported link-level result under the stated simulation assumptions. It does not, by itself, close Samsung's question about output power with a practical oscillator and amplifier budget.",
       "tdoc_id": "R4-2630294",
-      "passage": "The exact MPR will be decided in the WI phase. "
+      "passage": "At 7GHz, both the PA and LO contributions are larger than at 4GHz. PA gain and linearity generally degrade at higher frequency, so more PA distortion is expected at the same output power, and LO phase noise also increases with the carrier frequency. Assuming about 1.2% LO phase noise at 7GHz, compared with about 1% at 4GHz, and the same transceiver non-linearity and IQ imbalance as at 4GHz, a 2.5% Tx EVM at 7GHz would require the PA contribution to be reduced to about 1.7%. This is even tighter than about 1.8% at 4GHz despite the worse PA linearity, and costs about 1dB more back-off than 2.8% Tx EVM. With 2.8% Tx EVM, the PA contribution is about 2.1%, so the higher LO contribution is covered and some margin is also given to the PA. In other words, 2.8% for 7GHz covers the higher PA and LO contributions, while it keeps the MPR at about the same level as at 4GHz. A further relaxation to 3% saves only about 0.5dB of back-off, since the PA contribution grows only to about 2.36%, i.e., by about 1dB. Even if a larger LO contribution of about 1.5% is assumed at 7GHz, the back-off saved by the relaxation to 3% is only about 0.6dB. This is smaller than the about 1dB or more increase of the crossover SNR. Therefore, 2.8% is a reasonable Tx EVM for 7GHz."
+    },
+    {
+      "claim": "There is also a difference in the success criterion. Samsung asks when 1024-QAM first outperforms 256-QAM. Ericsson reports SNR at 90% of each modulation-and-coding scheme's maximum throughput. Crossing an existing mode and approaching a mode's own maximum answer different questions. Their SNR figures cannot be treated as competing estimates of one identical threshold.",
+      "tdoc_id": "R4-2630294",
+      "passage": "In RAN4#120bis, it was agreed that IQ imbalance and carrier leakage are considered as part of the Tx EVM requirement, without dedicated requirements [2]. For the down-selection, two aspects need to be considered together. The first is the gain of UL 1024QAM shown in the RAN4 LLS, i.e., the SNR (or SINR) at which UL 1024QAM starts to outperform UL 256QAM (crossover SNR). The second is the output power cost of the Tx EVM. Although the MPR is postponed to the WI phase, the Tx EVM agreed in the SI sets the PA linearity needed and hence the MPR to be specified later. As shown in [5], only the PA part of the Tx EVM changes with output power, by about 2dB for each 1dB of back-off, while the other parts, e.g., LO phase noise, do not. In other words, a tighter PA contribution costs about 1dB of back-off per 2dB of EVM, and a relaxed PA contribution saves back-off at the same rate. Therefore, each Tx EVM candidate should be judged by comparing the change in the crossover SNR with the change in back-off."
+    },
+    {
+      "claim": "There is also a difference in the success criterion. Samsung asks when 1024-QAM first outperforms 256-QAM. Ericsson reports SNR at 90% of each modulation-and-coding scheme's maximum throughput. Crossing an existing mode and approaching a mode's own maximum answer different questions. Their SNR figures cannot be treated as competing estimates of one identical threshold.",
+      "tdoc_id": "R4-2631347",
+      "passage": "Our RAN4#118bis evaluation was carried out at 7 GHz (100 MHz CBW, 30 kHz SCS, AWGN and TDL-D 10 ns with 5 Hz Doppler, practical channel estimation, MMSE receiver, HARQ retransmission enabled). Table 1 summarizes the SNR required to reach 90% of the maximum throughput for the 4Rx and 8Rx configurations."
+    },
+    {
+      "claim": "The evaluation record also needs reconciliation. Samsung says 2.5% was absent from the RAN4 7 GHz link-level campaign; Ericsson says its earlier 7 GHz evaluation did use it. Those statements may concern different evaluation sets. Ericsson's extracted text also names one channel model in its setup description and another in its numerical discussion. The original simulation material would need checking before aligning individual result points across the submissions.",
+      "tdoc_id": "R4-2630294",
+      "passage": "For 7GHz, 2.5% was not included in the RAN4 LLS campaign [2], so there is no LLS basis to select it in the SI. Between the evaluated values, i.e., 2.8% and 3%, the LLS shows a clear loss with 3%. As shown in Figure 2, the averaged crossover SNR with 3%+2.5% is higher than that of all the 2.8% Tx EVM cases by up to about 4dB, and no crossover is shown for MCS24 in TDL-A with 3%+2.5% [3]. In [4], the crossover SNR also increases by around 1dB for TDL-D and by more than 1dB for TDL-A in most cases, from 2.8%+2.3% to 3%+2.5%. This means that 2.8% is the lowest value proven in the LLS for 7GHz, and relaxing it to 3% reduces the gain of UL 1024QAM."
+    },
+    {
+      "claim": "The evaluation record also needs reconciliation. Samsung says 2.5% was absent from the RAN4 7 GHz link-level campaign; Ericsson says its earlier 7 GHz evaluation did use it. Those statements may concern different evaluation sets. Ericsson's extracted text also names one channel model in its setup description and another in its numerical discussion. The original simulation material would need checking before aligning individual result points across the submissions.",
+      "tdoc_id": "R4-2631347",
+      "passage": "Our RAN4#118bis evaluation was carried out at 7 GHz (100 MHz CBW, 30 kHz SCS, AWGN and TDL-D 10 ns with 5 Hz Doppler, practical channel estimation, MMSE receiver, HARQ retransmission enabled). Table 1 summarizes the SNR required to reach 90% of the maximum throughput for the 4Rx and 8Rx configurations."
+    },
+    {
+      "claim": "The evaluation record also needs reconciliation. Samsung says 2.5% was absent from the RAN4 7 GHz link-level campaign; Ericsson says its earlier 7 GHz evaluation did use it. Those statements may concern different evaluation sets. Ericsson's extracted text also names one channel model in its setup description and another in its numerical discussion. The original simulation material would need checking before aligning individual result points across the submissions.",
+      "tdoc_id": "R4-2631347",
+      "passage": "At 7 GHz with 2.5%/2.5%, MCS24 reaches 90% of its maximum throughput 2.9-4.0 dB above MCS22 for all Rank 1 configurations and for Rank 2 with 8Rx, i.e. at 21.7-24.8 dB in AWGN and 23.7-29.2 dB in TDL-A. With 4Rx, Rank 2 operates at MCS23 in TDL-A. These results show that 2.5% has been evaluated at 7 GHz and that UL 1024QAM MCS24 is reachable with 2.5% Tx EVM."
+    },
+    {
+      "claim": "Ericsson's case for 2.5% is also a requirements-design argument. It says a frequency-dependent limit would require separate MPR sets, corresponding conformance tests and a boundary between frequency categories. It points to the difficulty of applying a 4.2 GHz boundary to the 4400-4800 MHz range. One EVM value would permit one MPR set per device power class and waveform across bands.",
+      "tdoc_id": "R4-2631347",
+      "passage": "In NR, the UE MPR is specified per power class and waveform and does not depend on the operating band. For higher-order modulation, the MPR is driven by the Tx EVM requirement. A frequency-dependent UE Tx EVM, e.g. following the BS DL 1024QAM split at 4.2 GHz in TS 38.104 [8], would require two sets of MPR for UL 1024QAM and the corresponding conformance tests. It would also require a frequency boundary: with 4.2 GHz, the 4400-4800 MHz range studied in TR 38.922 would fall in a different category than the 4 GHz evaluations. A single value avoids these issues and results in one MPR set per power class and waveform for all bands. Furthermore, four sources show that the MPR increase for 2.5% Tx EVM is limited to 0.5-1.5 dB, whether compared with the existing NR 256QAM MPR or with a more relaxed 1024QAM Tx EVM [3]-[6]."
+    },
+    {
+      "claim": "This creates a tradeoff between a uniform requirements structure and the allowance for frequency-dependent hardware impairments. Ericsson argues that the added power reduction for 2.5% is limited; Samsung estimates a different cost when it budgets the 7 GHz amplifier and oscillator contributions. The available text supports comparing those assumptions, rather than declaring either percentage intrinsically more efficient.",
+      "tdoc_id": "R4-2631347",
+      "passage": "With 2.5% Tx EVM, the MPR for UL 1024QAM is 0.5-1.5 dB larger than the NR UL 256QAM MPR and 0.5 dB larger than with 2.8% Tx EVM."
+    },
+    {
+      "claim": "This creates a tradeoff between a uniform requirements structure and the allowance for frequency-dependent hardware impairments. Ericsson argues that the added power reduction for 2.5% is limited; Samsung estimates a different cost when it budgets the 7 GHz amplifier and oscillator contributions. The available text supports comparing those assumptions, rather than declaring either percentage intrinsically more efficient.",
+      "tdoc_id": "R4-2630294",
+      "passage": "At 7GHz, both the PA and LO contributions are larger than at 4GHz. PA gain and linearity generally degrade at higher frequency, so more PA distortion is expected at the same output power, and LO phase noise also increases with the carrier frequency. Assuming about 1.2% LO phase noise at 7GHz, compared with about 1% at 4GHz, and the same transceiver non-linearity and IQ imbalance as at 4GHz, a 2.5% Tx EVM at 7GHz would require the PA contribution to be reduced to about 1.7%. This is even tighter than about 1.8% at 4GHz despite the worse PA linearity, and costs about 1dB more back-off than 2.8% Tx EVM. With 2.8% Tx EVM, the PA contribution is about 2.1%, so the higher LO contribution is covered and some margin is also given to the PA. In other words, 2.8% for 7GHz covers the higher PA and LO contributions, while it keeps the MPR at about the same level as at 4GHz. A further relaxation to 3% saves only about 0.5dB of back-off, since the PA contribution grows only to about 2.36%, i.e., by about 1dB. Even if a larger LO contribution of about 1.5% is assumed at 7GHz, the back-off saved by the relaxation to 3% is only about 0.6dB. This is smaller than the about 1dB or more increase of the crossover SNR. Therefore, 2.8% is a reasonable Tx EVM for 7GHz."
+    },
+    {
+      "claim": "Earlier evidence from LG Electronics makes clear why transmitter EVM cannot stand in for the entire link. Its May RAN4#119 contribution reports that additional receive antennas lower crossover SNR in its evaluated configurations, while some four-layer cases never exceed 256-QAM throughput within the simulated range. LG proposes feasibility for one- and two-layer operation with enough receive antennas. These are conditional results, not a general guarantee for every base station.",
+      "tdoc_id": "R4-2605706",
+      "passage": "Configurations with a larger number of receive antennas (1x8, 2x8, 4x8) demonstrate crossover at 3–7 dB lower SNR than their counterparts with fewer Rx antennas (1x4, 2x4, 4x4), owing to additional diversity/array gain."
+    },
+    {
+      "claim": "Earlier evidence from LG Electronics makes clear why transmitter EVM cannot stand in for the entire link. Its May RAN4#119 contribution reports that additional receive antennas lower crossover SNR in its evaluated configurations, while some four-layer cases never exceed 256-QAM throughput within the simulated range. LG proposes feasibility for one- and two-layer operation with enough receive antennas. These are conditional results, not a general guarantee for every base station.",
+      "tdoc_id": "R4-2605706",
+      "passage": "The 4x4 rank 4 configuration is the most challenging — in the majority of cases the crossover is not achieved (marked as \"–\"), particularly for TDL-A and MCS 24, indicating that with 4 spatial layers the inter-layer interference prevents 1024QAM from outperforming 256QAM within the simulated SNR range."
+    },
+    {
+      "claim": "Earlier evidence from LG Electronics makes clear why transmitter EVM cannot stand in for the entire link. Its May RAN4#119 contribution reports that additional receive antennas lower crossover SNR in its evaluated configurations, while some four-layer cases never exceed 256-QAM throughput within the simulated range. LG proposes feasibility for one- and two-layer operation with enough receive antennas. These are conditional results, not a general guarantee for every base station.",
+      "tdoc_id": "R4-2605706",
+      "passage": "Proposal 5: UL 1K QAM is feasible for rank 1 and rank 2 configurations with enough receive antennas (≥8 Rx) in aspects of LLS results."
+    },
+    {
+      "claim": "Ericsson uses the receiver dependency to argue against a fixed layer restriction. It says the network selects transmission rank and modulation together, and can refrain from scheduling multiple layers when the channel or base-station configuration cannot support them. Its proposal shifts that choice into link adaptation. The practical comparison must therefore state the receiver configuration and number of layers as well as transmitter error and power.",
+      "tdoc_id": "R4-2631347",
+      "passage": "There has been some discussion regarding the restriction of MIMO layers for the UL 1024QAM for FWA. Our earlier evaluations show that with a larger BS receiver configuration, such as 8Rx, Rank2 UL 1024QAM gains over 256QAM at an SNR comparable to Rank1 with 4Rx. If Rank1 UL1024QAM is considered beneficial, multi-layer transmission with a suitable BS receiver gives significantly higher throughput at a similar operating point."
+    },
+    {
+      "claim": "Ericsson uses the receiver dependency to argue against a fixed layer restriction. It says the network selects transmission rank and modulation together, and can refrain from scheduling multiple layers when the channel or base-station configuration cannot support them. Its proposal shifts that choice into link adaptation. The practical comparison must therefore state the receiver configuration and number of layers as well as transmitter error and power.",
+      "tdoc_id": "R4-2631347",
+      "passage": "Furthermore, the aNB selects UL rank and MCS together through link adaptation, therefore multi-layer is simply not scheduled when channel condition or the BS configuration do not support it. Therefore, it is proposed not to restrict MIMO layers to UL 1024QAM."
+    },
+    {
+      "claim": "If the stricter limit delivers a useful throughput advantage at the output power that a practical 7 GHz transmitter can sustain, the single-limit approach avoids an additional requirements split. If its amplifier and oscillator budget forces enough power reduction to erase that advantage, an allowance for 7 GHz hardware has a stronger case. The common comparison still needed is useful throughput at a practical transmit-power operating point, with matched receiver and impairment assumptions.",
+      "tdoc_id": "R4-2631347",
+      "passage": "In NR, the UE MPR is specified per power class and waveform and does not depend on the operating band. For higher-order modulation, the MPR is driven by the Tx EVM requirement. A frequency-dependent UE Tx EVM, e.g. following the BS DL 1024QAM split at 4.2 GHz in TS 38.104 [8], would require two sets of MPR for UL 1024QAM and the corresponding conformance tests. It would also require a frequency boundary: with 4.2 GHz, the 4400-4800 MHz range studied in TR 38.922 would fall in a different category than the 4 GHz evaluations. A single value avoids these issues and results in one MPR set per power class and waveform for all bands. Furthermore, four sources show that the MPR increase for 2.5% Tx EVM is limited to 0.5-1.5 dB, whether compared with the existing NR 256QAM MPR or with a more relaxed 1024QAM Tx EVM [3]-[6]."
+    },
+    {
+      "claim": "If the stricter limit delivers a useful throughput advantage at the output power that a practical 7 GHz transmitter can sustain, the single-limit approach avoids an additional requirements split. If its amplifier and oscillator budget forces enough power reduction to erase that advantage, an allowance for 7 GHz hardware has a stronger case. The common comparison still needed is useful throughput at a practical transmit-power operating point, with matched receiver and impairment assumptions.",
+      "tdoc_id": "R4-2630294",
+      "passage": "At 7GHz, both the PA and LO contributions are larger than at 4GHz. PA gain and linearity generally degrade at higher frequency, so more PA distortion is expected at the same output power, and LO phase noise also increases with the carrier frequency. Assuming about 1.2% LO phase noise at 7GHz, compared with about 1% at 4GHz, and the same transceiver non-linearity and IQ imbalance as at 4GHz, a 2.5% Tx EVM at 7GHz would require the PA contribution to be reduced to about 1.7%. This is even tighter than about 1.8% at 4GHz despite the worse PA linearity, and costs about 1dB more back-off than 2.8% Tx EVM. With 2.8% Tx EVM, the PA contribution is about 2.1%, so the higher LO contribution is covered and some margin is also given to the PA. In other words, 2.8% for 7GHz covers the higher PA and LO contributions, while it keeps the MPR at about the same level as at 4GHz. A further relaxation to 3% saves only about 0.5dB of back-off, since the PA contribution grows only to about 2.36%, i.e., by about 1dB. Even if a larger LO contribution of about 1.5% is assumed at 7GHz, the back-off saved by the relaxation to 3% is only about 0.6dB. This is smaller than the about 1dB or more increase of the crossover SNR. Therefore, 2.8% is a reasonable Tx EVM for 7GHz."
+    },
+    {
+      "claim": "If the stricter limit delivers a useful throughput advantage at the output power that a practical 7 GHz transmitter can sustain, the single-limit approach avoids an additional requirements split. If its amplifier and oscillator budget forces enough power reduction to erase that advantage, an allowance for 7 GHz hardware has a stronger case. The common comparison still needed is useful throughput at a practical transmit-power operating point, with matched receiver and impairment assumptions.",
+      "tdoc_id": "R4-2605706",
+      "passage": "Configurations with a larger number of receive antennas (1x8, 2x8, 4x8) demonstrate crossover at 3–7 dB lower SNR than their counterparts with fewer Rx antennas (1x4, 2x4, 4x4), owing to additional diversity/array gain."
+    },
+    {
+      "claim": "A follow-up evaluation should place the candidate EVM limits on the same throughput-versus-link-budget comparison, include the oscillator and amplifier errors consistently, and state both crossover and near-maximum-throughput criteria. The unresolved choice is how much practical output power each distortion allowance costs, and whether the resulting link retains the gain used to justify 1024-QAM.",
+      "tdoc_id": "R4-2630294",
+      "passage": "In RAN4#120bis, it was agreed that IQ imbalance and carrier leakage are considered as part of the Tx EVM requirement, without dedicated requirements [2]. For the down-selection, two aspects need to be considered together. The first is the gain of UL 1024QAM shown in the RAN4 LLS, i.e., the SNR (or SINR) at which UL 1024QAM starts to outperform UL 256QAM (crossover SNR). The second is the output power cost of the Tx EVM. Although the MPR is postponed to the WI phase, the Tx EVM agreed in the SI sets the PA linearity needed and hence the MPR to be specified later. As shown in [5], only the PA part of the Tx EVM changes with output power, by about 2dB for each 1dB of back-off, while the other parts, e.g., LO phase noise, do not. In other words, a tighter PA contribution costs about 1dB of back-off per 2dB of EVM, and a relaxed PA contribution saves back-off at the same rate. Therefore, each Tx EVM candidate should be judged by comparing the change in the crossover SNR with the change in back-off."
+    },
+    {
+      "claim": "A follow-up evaluation should place the candidate EVM limits on the same throughput-versus-link-budget comparison, include the oscillator and amplifier errors consistently, and state both crossover and near-maximum-throughput criteria. The unresolved choice is how much practical output power each distortion allowance costs, and whether the resulting link retains the gain used to justify 1024-QAM.",
+      "tdoc_id": "R4-2631347",
+      "passage": "Our RAN4#118bis evaluation was carried out at 7 GHz (100 MHz CBW, 30 kHz SCS, AWGN and TDL-D 10 ns with 5 Hz Doppler, practical channel estimation, MMSE receiver, HARQ retransmission enabled). Table 1 summarizes the SNR required to reach 90% of the maximum throughput for the 4Rx and 8Rx configurations."
+    },
+    {
+      "claim": "A follow-up evaluation should place the candidate EVM limits on the same throughput-versus-link-budget comparison, include the oscillator and amplifier errors consistently, and state both crossover and near-maximum-throughput criteria. The unresolved choice is how much practical output power each distortion allowance costs, and whether the resulting link retains the gain used to justify 1024-QAM.",
+      "tdoc_id": "R4-2630294",
+      "passage": "At 7GHz, both the PA and LO contributions are larger than at 4GHz. PA gain and linearity generally degrade at higher frequency, so more PA distortion is expected at the same output power, and LO phase noise also increases with the carrier frequency. Assuming about 1.2% LO phase noise at 7GHz, compared with about 1% at 4GHz, and the same transceiver non-linearity and IQ imbalance as at 4GHz, a 2.5% Tx EVM at 7GHz would require the PA contribution to be reduced to about 1.7%. This is even tighter than about 1.8% at 4GHz despite the worse PA linearity, and costs about 1dB more back-off than 2.8% Tx EVM. With 2.8% Tx EVM, the PA contribution is about 2.1%, so the higher LO contribution is covered and some margin is also given to the PA. In other words, 2.8% for 7GHz covers the higher PA and LO contributions, while it keeps the MPR at about the same level as at 4GHz. A further relaxation to 3% saves only about 0.5dB of back-off, since the PA contribution grows only to about 2.36%, i.e., by about 1dB. Even if a larger LO contribution of about 1.5% is assumed at 7GHz, the back-off saved by the relaxation to 3% is only about 0.6dB. This is smaller than the about 1dB or more increase of the crossover SNR. Therefore, 2.8% is a reasonable Tx EVM for 7GHz."
     }
   ],
   "coverage_gaps": [
-    "Referenced simulation reports were not independently reviewed; numerical findings are attributed to the submitting companies.",
-    "These future-meeting submissions do not establish November outcomes or complete meeting coverage.",
-    "Xiaomi R4-2630837 was excluded because its extracted header contains R4-26xxxxx instead of the database document ID."
+    "Original referenced simulation reports and tables are not independently verified.",
+    "Ericsson extraction labels setup channel TDL-D but numerical discussion TDL-A; no channel-specific numerical reconciliation is attempted.",
+    "All numerical estimates remain attributed to the submitting organization; no adopted November outcome claimed."
+  ],
+  "source_metadata": {
+    "R4-2630294": {
+      "title": "Discussion on Tx EVM for UL 1024QAM",
+      "source": "Samsung",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_121/Docs/R4-2630294.zip"
+    },
+    "R4-2631347": {
+      "title": "Discussion on EVM for UL 1024QAM for 6G",
+      "source": "Ericsson",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_121/Docs/R4-2631347.zip"
+    },
+    "R4-2605706": {
+      "title": "(6G system parameters) Higher-order modulation",
+      "source": "LG Electronics",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_119/Docs/R4-2605706.zip"
+    }
+  },
+  "external_background": [
+    {
+      "url": "https://www.rohde-schwarz.com/us/products/test-and-measurement/analyzers/signal-and-spectrum-analyzers/understanding-error-vector-magnitude_258370.html",
+      "use": "Basic amplitude/phase symbol, EVM and constellation-spacing explanation only. Not evidence for a 3GPP decision.",
+      "passage": "EVM measures the relative magnitude of a vector connecting the reference symbol and the actual received or measured symbol."
+    }
   ]
 }

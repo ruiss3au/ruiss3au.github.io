@@ -1,69 +1,216 @@
 {
+  "editorial": {
+    "question": "What preparation dependencies remain when LTM combines special-cell switching with secondary-cell activation?",
+    "answer": "The faster command depends on prior configurations, usable pre-activation measurements and capabilities covering both cell roles; the October requests expose their alignment.",
+    "mechanism": "Candidate coordination and RRC provisioning establish alternatives; MAC CE selection and activation can act on them later.",
+    "tradeoff": "Preconfiguration shortens switch-time control but introduces coordination and update work; dynamic selection remains bounded by prior configurations.",
+    "consequence": "Implementers need to check prepared alternatives, report availability and capability scope before treating a combined switch as an interruption reduction.",
+    "novelty": "Explains the architectural reason for the October requests using the March work-item justification instead of restating the liaison.",
+    "uncertainty": "Detailed capability agreements, reporting timing and RAN4 responses are unavailable; no measured latency gain is established.",
+    "source_ids": [
+      "RP-260232",
+      "R4-2630009",
+      "R4-2630011"
+    ],
+    "analysis_excerpt": "The dependency runs in both directions. A switch command that can activate secondary cells is useful only if the network has enough information to choose them. Measurements of candidate cells are useful only if the configuration and device capabilities let the network act on them. Reading the work-item description alongside the October liaisons, the open problem is whether Release 20 can connect those steps without adding a separate configuration exchange to each switch.",
+    "decision": "publish"
+  },
   "claims": [
     {
-      "claim": "RAN2 asks RAN4 to check measurement reporting for configured candidate secondary cells even when deactivated.",
-      "tdoc_id": "R4-2630011",
-      "passage": "1. Overall Description:\nDuring the discussion on LTM SCell activation, RAN2 understands the UE can send L1 measurement report for LTM candidate SCells as in the LTM configuration, whether the candidate happens to be a deactivated SCell or not has not impact on this. \nRAN2 would like to check whether it is OK with RAN4. \n2. Actions:\nTo RAN WG 4:\nRAN2 kindly request RAN4 to take the above information into account during the future work, and provide feedback, if any.\n"
-    },
-    {
-      "claim": "The request concerns secondary-cell activation during LTM under Release 20 mobility enhancements Phase 5.",
-      "tdoc_id": "R4-2630011",
-      "passage": "Title:\tLS on deactivated SCell measurement report in SCell activation during LTM\nResponse to:\t-\nRelease:\tRel-20\nWork Item:\tNR_Mob_Ph5\nSource:\tRAN2\nTo:\tRAN4\n"
-    },
-    {
-      "claim": "LTM means Layer 1/Layer 2 Triggered Mobility.",
+      "claim": "Release 20 mobility work is trying to remove a limitation of earlier fast cell switching: the network can prepare a device to change its main serving cell, but the earlier framework cannot use that same switch command to control activation of the target's secondary cells. Apple's revised work-item description identifies that limitation and proposes dynamic activation as part of the switch. The October requests from Radio Access Network Working Group 2 (RAN2) concern the measurements and device capabilities needed to make it work.",
       "tdoc_id": "RP-260232",
-      "passage": "As part of Rel-18, enhanced mobility feature: Layer1/Layer2 Triggered Mobility (LTM) was introduced with the aim of reducing interruption time and latency from handovers due to mobility."
+      "passage": "In addition, in Rel-18/Rel-19 the beam configuration for the UE measurement and reporting for the candidate cells in LTM is primarily with the intention of viewing that candidate cell for the role of SpCell.  While the framework does not prevent the network to use the measurements reported by the UE for SCell related evaluations, it does not provide the means for the network to control the SCell activation of the candidate target LTM cell as part of the LTM cell switch command.  If the candidate cell intends to configure Carrier Aggregation (CA) to the UE as part of it’s candidate configuration, the current framework only allows the UE to apply the CA configuration as provided in the pre-configured prior RRC configuration. "
     },
     {
-      "claim": "RAN2 understands that UE measurement reporting for LTM candidate secondary cells follows the configuration regardless of deactivation.",
+      "claim": "Release 20 mobility work is trying to remove a limitation of earlier fast cell switching: the network can prepare a device to change its main serving cell, but the earlier framework cannot use that same switch command to control activation of the target's secondary cells. Apple's revised work-item description identifies that limitation and proposes dynamic activation as part of the switch. The October requests from Radio Access Network Working Group 2 (RAN2) concern the measurements and device capabilities needed to make it work.",
+      "tdoc_id": "R4-2630009",
+      "passage": "The highlighted agreements above are relevant to RAN1/RAN4, as these agreements assume reuse of the relevant R18/R19 LTM UE capabilities defined by RAN1/RAN4. In addition, the candidate cell scope under these capabilities is extended to include both LTM candidate SpCell and LTM candidate SCell. For these reasons, RAN2 considers it necessary to align with RAN1/RAN4 regarding such reuse."
+    },
+    {
+      "claim": "Release 20 mobility work is trying to remove a limitation of earlier fast cell switching: the network can prepare a device to change its main serving cell, but the earlier framework cannot use that same switch command to control activation of the target's secondary cells. Apple's revised work-item description identifies that limitation and proposes dynamic activation as part of the switch. The October requests from Radio Access Network Working Group 2 (RAN2) concern the measurements and device capabilities needed to make it work.",
       "tdoc_id": "R4-2630011",
-      "passage": "During the discussion on LTM SCell activation, RAN2 understands the UE can send L1 measurement report for LTM candidate SCells as in the LTM configuration, whether the candidate happens to be a deactivated SCell or not has not impact on this. \nRAN2 would like to check whether it is OK with RAN4. \n"
+      "passage": "During the discussion on LTM SCell activation, RAN2 understands the UE can send L1 measurement report for LTM candidate SCells as in the LTM configuration, whether the candidate happens to be a deactivated SCell or not has not impact on this. "
     },
     {
-      "claim": "RAN2 requests RAN4 feedback for future work; the liaison does not establish RAN4 agreement.",
+      "claim": "The work item connects this limitation to carrier aggregation: the target cell may already have supplied a configuration for additional carriers, but the switch command cannot dynamically choose their activation. Preparing the special-cell switch and preparing the secondary cells are related tasks, but they do not automatically complete together. The proposed improvement gives the network a way to select secondary-cell activation at the time of the switch, rather than simply accepting the carrier-aggregation configuration supplied earlier.",
+      "tdoc_id": "RP-260232",
+      "passage": "In addition, in Rel-18/Rel-19 the beam configuration for the UE measurement and reporting for the candidate cells in LTM is primarily with the intention of viewing that candidate cell for the role of SpCell.  While the framework does not prevent the network to use the measurements reported by the UE for SCell related evaluations, it does not provide the means for the network to control the SCell activation of the candidate target LTM cell as part of the LTM cell switch command.  If the candidate cell intends to configure Carrier Aggregation (CA) to the UE as part of it’s candidate configuration, the current framework only allows the UE to apply the CA configuration as provided in the pre-configured prior RRC configuration. "
+    },
+    {
+      "claim": "The work item connects this limitation to carrier aggregation: the target cell may already have supplied a configuration for additional carriers, but the switch command cannot dynamically choose their activation. Preparing the special-cell switch and preparing the secondary cells are related tasks, but they do not automatically complete together. The proposed improvement gives the network a way to select secondary-cell activation at the time of the switch, rather than simply accepting the carrier-aggregation configuration supplied earlier.",
+      "tdoc_id": "RP-260232",
+      "passage": "In Rel-20, enhancements should be specified to allow greater flexibility for the network to dynamically change the LTM configuration using L2 signalling without RRC messages and to provide the means for the network to activate SCells dynamically as part of SpCell change with LTM cell switch command."
+    },
+    {
+      "claim": "Layer 1/Layer 2 Triggered Mobility (LTM) was introduced in Release 18 to reduce handover interruption and latency. The revised work-item description says Release 19 extended it across central units and added event-triggered Layer 2 reporting and channel-state information reference signals. These changes expanded the framework, but retained an important dependency: candidate cells provide configurations, and the serving cell assembles the configuration delivered to the device through radio resource control (RRC) signaling.",
+      "tdoc_id": "RP-260232",
+      "passage": "As part of Rel-18, enhanced mobility feature: Layer1/Layer2 Triggered Mobility (LTM) was introduced with the aim of reducing interruption time and latency from handovers due to mobility. While Rel-18 LTM addressed the latency issues, it has limitation (for e.g., LTM was confined to intra-CU alone, mobility was based on SSB reference signals alone etc.), which were addressed in Rel-19 with further mobility enhancements with NR mobility Enhancements Phase 4 WI. Rel-19 LTM feature introduced inter-CU LTM, event triggered L2 reporting for LTM and also the ability to use CSI-RS reference signals for LTM based mobility. "
+    },
+    {
+      "claim": "Layer 1/Layer 2 Triggered Mobility (LTM) was introduced in Release 18 to reduce handover interruption and latency. The revised work-item description says Release 19 extended it across central units and added event-triggered Layer 2 reporting and channel-state information reference signals. These changes expanded the framework, but retained an important dependency: candidate cells provide configurations, and the serving cell assembles the configuration delivered to the device through radio resource control (RRC) signaling.",
+      "tdoc_id": "RP-260232",
+      "passage": "However, Rel-19 LTM has some shortcoming as well. The LTM framework from both Rel-18 and Rel-19 is built on the principle of network co-ordinating with potential candidate cells (from the same and inter-CU gNBs) for their configurations intended for the UE, and having the serving cell compose the net configuration and provide it to the UE to enable RRC message-less LTM switches among these candidate LTM cells. This requires extensive network node signalling to formulate the resultant RRC configuration to the UE, and if there is any change in the configuration from any of the candidate LTM cells, the co-ordination between all participating network nodes and composition by the serving cell based on the result of that co-ordination would be needed in most cases. This can be a drawback in LTM as the mobility here involves operation with beam configuration and measurement on beams from multiple candidate cells, and due to the nature of beam based mobility, there can be frequent changes on such configuration, and might require the inter-node signalling overhead and the resulting serving cell actions (on providing the updated RRC configuration), making LTM less efficient."
+    },
+    {
+      "claim": "That arrangement moves preparation ahead of the switch. The device already holds candidate configurations when it receives the lower-layer instruction to change cells. However, a change in a candidate's configuration can require renewed coordination between network nodes and another composition of the device's RRC configuration. The work-item justification singles out beam configuration and measurement across candidate cells as a source of frequent changes.",
+      "tdoc_id": "RP-260232",
+      "passage": "However, Rel-19 LTM has some shortcoming as well. The LTM framework from both Rel-18 and Rel-19 is built on the principle of network co-ordinating with potential candidate cells (from the same and inter-CU gNBs) for their configurations intended for the UE, and having the serving cell compose the net configuration and provide it to the UE to enable RRC message-less LTM switches among these candidate LTM cells. This requires extensive network node signalling to formulate the resultant RRC configuration to the UE, and if there is any change in the configuration from any of the candidate LTM cells, the co-ordination between all participating network nodes and composition by the serving cell based on the result of that co-ordination would be needed in most cases. This can be a drawback in LTM as the mobility here involves operation with beam configuration and measurement on beams from multiple candidate cells, and due to the nature of beam based mobility, there can be frequent changes on such configuration, and might require the inter-node signalling overhead and the resulting serving cell actions (on providing the updated RRC configuration), making LTM less efficient."
+    },
+    {
+      "claim": "The resulting tradeoff is between a fast switch and the work required to keep its prepared configurations usable. A short switch command does not eliminate coordination; it relies on that coordination having happened earlier. If configurations change often, the preparation process can itself become expensive. This is the architectural problem behind the Release 20 proposal to select among previously supplied measurement configurations using a control element at the medium access control layer (MAC CE).",
+      "tdoc_id": "RP-260232",
+      "passage": "However, Rel-19 LTM has some shortcoming as well. The LTM framework from both Rel-18 and Rel-19 is built on the principle of network co-ordinating with potential candidate cells (from the same and inter-CU gNBs) for their configurations intended for the UE, and having the serving cell compose the net configuration and provide it to the UE to enable RRC message-less LTM switches among these candidate LTM cells. This requires extensive network node signalling to formulate the resultant RRC configuration to the UE, and if there is any change in the configuration from any of the candidate LTM cells, the co-ordination between all participating network nodes and composition by the serving cell based on the result of that co-ordination would be needed in most cases. This can be a drawback in LTM as the mobility here involves operation with beam configuration and measurement on beams from multiple candidate cells, and due to the nature of beam based mobility, there can be frequent changes on such configuration, and might require the inter-node signalling overhead and the resulting serving cell actions (on providing the updated RRC configuration), making LTM less efficient."
+    },
+    {
+      "claim": "The resulting tradeoff is between a fast switch and the work required to keep its prepared configurations usable. A short switch command does not eliminate coordination; it relies on that coordination having happened earlier. If configurations change often, the preparation process can itself become expensive. This is the architectural problem behind the Release 20 proposal to select among previously supplied measurement configurations using a control element at the medium access control layer (MAC CE).",
+      "tdoc_id": "RP-260232",
+      "passage": "Specify the necessary configuration and procedures for MAC CE based configuration selection among prior provided RRC configurations of UE L1 measurement and reporting LTM configuration [RAN2]"
+    },
+    {
+      "claim": "The proposed dynamic measurement change is deliberately limited. The work item calls for MAC CE selection among prior RRC configurations of Layer 1 measurement and reporting. It does not describe arbitrary creation of a new configuration in the switch command. The network first provisions alternatives, then selects one that the device already knows.",
+      "tdoc_id": "RP-260232",
+      "passage": "Specify the necessary configuration and procedures for MAC CE based configuration selection among prior provided RRC configurations of UE L1 measurement and reporting LTM configuration [RAN2]"
+    },
+    {
+      "claim": "The proposed dynamic measurement change is deliberately limited. The work item calls for MAC CE selection among prior RRC configurations of Layer 1 measurement and reporting. It does not describe arbitrary creation of a new configuration in the switch command. The network first provisions alternatives, then selects one that the device already knows.",
+      "tdoc_id": "RP-260232",
+      "passage": "NOTE 7: This objective is limited to the configuration related to L1 measurement and reporting configuration and strives to avoid RAN1 impact (including reporting)"
+    },
+    {
+      "claim": "For example, suppose the network has already supplied two measurement configurations for candidate cells. Selecting the second configuration through a MAC CE would avoid sending that configuration again through RRC at the point of selection. This is an illustration of the work item's proposed mechanism, not a measured latency result. The initial provisioning remains necessary, and an alternative outside the prepared set would still be outside that selection mechanism.",
+      "tdoc_id": "RP-260232",
+      "passage": "Specify the necessary configuration and procedures for MAC CE based configuration selection among prior provided RRC configurations of UE L1 measurement and reporting LTM configuration [RAN2]"
+    },
+    {
+      "claim": "Secondary-cell activation is a separate objective in the same work item. It calls for the network to trigger activation as part of the special-cell LTM switch and to reuse candidate-cell measurement and reporting procedures where possible. It explicitly excludes early channel-state information acquisition for the secondary cell. The scope therefore supports coordinated switching and activation, without promising that every step needed to use an additional carrier has been eliminated.",
+      "tdoc_id": "RP-260232",
+      "passage": "Specify the necessary configuration and UE procedures for NW triggering of LTM SCell activation as part of the SpCell LTM cell switch [RAN2, RAN3]. "
+    },
+    {
+      "claim": "Secondary-cell activation is a separate objective in the same work item. It calls for the network to trigger activation as part of the special-cell LTM switch and to reuse candidate-cell measurement and reporting procedures where possible. It explicitly excludes early channel-state information acquisition for the secondary cell. The scope therefore supports coordinated switching and activation, without promising that every step needed to use an additional carrier has been eliminated.",
+      "tdoc_id": "RP-260232",
+      "passage": "NOTE 1: Reuse the candidate cell LTM measurement and reporting procedures where possible for the SCell activation improvements"
+    },
+    {
+      "claim": "Secondary-cell activation is a separate objective in the same work item. It calls for the network to trigger activation as part of the special-cell LTM switch and to reuse candidate-cell measurement and reporting procedures where possible. It explicitly excludes early channel-state information acquisition for the secondary cell. The scope therefore supports coordinated switching and activation, without promising that every step needed to use an additional carrier has been eliminated.",
+      "tdoc_id": "RP-260232",
+      "passage": "NOTE 2: Early CSI acquisition procedure for SCell is not in the scope."
+    },
+    {
+      "claim": "RAN2's October liaison asks Radio Access Network Working Group 4 (RAN4) to confirm that a device can send Layer 1 measurement reports for a configured LTM candidate secondary cell regardless of whether that cell is currently deactivated. The request preserves a distinction between a cell's activation state and its role as a measurement candidate. RAN2 states its understanding and asks for a radio-requirements check; the letter contains no RAN4 response.",
       "tdoc_id": "R4-2630011",
-      "passage": "RAN2 would like to check whether it is OK with RAN4. \n2. Actions:\nTo RAN WG 4:\nRAN2 kindly request RAN4 to take the above information into account during the future work, and provide feedback, if any.\n"
+      "passage": "During the discussion on LTM SCell activation, RAN2 understands the UE can send L1 measurement report for LTM candidate SCells as in the LTM configuration, whether the candidate happens to be a deactivated SCell or not has not impact on this. "
     },
     {
-      "claim": "RAN2 asks RAN1 and RAN4 to confirm reuse of relevant Release 18 and 19 LTM UE capabilities.",
-      "tdoc_id": "R4-2630009",
-      "passage": "The highlighted agreements above are relevant to RAN1/RAN4, as these agreements assume reuse of the relevant R18/R19 LTM UE capabilities defined by RAN1/RAN4. In addition, the candidate cell scope under these capabilities is extended to include both LTM candidate SpCell and LTM candidate SCell. For these reasons, RAN2 considers it necessary to align with RAN1/RAN4 regarding such reuse.\n2. Actions:\nTo RAN WG 1 and WG 4:\nRAN2 kindly request RAN1 and RAN4 to confirm the reuse of the relevant R18/R19 LTM UE capabilities as stated in the RAN2 agreements, and provide feedback if there is any concern.\n"
-    },
-    {
-      "claim": "RAN2 extends the candidate-cell scope to both candidate special cells and candidate secondary cells and identifies this as a reason for alignment on reuse.",
-      "tdoc_id": "R4-2630009",
-      "passage": "The highlighted agreements above are relevant to RAN1/RAN4, as these agreements assume reuse of the relevant R18/R19 LTM UE capabilities defined by RAN1/RAN4. In addition, the candidate cell scope under these capabilities is extended to include both LTM candidate SpCell and LTM candidate SCell. For these reasons, RAN2 considers it necessary to align with RAN1/RAN4 regarding such reuse.\n"
-    },
-    {
-      "claim": "Some other capabilities remain under discussion in RAN2 and will be finalized at future meetings.",
-      "tdoc_id": "R4-2630009",
-      "passage": "Some other capabilities remain under discussion in RAN2 and will be finalized in future meetings.\n"
-    },
-    {
-      "claim": "The open confirmation request asks whether RAN1 and RAN4 have concerns about reuse.",
-      "tdoc_id": "R4-2630009",
-      "passage": "RAN2 kindly request RAN1 and RAN4 to confirm the reuse of the relevant R18/R19 LTM UE capabilities as stated in the RAN2 agreements, and provide feedback if there is any concern.\n"
-    },
-    {
-      "claim": "The liaison originates from RAN2 in Jeju on 12-16 October 2026 and is incoming to RAN4 in Calgary on 16-20 November 2026; it does not establish November outcomes.",
-      "tdoc_id": "R4-2630009",
-      "passage": "3GPP TSG RAN WG4 Meeting #121\tR4-2630009\nCalgary, Canada, 16 - 20 November, 2026\n3GPP TSG-RAN WG2 Meeting #135bis\t\t\t\t\t\t\t\t\t\tR2-2607807\nJeju, Korea, 12th – 16th Oct., 2026\n"
-    },
-    {
-      "claim": "The liaison originates from RAN2 in Jeju on 12-16 October 2026 and is incoming to RAN4 in Calgary on 16-20 November 2026; it does not establish November outcomes.",
+      "claim": "RAN2's October liaison asks Radio Access Network Working Group 4 (RAN4) to confirm that a device can send Layer 1 measurement reports for a configured LTM candidate secondary cell regardless of whether that cell is currently deactivated. The request preserves a distinction between a cell's activation state and its role as a measurement candidate. RAN2 states its understanding and asks for a radio-requirements check; the letter contains no RAN4 response.",
       "tdoc_id": "R4-2630011",
-      "passage": "3GPP TSG RAN WG4 Meeting #121\tR4-2630011\nCalgary, Canada, 16 - 20 November, 2026\n3GPP TSG-RAN WG2 Meeting #135bis\t\t\t\t\t\t\t\t\t\tR2-2607816\nJeju, Korea, 12th – 16th Oct., 2026\n"
+      "passage": "RAN2 would like to check whether it is OK with RAN4. "
     },
     {
-      "claim": "The extracted capability-reuse liaison references detailed agreements that are absent between its introduction and following discussion.",
+      "claim": "If measurements can be obtained while a candidate is deactivated, the network can use those reports in deciding which prepared secondary cells to activate during a switch. Requiring activation before obtaining the relevant report would introduce an ordering dependency that the proposed combined operation would have to accommodate. This is a consequence of reading the measurement request against the work item's activation objective, rather than a new procedure specified in the liaison.",
+      "tdoc_id": "R4-2630011",
+      "passage": "During the discussion on LTM SCell activation, RAN2 understands the UE can send L1 measurement report for LTM candidate SCells as in the LTM configuration, whether the candidate happens to be a deactivated SCell or not has not impact on this. "
+    },
+    {
+      "claim": "If measurements can be obtained while a candidate is deactivated, the network can use those reports in deciding which prepared secondary cells to activate during a switch. Requiring activation before obtaining the relevant report would introduce an ordering dependency that the proposed combined operation would have to accommodate. This is a consequence of reading the measurement request against the work item's activation objective, rather than a new procedure specified in the liaison.",
+      "tdoc_id": "RP-260232",
+      "passage": "Specify the necessary configuration and UE procedures for NW triggering of LTM SCell activation as part of the SpCell LTM cell switch [RAN2, RAN3]. "
+    },
+    {
+      "claim": "If measurements can be obtained while a candidate is deactivated, the network can use those reports in deciding which prepared secondary cells to activate during a switch. Requiring activation before obtaining the relevant report would introduce an ordering dependency that the proposed combined operation would have to accommodate. This is a consequence of reading the measurement request against the work item's activation objective, rather than a new procedure specified in the liaison.",
+      "tdoc_id": "RP-260232",
+      "passage": "NOTE 1: Reuse the candidate cell LTM measurement and reporting procedures where possible for the SCell activation improvements"
+    },
+    {
+      "claim": "The letter does not establish measurement freshness, reporting delay or an activation-time guarantee. Those details determine whether an available report is useful when the switch occurs. The work item assigns RAN4 the task of evaluating and specifying requirements as necessary; that requirement work cannot be replaced by a protocol group's statement that reporting is expected to work.",
+      "tdoc_id": "R4-2630011",
+      "passage": "During the discussion on LTM SCell activation, RAN2 understands the UE can send L1 measurement report for LTM candidate SCells as in the LTM configuration, whether the candidate happens to be a deactivated SCell or not has not impact on this. "
+    },
+    {
+      "claim": "The letter does not establish measurement freshness, reporting delay or an activation-time guarantee. Those details determine whether an available report is useful when the switch occurs. The work item assigns RAN4 the task of evaluating and specifying requirements as necessary; that requirement work cannot be replaced by a protocol group's statement that reporting is expected to work.",
+      "tdoc_id": "RP-260232",
+      "passage": "Evaluate and specify as necessary the needed RAN4 requirements for this [RAN4]. "
+    },
+    {
+      "claim": "The companion October liaison asks Radio Access Network Working Group 1 (RAN1) and RAN4 to confirm reuse of relevant Release 18 and Release 19 LTM device capabilities. RAN2 explains why it needs confirmation: the candidate-cell scope now includes both candidate special cells and candidate secondary cells. It also says some capabilities remain under discussion. The request concerns whether the earlier capabilities cover the expanded use, rather than assuming that support for special-cell switching also covers secondary-cell activation.",
       "tdoc_id": "R4-2630009",
-      "passage": "In the RAN2#135bis meeting, UE capabilities for Mobility Enh Ph5 were discussed and agreements were reached as follows:\nSome other capabilities remain under discussion in RAN2 and will be finalized in future meetings.\n"
+      "passage": "The highlighted agreements above are relevant to RAN1/RAN4, as these agreements assume reuse of the relevant R18/R19 LTM UE capabilities defined by RAN1/RAN4. In addition, the candidate cell scope under these capabilities is extended to include both LTM candidate SpCell and LTM candidate SCell. For these reasons, RAN2 considers it necessary to align with RAN1/RAN4 regarding such reuse."
+    },
+    {
+      "claim": "The companion October liaison asks Radio Access Network Working Group 1 (RAN1) and RAN4 to confirm reuse of relevant Release 18 and Release 19 LTM device capabilities. RAN2 explains why it needs confirmation: the candidate-cell scope now includes both candidate special cells and candidate secondary cells. It also says some capabilities remain under discussion. The request concerns whether the earlier capabilities cover the expanded use, rather than assuming that support for special-cell switching also covers secondary-cell activation.",
+      "tdoc_id": "R4-2630009",
+      "passage": "Some other capabilities remain under discussion in RAN2 and will be finalized in future meetings."
+    },
+    {
+      "claim": "The dependency runs in both directions. A switch command that can activate secondary cells is useful only if the network has enough information to choose them. Measurements of candidate cells are useful only if the configuration and device capabilities let the network act on them. Reading the work-item description alongside the October liaisons, the open problem is whether Release 20 can connect those steps without adding a separate configuration exchange to each switch.",
+      "tdoc_id": "RP-260232",
+      "passage": "In addition, in Rel-18/Rel-19 the beam configuration for the UE measurement and reporting for the candidate cells in LTM is primarily with the intention of viewing that candidate cell for the role of SpCell.  While the framework does not prevent the network to use the measurements reported by the UE for SCell related evaluations, it does not provide the means for the network to control the SCell activation of the candidate target LTM cell as part of the LTM cell switch command.  If the candidate cell intends to configure Carrier Aggregation (CA) to the UE as part of it’s candidate configuration, the current framework only allows the UE to apply the CA configuration as provided in the pre-configured prior RRC configuration. "
+    },
+    {
+      "claim": "The dependency runs in both directions. A switch command that can activate secondary cells is useful only if the network has enough information to choose them. Measurements of candidate cells are useful only if the configuration and device capabilities let the network act on them. Reading the work-item description alongside the October liaisons, the open problem is whether Release 20 can connect those steps without adding a separate configuration exchange to each switch.",
+      "tdoc_id": "RP-260232",
+      "passage": "Specify the necessary configuration and UE procedures for NW triggering of LTM SCell activation as part of the SpCell LTM cell switch [RAN2, RAN3]. "
+    },
+    {
+      "claim": "The dependency runs in both directions. A switch command that can activate secondary cells is useful only if the network has enough information to choose them. Measurements of candidate cells are useful only if the configuration and device capabilities let the network act on them. Reading the work-item description alongside the October liaisons, the open problem is whether Release 20 can connect those steps without adding a separate configuration exchange to each switch.",
+      "tdoc_id": "R4-2630009",
+      "passage": "The highlighted agreements above are relevant to RAN1/RAN4, as these agreements assume reuse of the relevant R18/R19 LTM UE capabilities defined by RAN1/RAN4. In addition, the candidate cell scope under these capabilities is extended to include both LTM candidate SpCell and LTM candidate SCell. For these reasons, RAN2 considers it necessary to align with RAN1/RAN4 regarding such reuse."
+    },
+    {
+      "claim": "The dependency runs in both directions. A switch command that can activate secondary cells is useful only if the network has enough information to choose them. Measurements of candidate cells are useful only if the configuration and device capabilities let the network act on them. Reading the work-item description alongside the October liaisons, the open problem is whether Release 20 can connect those steps without adding a separate configuration exchange to each switch.",
+      "tdoc_id": "R4-2630011",
+      "passage": "During the discussion on LTM SCell activation, RAN2 understands the UE can send L1 measurement report for LTM candidate SCells as in the LTM configuration, whether the candidate happens to be a deactivated SCell or not has not impact on this. "
+    },
+    {
+      "claim": "For an implementation review, the useful questions are consequently specific: which alternatives must be provisioned before the switch, which candidate-cell reports remain available before activation, and which existing device capabilities cover the combined operation? The available sources do not supply a numerical interruption improvement. They do identify the dependencies that a credible improvement would have to satisfy.",
+      "tdoc_id": "RP-260232",
+      "passage": "Specify the necessary configuration and procedures for MAC CE based configuration selection among prior provided RRC configurations of UE L1 measurement and reporting LTM configuration [RAN2]"
+    },
+    {
+      "claim": "For an implementation review, the useful questions are consequently specific: which alternatives must be provisioned before the switch, which candidate-cell reports remain available before activation, and which existing device capabilities cover the combined operation? The available sources do not supply a numerical interruption improvement. They do identify the dependencies that a credible improvement would have to satisfy.",
+      "tdoc_id": "R4-2630009",
+      "passage": "The highlighted agreements above are relevant to RAN1/RAN4, as these agreements assume reuse of the relevant R18/R19 LTM UE capabilities defined by RAN1/RAN4. In addition, the candidate cell scope under these capabilities is extended to include both LTM candidate SpCell and LTM candidate SCell. For these reasons, RAN2 considers it necessary to align with RAN1/RAN4 regarding such reuse."
+    },
+    {
+      "claim": "For an implementation review, the useful questions are consequently specific: which alternatives must be provisioned before the switch, which candidate-cell reports remain available before activation, and which existing device capabilities cover the combined operation? The available sources do not supply a numerical interruption improvement. They do identify the dependencies that a credible improvement would have to satisfy.",
+      "tdoc_id": "R4-2630011",
+      "passage": "During the discussion on LTM SCell activation, RAN2 understands the UE can send L1 measurement report for LTM candidate SCells as in the LTM configuration, whether the candidate happens to be a deactivated SCell or not has not impact on this. "
+    },
+    {
+      "claim": "The October liaisons originated at RAN2's 12-16 October Jeju meeting and were forwarded to RAN4's 16-20 November Calgary meeting. Their detailed capability-agreement block is missing from the extraction. This analysis therefore follows the work-item objectives and the explicit requests, without claiming a final capability list or a November outcome.",
+      "tdoc_id": "R4-2630009",
+      "passage": "Jeju, Korea, 12th – 16th Oct., 2026"
+    },
+    {
+      "claim": "The October liaisons originated at RAN2's 12-16 October Jeju meeting and were forwarded to RAN4's 16-20 November Calgary meeting. Their detailed capability-agreement block is missing from the extraction. This analysis therefore follows the work-item objectives and the explicit requests, without claiming a final capability list or a November outcome.",
+      "tdoc_id": "R4-2630009",
+      "passage": "Calgary, Canada, 16 - 20 November, 2026"
+    },
+    {
+      "claim": "The October liaisons originated at RAN2's 12-16 October Jeju meeting and were forwarded to RAN4's 16-20 November Calgary meeting. Their detailed capability-agreement block is missing from the extraction. This analysis therefore follows the work-item objectives and the explicit requests, without claiming a final capability list or a November outcome.",
+      "tdoc_id": "R4-2630009",
+      "passage": "In the RAN2#135bis meeting, UE capabilities for Mobility Enh Ph5 were discussed and agreements were reached as follows:"
     }
   ],
   "coverage_gaps": [
-    "The extracted text of R4-2630009 omits the detailed capability agreements referenced in its prose.",
-    "No RAN4 response or November meeting outcome is established by these incoming RAN2 liaisons.",
-    "The supplied extraction is partial; this article makes no claim of complete meeting coverage."
-  ]
+    "Capability-agreement table absent from R4-2630009 extraction.",
+    "No final RAN4 response, measurement timing or measured interruption result inferred."
+  ],
+  "source_metadata": {
+    "RP-260232": {
+      "title": "Revised Work Item:  NR mobility enhancements Phase 5",
+      "source": "Apple Inc",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/TSG_RAN/TSGR_111/Docs/RP-260232.zip"
+    },
+    "R4-2630009": {
+      "title": "LS on UE capability for Mobility Enh Ph5",
+      "source": "RAN2",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_121/Docs/R4-2630009.zip"
+    },
+    "R4-2630011": {
+      "title": "LS on deactivated SCell measurement report in SCell activation during LTM",
+      "source": "RAN2",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_121/Docs/R4-2630011.zip"
+    }
+  }
 }
