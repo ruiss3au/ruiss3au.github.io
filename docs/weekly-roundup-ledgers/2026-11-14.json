@@ -1,0 +1,275 @@
+{
+  "editorial": {
+    "decision": "publish",
+    "question": "Why can replacing a known measurement gap with shorter autonomous receiver interruptions reduce throughput, and what evidence would justify preserving autonomous operation?",
+    "answer": "Unavailable airtime is not a throughput-loss bound. Nokia isolates losses from control/data/feedback dependencies and mistaken link adaptation, while Ericsson shows that shorter autonomous interruptions can approach coordinated operation in one full-buffer case. Apple makes a bounded-autonomy case for infrequent measurements; Qualcomm explains why saved symbols need not become additional system throughput. The defensible distinction is interruption visibility plus duration, repetition and traffic conditions, not gapless versus gap-based naming.",
+    "mechanism": "An unannounced interruption can erase current data, feedback on earlier data, and the grant for later data. Missing or unreliable feedback can also lower the modulation and coding scheme despite unchanged radio conditions. Protecting the control channel removes one dependency but leaves data and feedback losses. Network-known timing permits scheduling around the interruption; ideal feedback handling removes only one component of the loss.",
+    "tradeoff": "Nokia prioritizes network-visible timing and evaluates 0.5 ms interruptions around 40 ms occasions, including an 84-device full-buffer case. Ericsson reports a favorable six-symbol autonomous case with 30 devices and 80 ms periodicity. Apple prioritizes implementation flexibility under bounded, network-authorized measurements and contrasts 640 ms and 40 ms repetition, arguing that generic control-channel avoidance is costly across differently timed carriers. Qualcomm prioritizes slot-level simplicity because finer timing adds scheduler complexity and gains depend on traffic and numerology. These are different operating assumptions, not matched estimates of one universal penalty.",
+    "consequence": "Evaluators should compare realistic control/data/feedback dependencies under matched repetition, interruption duration, load and timing assumptions before recommending autonomous operation. Implementers cannot infer a throughput guarantee from a small interruption ratio or from control-channel protection alone; nor does available evidence justify excluding every infrequent autonomous measurement.",
+    "novelty": "Existing coverage develops waveform power, transmitter distortion and prepared mobility, but does not explain the measurement-interruption feedback loop. The August Nokia baseline already warned about link adaptation; the November evidence tests protected versus unprotected control, retains a substantial residual under ideal link adaptation, and supplies a shorter-interruption counterexample plus a sparse-measurement applicability argument.",
+    "uncertainty": "The extracted parameter tables do not permit a matched Nokia/Ericsson receiver-and-scheduler comparison. October way-forward references R4-2621632 and R4-2621595 are absent from the snapshot. The article will not claim an adopted outcome or a cross-company numerical ranking. A matched short-interruption experiment covering decoding, feedback, control, timing alignment, traffic and sparse versus frequent measurements could change the scope recommendation.",
+    "source_ids": [
+      "R4-2611989",
+      "R4-2630391",
+      "R4-2631565",
+      "R4-2630453",
+      "R4-2632068"
+    ],
+    "analysis_excerpt": "This qualifies the earlier baseline. Nokia's August discussion described ideal adaptation as almost aligning throughput with uninterrupted operation. The November model explicitly includes more control and feedback dependencies and retains a substantial residual under ideal adaptation. These are different experiments, so their percentages cannot establish a measured trend. They do show why a mitigation demonstrated against one loss mechanism must be tested again when the surrounding procedure is modeled more completely. [R4-2611989](https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_120/Docs/R4-2611989.zip), [R4-2630391](https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_121/Docs/R4-2630391.zip)."
+  },
+  "claims": [
+    {
+      "claim": "Verified document identity and attribution: R4-2611989; database title: Discussion on measurement gaps for 6G; database source: Nokia. The original header establishes meeting, location, dates and discussion status, not a meeting outcome.",
+      "tdoc_id": "R4-2611989",
+      "passage": "3GPP TSG-RAN WG4 Meeting #120\tR4-2611989\nMaastricht, Netherlands, 24th – 28th August 2026\nSource:\tNokia\nTitle:\tDiscussion on measurement gaps for 6G\nAgenda item:\t8.6.1\nDocument for:\tDiscussion"
+    },
+    {
+      "claim": "Verified document identity and attribution: R4-2630391; database title: Simulations of 6G measurements with and without gaps; database source: Nokia. The original header establishes meeting, location, dates and discussion status, not a meeting outcome.",
+      "tdoc_id": "R4-2630391",
+      "passage": "3GPP TSG-RAN WG4 Meeting #121\tR4-2630391\nCalgary, Canada, 16 - 20 November 2026\nSource:\tNokia\nTitle:\tSimulations of 6G measurements with and without gaps \nAgenda item:\t8.6.1\nDocument for:\tDiscussion"
+    },
+    {
+      "claim": "Verified document identity and attribution: R4-2631565; database title: Simulation results of 6G MG design; database source: Ericsson. The original header establishes meeting, location, dates and discussion status, not a meeting outcome.",
+      "tdoc_id": "R4-2631565",
+      "passage": "3GPP TSG-RAN WG4 Meeting #121\tR4-2631565\nCalgary, Canada, Nov. 16 - 20, 2026\nAgenda item:\t\t\t8.6.1\nSource:\tEricsson\nTitle:\tSimulation results of 6G MG\nDocument for:\tDiscussion"
+    },
+    {
+      "claim": "Verified document identity and attribution: R4-2630453; database title: On 6G MG design study; database source: Apple. The original header establishes meeting, location, dates and discussion status, not a meeting outcome.",
+      "tdoc_id": "R4-2630453",
+      "passage": "3GPP TSG-RAN WG4 Meeting #121\tR4-2630453\nCalgary, Canada, Nov. 16 - 20, 2026\nAgenda item:\t8.6.1\nSource:\tApple\nTitle:\tOn 6G MG design study\nDocument for:\tDiscussion"
+    },
+    {
+      "claim": "Verified document identity and attribution: R4-2632068; database title: Views on measurement gap design for 6GR; database source: Qualcomm Incorporated. The original header establishes meeting, location, dates and discussion status, not a meeting outcome.",
+      "tdoc_id": "R4-2632068",
+      "passage": "3GPP TSG-RAN WG4 #121\tR4-2632068\nCalgary, Canada, Nov. 16 - 20 2026\t\nAgenda item:\t8.6.1\nSource:\tQualcomm Incorporated\nTitle:\tViews on measurement gap design for 6GR\nDocument for:\tDiscussion"
+    },
+    {
+      "claim": "A planned measurement gap removes the device from scheduling, whereas the August autonomous-blackout simulation leaves it schedulable during two 1 ms interruptions every 40 ms. This supports the operational baseline and the earlier evaluation conditions.",
+      "tdoc_id": "R4-2611989",
+      "passage": "The interruptions model reproduces the scenario where a UE performs measurements that disrupt normal data reception — as opposed to what happens with periodic planned gaps (where the UE is simply removed from the scheduler). For the sake of these simulations, there are 2 x 1 ms Interruptions every 40 ms. UE autonomous interruptions generate in the simulator a receive-side “blackout”: The UE e.g., misses DL transport blocks during the Interruptions window, without being removed from the scheduler."
+    },
+    {
+      "claim": "Qualcomm defines autonomous timing, shared knowledge of timing, and interruption-free measurement as distinct scenarios. Gapless does not imply interruption-free.",
+      "tdoc_id": "R4-2632068",
+      "passage": "Three scenarios are primarily under consideration:\nScenario 1: UE autonomous interruption\nOption 1: UE autonomous interruption without time-domain restriction\nThe interruption location is unknown without any time-domain restriction\nOption 2: UE autonomous interruption with time-domain restriction\nThe interruption location is unknown with some time-domain restriction\nScenario 2: Interruption aware to both network and UE\nOption 1: Network controlled interruption\nOption 2: Interruption suggested or indicated by UE\nScenario 3: Gap-less measurement without interruption"
+    },
+    {
+      "claim": "Qualcomm describes device-autonomous downlink/uplink interruption while retuning the radio and the resulting network scheduling uncertainty.",
+      "tdoc_id": "R4-2632068",
+      "passage": "S1-O1: UE-autonomous interruption without time-domain restriction, where the UE may interrupt DL and UL while retuning its RF to perform measurements without gaps. The UE determines when such interruptions occur, which may create network scheduling uncertainty because the network is not aware of the interruption timing. This can lead to throughput loss due to failed transmissions and retransmissions, possible MCS degradation, and potential synchronization impact if the UE misses critical control information. Although this option provides UE implementation flexibility, these drawbacks need to be considered."
+    },
+    {
+      "claim": "Nokia already preferred network-visible interruption timing in its August paper; this is a baseline position, not newly reached consensus.",
+      "tdoc_id": "R4-2611989",
+      "passage": "At RAN4#119, several contributions discussed the scenarios to study for 6G gap-less measurements, including UE autonomous interruption, interruption aware to both network and UE, and gap-less measurement without interruption. From the discussion, it is clear that interruption visibility to the network is a key aspect for the 6G design, since unknown interruption locations may impact scheduling, control-channel reliability, HARQ operation, link adaptation, and overall system throughput. In Nokia’s view, unrestricted UE autonomous interruption should not be used as a baseline design assumption for 6G gap-less measurements. Instead, RAN4 should focus the study on solutions where the network has more visibility to interruption locations, or where no interruption is caused, so that the network can reliably protect critical transmissions and coordinate measurement-related interruptions across UEs."
+    },
+    {
+      "claim": "The earlier Nokia evaluation identified feedback-driven link-adaptation errors and conservative transmission settings as a source of loss beyond interrupted resources.",
+      "tdoc_id": "R4-2611989",
+      "passage": "Figure 3 shows the evaluation of link adaptation impact on the results for the scenarios of Figure 1 and Figure 2. The results in Figure 3 show a comparison of the throughput gain achieved by removing interruptions, or using an ideal gain in comparison to the case of no-gaps with interruptions and realistic OLLA. The results with Ideal OLLA are generated by OLLA ignoring the contribution of interruptions on the BLER. The results show a significant throughput improvement when using ideal OLLA in comparison to realistic OLLA. Therefore, the simulations indicate that throughput degradation exceeds the resources directly affected by interruptions. The main reason is identified in the interaction with the link adaptation. Interruption-induced transmission failures are wrongly interpreted as channel degradation and drive OLLA towards lower operating points, resulting in reduced MCS and long-lasting throughput penalties. Separate analyses were therefore conducted to isolate OLLA effects. The results indicate that a significant contribution of the observed performance loss originates from incorrect OLLA adaptation rather than solely from retransmissions. These findings motivate network-controlled or network-aware interruption mechanisms in 6G."
+    },
+    {
+      "claim": "The November Nokia system model includes cross-slot scheduling, downlink control/data losses and uplink feedback errors; unrestricted S1-O1 can affect up to three transmission opportunities and is described as almost worst case.",
+      "tdoc_id": "R4-2630391",
+      "passage": "This contribution further evaluates S1-O1 and S1-O2 using cross-slot scheduling and models both DL control/data losses and UL ACK/NACK errors. For S1-O1, PDCCH is not protected; therefore, an interruption affecting PDCCH, PDSCH, and HARQ feedback can affect up to three TB transmission opportunities: one due to missing HARQ feedback, one due to interrupted PDSCH reception, and one due to loss of the scheduling DCI for the subsequent transmission. This yields almost worst-case scenario behaviour. Further losses which were not modeled here could stem from multi-slot or cross-carrier grants being lost by an interruption. For S1-O2, PDCCH is modeled as protected from interruption, subject to RAN1 agreement, resulting in up to two affected TB transmission opportunities under the same assumptions, i.e. 1 slot lost of PDSCH and 1 slot lost of HARQ feedback."
+    },
+    {
+      "claim": "For S1-O2 Nokia assumes protected control reception, subject to RAN1 agreement, but still permits data loss and lost feedback, affecting up to two transmission opportunities. This is a modeling assumption, not an agreed physical-layer mechanism.",
+      "tdoc_id": "R4-2630391",
+      "passage": "This contribution further evaluates S1-O1 and S1-O2 using cross-slot scheduling and models both DL control/data losses and UL ACK/NACK errors. For S1-O1, PDCCH is not protected; therefore, an interruption affecting PDCCH, PDSCH, and HARQ feedback can affect up to three TB transmission opportunities: one due to missing HARQ feedback, one due to interrupted PDSCH reception, and one due to loss of the scheduling DCI for the subsequent transmission. This yields almost worst-case scenario behaviour. Further losses which were not modeled here could stem from multi-slot or cross-carrier grants being lost by an interruption. For S1-O2, PDCCH is modeled as protected from interruption, subject to RAN1 agreement, resulting in up to two affected TB transmission opportunities under the same assumptions, i.e. 1 slot lost of PDSCH and 1 slot lost of HARQ feedback."
+    },
+    {
+      "claim": "Both Nokia autonomous scenarios assume a 0.5 ms interruption before and after each 40 ms measurement occasion, totaling a raw interruption ratio of 2.5%.",
+      "tdoc_id": "R4-2630391",
+      "passage": "Throughput loss is reported relative to the no-gaps/no-interruptions case. For S1-O1 and S1-O2, gap-less measurements are assumed with interruptions before and after an SMTC having 40 ms periodicity. Each interruption has a duration of 0.5 ms, corresponding to one slot, and the resulting raw interruption ratio is 2.5%."
+    },
+    {
+      "claim": "In the worked dependency example, one interrupted slot can lose present data, feedback for preceding data and a grant for following data, without a three-slot physical blackout.",
+      "tdoc_id": "R4-2630391",
+      "passage": "Under S1-O1, a one-slot interruption is not limited to that slot: besides the PDSCH TB in the interrupted slot, HARQ feedback for the preceding slot and DCI for the following slot may be affected, so one interruption can cause loss or unnecessary retransmission of multiple TBs. For both S1-O1 and S1-O2 the network is not aware of per-UE interruption timing on the serving cell. Comparing S1-O1 with S1-O2 under PLA, mean cell throughput for S1-O1 is about 12–16% lower than for S1-O2 for the same traffic and load, which illustrates the additional cost of unprotected PDCCH in the S1-O1 model."
+    },
+    {
+      "claim": "The reception/retransmission data unit described as a transport block in the article is what Nokia calls a PDSCH TB; its earlier, current and subsequent transmission opportunities are separately affected.",
+      "tdoc_id": "R4-2630391",
+      "passage": "Under S1-O1, a one-slot interruption is not limited to that slot: besides the PDSCH TB in the interrupted slot, HARQ feedback for the preceding slot and DCI for the following slot may be affected, so one interruption can cause loss or unnecessary retransmission of multiple TBs. For both S1-O1 and S1-O2 the network is not aware of per-UE interruption timing on the serving cell. Comparing S1-O1 with S1-O2 under PLA, mean cell throughput for S1-O1 is about 12–16% lower than for S1-O2 for the same traffic and load, which illustrates the additional cost of unprotected PDCCH in the S1-O1 model."
+    },
+    {
+      "claim": "Nokia describes outer-loop link adaptation selecting a more conservative modulation and coding scheme even when radio-channel conditions have not worsened. This supports the operational explanation of MCS and feedback-driven rate adjustment.",
+      "tdoc_id": "R4-2630391",
+      "passage": "In the previous meeting, system-level simulation results showed that interruption-induced loss of PDSCH transport blocks can reduce DL throughput beyond the loss associated with the required retransmissions. In particular, interruption-affected HARQ feedback may cause the gNB outer-loop link adaptation (OLLA) to select a more conservative modulation and coding scheme (MCS), even when the underlying radio-channel conditions have not degraded."
+    },
+    {
+      "claim": "Ordinary adaptation responds to interruption-affected feedback; ideal adaptation suppresses unjustified down-steps. The ideal case is an evaluation upper bound, explicitly not deployable.",
+      "tdoc_id": "R4-2630391",
+      "passage": "Two link-adaptation settings are considered for S1-O1 and S1-O2. With practical link adaptation (PLA), OLLA processes HARQ feedback normally, such that missing or unreliable feedback during an interruption may trigger an unwarranted MCS reduction. With ideal link adaptation (ILA), interruption-affected feedback does not cause an OLLA down-step not justified by channel behaviour. ILA is used only as an evaluation upper bound and does not represent a deployable feature. Mitigation is applied only to S1-O1 and S1-O2; Gap, NCSG with visible interruption lengths (VILs) of 0.5 ms and 1 ms, and the no-gaps/no-interruptions reference are evaluated with PLA only. A VIL of 0.5 ms was simulated in light of ongoing discussions to shorten the interruption length, which could be argued to also justify shortening the VIL of the NCSG."
+    },
+    {
+      "claim": "The reported numerical table in the article is the 84-device full-buffer evaluation and concerns mean downlink cell throughput relative to no gaps/no interruptions.",
+      "tdoc_id": "R4-2630391",
+      "passage": "Figure 1 shows mean DL cell throughput at 84 UEs in full-buffer traffic. PLA is practical link adaptation without ideal mitigation; and Figure 2 shows DL throughput loss (%) relative to the no gaps no interruptions reference at 84 UEs in full-buffer traffic.  ILA is ideal link adaptation for S1-O1 and S1-O2 only. Gap and both NCSG cases are PLA only. Colours are per scenario in the legend (PLA = full colour, ILA = lighter tint where shown)."
+    },
+    {
+      "claim": "For the 84-device full-buffer case, S1-O1 loses 38.9% with ordinary adaptation and 23.4% with ideal adaptation; S1-O2 loses 28.8% and 18.1% respectively. The same passage supports the approximately 15-point ideal-adaptation recovery cited for S1-O1.",
+      "tdoc_id": "R4-2630391",
+      "passage": "Loss (%) vs the 8.69 Mbps no-gap no interruption  reference: S1-O1 38.9% (PLA) / 23.4% (ILA); S1-O2 28.8% / 18.1%; Gap 13.6% (PLA only); NCSG 1.8% and 4.7% (PLA). ILA cuts S1-O1/S1-O2 loss by ~15 and ~11 percentage points vs PLA."
+    },
+    {
+      "claim": "Interpretation premise: protecting control reduces the reported loss under both adaptation models, and substantial residual losses remain even under ideal adaptation. These reported values support the article's inference that fixing adaptation alone does not collapse loss to the raw interruption ratio.",
+      "tdoc_id": "R4-2630391",
+      "passage": "Loss (%) vs the 8.69 Mbps no-gap no interruption  reference: S1-O1 38.9% (PLA) / 23.4% (ILA); S1-O2 28.8% / 18.1%; Gap 13.6% (PLA only); NCSG 1.8% and 4.7% (PLA). ILA cuts S1-O1/S1-O2 loss by ~15 and ~11 percentage points vs PLA."
+    },
+    {
+      "claim": "Interpretation premise: the raw interruption ratio is 2.5%, a duration measure, not a throughput-loss guarantee. Read with the measured loss values and dependency model, it supports distinguishing unavailable time from procedural and adaptation costs.",
+      "tdoc_id": "R4-2630391",
+      "passage": "Throughput loss is reported relative to the no-gaps/no-interruptions case. For S1-O1 and S1-O2, gap-less measurements are assumed with interruptions before and after an SMTC having 40 ms periodicity. Each interruption has a duration of 0.5 ms, corresponding to one slot, and the resulting raw interruption ratio is 2.5%."
+    },
+    {
+      "claim": "Interpretation premise: under practical adaptation, interruption-related missing or unreliable feedback is treated as failed reception, lowering transmission settings; removing that reaction does not itself repair affected transmissions.",
+      "tdoc_id": "R4-2630391",
+      "passage": "The larger loss for S1-O1 than for S1-O2 is consistent with DL BLER shifted upward and DL MCS shifted toward lower indices in the BLER and MCS CDFs. Under PLA, conservative OLLA after disturbed HARQ feedback adds loss beyond direct TB loss and retransmission the MCS distribution moves down because the network treats missing or unreliable feedback during interruptions as failed receptions. ILA largely restores MCS toward the Gap/NCSG/reference cluster while mean BLER for S1 can be similar or slightly higher than under PLA, which is consistent with suppressing erroneous OLLA down-steps rather than “improving BLER” in isolation."
+    },
+    {
+      "claim": "The August paper described its ideal-adaptation result as nearly aligning throughput with uninterrupted operation; the article contrasts that qualitative description with November's substantial ideal-case residual, without claiming a matched time trend.",
+      "tdoc_id": "R4-2611989",
+      "passage": "Figure 3: Not applying OLLA during Interruptions (Ideal OLLA) almost aligns throughput to the case without Interruptions. The impact due to resources directly affected by Interruptions is the difference between the two bars"
+    },
+    {
+      "claim": "Interpretation premise for the August/November comparison: the November evaluation explicitly models control, data and feedback dependencies, including multiple affected transmission opportunities.",
+      "tdoc_id": "R4-2630391",
+      "passage": "This contribution further evaluates S1-O1 and S1-O2 using cross-slot scheduling and models both DL control/data losses and UL ACK/NACK errors. For S1-O1, PDCCH is not protected; therefore, an interruption affecting PDCCH, PDSCH, and HARQ feedback can affect up to three TB transmission opportunities: one due to missing HARQ feedback, one due to interrupted PDSCH reception, and one due to loss of the scheduling DCI for the subsequent transmission. This yields almost worst-case scenario behaviour. Further losses which were not modeled here could stem from multi-slot or cross-carrier grants being lost by an interruption. For S1-O2, PDCCH is modeled as protected from interruption, subject to RAN1 agreement, resulting in up to two affected TB transmission opportunities under the same assumptions, i.e. 1 slot lost of PDSCH and 1 slot lost of HARQ feedback."
+    },
+    {
+      "claim": "Ericsson's full-buffer simulation has 30 devices and 80 ms repetition. Its network-controlled 0.5 ms visible interruption loses less than 0.5% against uninterrupted operation; its autonomous 0.5 ms interruption is comparable to a 6 ms gap at the same period despite the smaller raw interruption ratio.",
+      "tdoc_id": "R4-2631565",
+      "passage": "Table 2 compares the average DL/UL UE throughput of the gap-based and gapless measurement proposals for 30 UEs with full-buffer traffic. The “no gap no interruption” case represents operation without measurement-related interruptions. S2-O1 (MGRP=80ms, VIL=0.5ms) achieves the highest average DL/UL UE throughput among the evaluated proposals, with less than 0.5% loss relative to this reference case, owing to the short VIL and effective indication of UE interruptions to the NW. The UE-autonomous S1-O1 (MGRP=80ms, VIL=0.5ms) provides throughput comparable to MG (MGRP=80ms, MGL=6ms), despite a theoretical interruption ratio of only 1.25%, compared with 7.5% for the MG. Indicating UE interruptions to the NW enables more efficient scheduling across UEs and mitigates throughput loss. Increasing the VIL to 1ms in S1-O1 (MGRP=80ms) results in approximately 4.5% DL throughput loss. Symbol-level S1-O1 (MGRP=80ms, MGL=6 symbols), with an interruption duration equivalent to 140us plus 33us (MRTD), achieves throughput comparable to S2-O1 (MGRP=80ms, VIL=0.5ms)."
+    },
+    {
+      "claim": "The favorable counterexample is Ericsson's six-symbol autonomous interruption in the full-buffer 30-device, 80 ms case, reported comparable to network-controlled interruption. The article does not generalize this to every traffic model.",
+      "tdoc_id": "R4-2631565",
+      "passage": "Table 2 compares the average DL/UL UE throughput of the gap-based and gapless measurement proposals for 30 UEs with full-buffer traffic. The “no gap no interruption” case represents operation without measurement-related interruptions. S2-O1 (MGRP=80ms, VIL=0.5ms) achieves the highest average DL/UL UE throughput among the evaluated proposals, with less than 0.5% loss relative to this reference case, owing to the short VIL and effective indication of UE interruptions to the NW. The UE-autonomous S1-O1 (MGRP=80ms, VIL=0.5ms) provides throughput comparable to MG (MGRP=80ms, MGL=6ms), despite a theoretical interruption ratio of only 1.25%, compared with 7.5% for the MG. Indicating UE interruptions to the NW enables more efficient scheduling across UEs and mitigates throughput loss. Increasing the VIL to 1ms in S1-O1 (MGRP=80ms) results in approximately 4.5% DL throughput loss. Symbol-level S1-O1 (MGRP=80ms, MGL=6 symbols), with an interruption duration equivalent to 140us plus 33us (MRTD), achieves throughput comparable to S2-O1 (MGRP=80ms, VIL=0.5ms)."
+    },
+    {
+      "claim": "Interpretation premise: comparing the half-millisecond autonomous result with the six-symbol autonomous result changes throughput ordering in Ericsson's full-buffer model, supporting conditional study of shorter autonomous interruptions.",
+      "tdoc_id": "R4-2631565",
+      "passage": "Table 2 compares the average DL/UL UE throughput of the gap-based and gapless measurement proposals for 30 UEs with full-buffer traffic. The “no gap no interruption” case represents operation without measurement-related interruptions. S2-O1 (MGRP=80ms, VIL=0.5ms) achieves the highest average DL/UL UE throughput among the evaluated proposals, with less than 0.5% loss relative to this reference case, owing to the short VIL and effective indication of UE interruptions to the NW. The UE-autonomous S1-O1 (MGRP=80ms, VIL=0.5ms) provides throughput comparable to MG (MGRP=80ms, MGL=6ms), despite a theoretical interruption ratio of only 1.25%, compared with 7.5% for the MG. Indicating UE interruptions to the NW enables more efficient scheduling across UEs and mitigates throughput loss. Increasing the VIL to 1ms in S1-O1 (MGRP=80ms) results in approximately 4.5% DL throughput loss. Symbol-level S1-O1 (MGRP=80ms, MGL=6 symbols), with an interruption duration equivalent to 140us plus 33us (MRTD), achieves throughput comparable to S2-O1 (MGRP=80ms, VIL=0.5ms)."
+    },
+    {
+      "claim": "Nokia's link-level test models symbol interruptions by puncturing affected resource elements and giving their bits zero decoding reliability. The shorter symbol duration is a different granularity from the whole-slot blackout.",
+      "tdoc_id": "R4-2630391",
+      "passage": "We also performed link level simulations to consider effects of symbol level interruptions. Interruptions were modelled by puncturing the interrupted resource elements at the receiver, i.e. as setting the IQ = 0 after FFT stage and setting the LLRs to 0 after the soft demodulation stage. This result in the decoder considering that all interrupted bits have zero reliability. Interruption lengths were adaptable with a 13-symbol interruption indicating a full slot interruption. Interruptions lengths studied were aligned with the RF discussion RAN4#120, i.e. interruptions of 35 us, 70 us, 140 us, [210] us are modelled as 1, 3, 5, and 7 OFDM symbols. "
+    },
+    {
+      "claim": "Nokia's link-level result avoids control and demodulation-reference symbols, uses practical channel estimation and reports nearly 100% block error at MCS 13 and above for a one-symbol interruption at 20 dB SNR. The population is interrupted blocks only.",
+      "tdoc_id": "R4-2630391",
+      "passage": "Figure 11 shows results for practical channel estimation, with interruptions avoiding DMRS and PDCCH symbols. This figure shows BLER level at 20 dB SNR for each MCS, only for the interrupted transport blocks. From the results of this figure, we can notice that above a certain MCS the BLER approaches 100%. For 1 symbol interruption, MCS 13 and above experience close to 100 % BLER. For 3 symbol interruptions, the limit is MCS=7. For 5 symbol the limit is MCS=6, while for 7 symbols, the limit is MCS=2."
+    },
+    {
+      "claim": "Interpretation premise: interrupted blocks can fail despite an interruption limited to one symbol, even with control and channel-estimation symbols preserved; preserving most symbols cannot be assumed to preserve throughput.",
+      "tdoc_id": "R4-2630391",
+      "passage": "Figure 11 shows results for practical channel estimation, with interruptions avoiding DMRS and PDCCH symbols. This figure shows BLER level at 20 dB SNR for each MCS, only for the interrupted transport blocks. From the results of this figure, we can notice that above a certain MCS the BLER approaches 100%. For 1 symbol interruption, MCS 13 and above experience close to 100 % BLER. For 3 symbol interruptions, the limit is MCS=7. For 5 symbol the limit is MCS=6, while for 7 symbols, the limit is MCS=2."
+    },
+    {
+      "claim": "Interpretation premise for withholding a cross-company ranking: Ericsson's favorable short-autonomy result concerns system throughput at 30 devices and an 80 ms repetition period.",
+      "tdoc_id": "R4-2631565",
+      "passage": "Table 2 compares the average DL/UL UE throughput of the gap-based and gapless measurement proposals for 30 UEs with full-buffer traffic. The “no gap no interruption” case represents operation without measurement-related interruptions. S2-O1 (MGRP=80ms, VIL=0.5ms) achieves the highest average DL/UL UE throughput among the evaluated proposals, with less than 0.5% loss relative to this reference case, owing to the short VIL and effective indication of UE interruptions to the NW. The UE-autonomous S1-O1 (MGRP=80ms, VIL=0.5ms) provides throughput comparable to MG (MGRP=80ms, MGL=6ms), despite a theoretical interruption ratio of only 1.25%, compared with 7.5% for the MG. Indicating UE interruptions to the NW enables more efficient scheduling across UEs and mitigates throughput loss. Increasing the VIL to 1ms in S1-O1 (MGRP=80ms) results in approximately 4.5% DL throughput loss. Symbol-level S1-O1 (MGRP=80ms, MGL=6 symbols), with an interruption duration equivalent to 140us plus 33us (MRTD), achieves throughput comparable to S2-O1 (MGRP=80ms, VIL=0.5ms)."
+    },
+    {
+      "claim": "Interpretation premise for withholding a cross-company ranking: Nokia's system example is evaluated with 84 devices in full-buffer traffic.",
+      "tdoc_id": "R4-2630391",
+      "passage": "Figure 1 shows mean DL cell throughput at 84 UEs in full-buffer traffic. PLA is practical link adaptation without ideal mitigation; and Figure 2 shows DL throughput loss (%) relative to the no gaps no interruptions reference at 84 UEs in full-buffer traffic.  ILA is ideal link adaptation for S1-O1 and S1-O2 only. Gap and both NCSG cases are PLA only. Colours are per scenario in the legend (PLA = full colour, ILA = lighter tint where shown)."
+    },
+    {
+      "claim": "Interpretation premise for withholding a cross-company ranking: Nokia's autonomous interruptions repeat around a 40 ms measurement occasion.",
+      "tdoc_id": "R4-2630391",
+      "passage": "Throughput loss is reported relative to the no-gaps/no-interruptions case. For S1-O1 and S1-O2, gap-less measurements are assumed with interruptions before and after an SMTC having 40 ms periodicity. Each interruption has a duration of 0.5 ms, corresponding to one slot, and the resulting raw interruption ratio is 2.5%."
+    },
+    {
+      "claim": "Apple argues for device flexibility when measurement operations compete and the device cannot perform them all simultaneously.",
+      "tdoc_id": "R4-2630453",
+      "passage": "For instance, in 5G deactivated SCell measurement, the measCycleSCell is configured for the measurement periodicity but no deterministic time offset of the measurement occasions is configured to UE, and therefore UE would have flexibility to perform the deactivated SCell measurement on an SMTC occasion within measCycleSCell. Another example is: when inter-frequency measurement without MG with interruption is colliding with intra-frequency measurement without MG without interruption in time domain, it can be up to UE implementation to decide when to perform intra-frequency or inter-frequency measurement if UE cannot perform all these measurements simultaneously. This means the visible interruption on gap-less inter-frequency measurement will become invisible or UE specific interruption in this case, as shown in the following figure. "
+    },
+    {
+      "claim": "Apple's autonomous-measurement position is bounded: candidate locations adjoin configured measurement occasions, interruption length and aggregate ratio are bounded, and existing exclusions remain. It does not propose disappearance at arbitrary times.",
+      "tdoc_id": "R4-2630453",
+      "passage": "In our view, the question is not the existing NR use of UE autonomous interruption, but how its impact is bounded if it is used in more cases in 6G. It should be noted that such UE specific interruption is not an unrestricted interruption. Taking the collision case in Figure 1 as an example, UE doesn’t create interruptions at new positions, since the interruption is caused by the RF switching for the configured gap-less inter-frequency measurement, and therefore it remains associated with the configured measurement occasions (SMTC) of that layer, in the same way as in NR, e.g., for deactivated SCC measurement, UE is “only allowed to cause interruptions on PCell or activated SCell(s) immediately before and immediately after an SMTC” (TS 38.133 clause 8.2.2.2.3). When UE cannot perform all intra- and inter-frequency measurements in the same occasion, UE only decides which of the configured occasions are used for which layer. Thus, network can still rely on the following information:\nCandidate interruption positions: adjacent to the configured SMTC occasions of the inter-frequency layer, i.e., the interruption doesn’t occur away from these configured occasions;\nMaximum length of each interruption;\nMaximum interruption ratio over time: since UE only uses a subset of the configured occasions for the inter-frequency layer, the number of interruptions doesn’t exceed that of the fully visible interruption case;\nExisting exclusion rules: e.g., no interruption during DRX ON duration when no SMTC occasion occurs around it (TS 38.133 clause 8.2.2.2.19)."
+    },
+    {
+      "claim": "Apple says the network knows the configured candidate occasions but not which subset the device uses, and can choose deterministic timing when needed.",
+      "tdoc_id": "R4-2630453",
+      "passage": "What network doesn’t know is which subset of the configured occasions UE uses, and the impact on scheduled control and data transmissions is then bounded by the interruption ratio and length limits as in NR today. If network wants to protect particular transmissions, it can schedule them away from the configured occasions of that layer, and if network needs fully deterministic timing, it can configure S2-O1 or MG instead. In our view, this association with the configured measurement occasions is an inherent property of measurement-related interruption, e.g., as already specified in NR for deactivated SCC measurement, and it is different from the time-domain restriction in S1-O2, which requires UE to place the RF switching to avoid specific serving cell channels. We are fine to state this association explicitly in the requirements during the WI phase."
+    },
+    {
+      "claim": "Apple explicitly scopes autonomous measurement to device indication, network authorization per measurement configuration, and quantitative limits. This establishes the bounded-autonomy alternative as Apple's proposal, not an adopted rule.",
+      "tdoc_id": "R4-2630453",
+      "passage": "Also, S1-O1 is not intended for general and unconditional RRM measurements. In our view, the applicability of S1-O1 is bounded by the following conditions:\nUE indication: UE indicates that it supports or needs gap-less measurement with interruption for the target layer, e.g., per-MO or per-band indication based on the current serving cell(s) (see sections 2.2 and 2.3), similar to NeedForInterruptionInfoNR-r18 in NR (TS 38.133 clause 8.2.2.2.19);\nNetwork control: as agreed in RAN4#119, “After receiving UE reported gap related capability or other indication, the MG configuration, including gap-less measurement, should be explicitly under network control”, i.e., network decides for each target measurement whether to configure MG, a network configured pattern (S2-O1), or gap-less measurement with UE autonomous interruption, and S1-O1 is network-authorized per measurement configuration;\nQuantitative bounds: a maximum interruption ratio, with NR as the starting point, and a maximum length of each interruption, for each applicable scenario."
+    },
+    {
+      "claim": "Apple compares two 0.5 ms interruptions every 640 ms (about 0.16%) with the same interruptions every 40 ms (2.5%), arguing that length, ratio and applicable scenarios must be considered together.",
+      "tdoc_id": "R4-2630453",
+      "passage": "In our view, the throughput impact of UE autonomous interruption depends on the interruption amount, which scales with the measurement periodicity, e.g., with one slot of 0.5 ms interrupted before and after each occasion, the interruption ratio is about 0.16% for a 640 ms measCycleSCell, while it’s already 2.5% for a 40 ms SMTC. In the evaluations presented so far, the assumed interruption was about one slot before and after each 40 ms or 80 ms occasion, and it was also shown that reducing the interruption mitigates the throughput degradation. Thus, the maximum interruption, including the maximum interruption ratio and the length of each interruption, is the key bound for S1-O1, and the bound and the applicable scenarios can be decided together in the WI phase."
+    },
+    {
+      "claim": "Interpretation premise: Apple's sparse and frequent examples differ in repetition, so frequent-blackout results alone do not establish the acceptability of sparse autonomous operation.",
+      "tdoc_id": "R4-2630453",
+      "passage": "In our view, the throughput impact of UE autonomous interruption depends on the interruption amount, which scales with the measurement periodicity, e.g., with one slot of 0.5 ms interrupted before and after each occasion, the interruption ratio is about 0.16% for a 640 ms measCycleSCell, while it’s already 2.5% for a 40 ms SMTC. In the evaluations presented so far, the assumed interruption was about one slot before and after each 40 ms or 80 ms occasion, and it was also shown that reducing the interruption mitigates the throughput degradation. Thus, the maximum interruption, including the maximum interruption ratio and the length of each interruption, is the key bound for S1-O1, and the bound and the applicable scenarios can be decided together in the WI phase."
+    },
+    {
+      "claim": "Apple says protecting control leaves data and feedback vulnerable, and that full procedural protection would require known timing. This agrees with Nokia's dependency mechanism without establishing identical scope preferences.",
+      "tdoc_id": "R4-2630453",
+      "passage": "Regarding the impact of missed DCI on subsequent procedures, e.g., a missed UL grant leading to a missing PUSCH, we think such procedural impact is not specific to S1-O1. Under S1-O2, UE may receive the PDCCH but still lose the scheduled PDSCH, or interrupt the slot of the associated PUSCH/PUCCH, and the following HARQ procedure is affected as well. Fully protecting a procedure would require protecting the PDCCH together with all its dependent PDSCH/PUSCH/PUCCH resources, which needs network-known interruption timing, i.e., what S2-O1 provides. Thus, the procedural impact under both S1 options is mainly determined by how often and how long UE interrupts. This is also how NR bounds UE autonomous interruption today, i.e., TS 38.133 bounds the amount of interruption instead of its position relative to specific channels, e.g.,"
+    },
+    {
+      "claim": "Apple identifies radio-switching complexity when carrier receive timing differs and the device tries to avoid each control channel. This is an implementation tradeoff asserted by Apple, not a measured complexity figure.",
+      "tdoc_id": "R4-2630453",
+      "passage": "On the other hand, the adjustment of interruption position on time domain will need adaptive RF component control, which will cause high complexity for UE implementation. For instance, the RTDs among carriers of CA can differ in different CA scenarios (collocated and non-collocated CA) or async/sync DC, UE needs to adjust the RF behaviour based on the different timing of different carriers to avoid interruption to PDCCH for any kind of CA scenarios. In addition, if the interruption is from DL measurement to UL, to avoid impact on UL control channel, UE also needs to consider the Rx-Tx difference across the different carriers. To us, it’s too complicated to standardize option 2 as a generic solution for gap-less measurement with interruption. For instance, if UE has async DC and needs to perform gap-less measurement on PSCC, since the RTD can be up to 500 us, it will require UE to adapt the RF adjustment timing to different RTD conditions, and therefore it will cause high complexity for UE implementation on RF control."
+    },
+    {
+      "claim": "Apple prefers autonomous interruption without time-domain restriction as a baseline and is open to constrained autonomy in limited scenarios.",
+      "tdoc_id": "R4-2630453",
+      "passage": "According to the above analysis, considering both the benefit and complexity, we prefer to consider the autonomous interruption without time-domain restriction as baseline. For the option 2, we are open to solution and applicability scenario discussion, and in our view option 2 can only be applied for limited scenarios, e.g., UE autonomous interruption with time-domain restriction can be considered for the following scenarios:"
+    },
+    {
+      "claim": "Apple proposes limiting control-protected autonomy at least to synchronized cases; it argues that receive timing is then bounded sufficiently to determine the protected position.",
+      "tdoc_id": "R4-2630453",
+      "passage": "Regarding S1-O2 (UE autonomous interruption with time-domain restriction), we think it can be FFS after concluding the S1-O1 and S2-O1 in Rel-21 WI, and the scenario for this option shall at least be limited to synchronized case between victim and aggressor carriers. Only in the synchronized case is the receive timing difference between carriers bounded to a small part of the slot, e.g., up to 33us for FR1 inter-band CA, so that a protected control channel position can be determined at all, while in the asynchronous case it cannot (see Figure 2)."
+    },
+    {
+      "claim": "Qualcomm argues that nominal saved symbol time assumes the device would otherwise have been scheduled in it; partial traffic load and scheduling another device can reduce the system benefit.",
+      "tdoc_id": "R4-2632068",
+      "passage": "These values represent an upper bound on UE-level throughput benefit because they assume that the UE would otherwise be scheduled throughout every affected resource. The exact symbol-level interruption may be more than this due to the placement of the interruption and any timing mis-alignment. Furthermore, with partial traffic loading, the gain scales approximately with the scheduling probability; for example, at 50% utilization, the reduction for the 30 kHz case is about 0.45 percent. From a system perspective, the network may instead schedule another UE in the affected slot, further reducing the benefit of preserving uninterrupted symbols for the same UE."
+    },
+    {
+      "claim": "Qualcomm identifies required physical-layer support, precise timing knowledge and more complex within-slot scheduling; it proposes focusing first on slot granularity and revisiting symbols if justified.",
+      "tdoc_id": "R4-2632068",
+      "passage": "In addition, symbol-level interruption granularity may require RAN1 to define suitable physical-layer or slot-design mechanisms for identifying and using the symbols available before and after the interruption. It would also add significant network scheduling complexity, since the scheduler would need precise symbol-level knowledge of the interruption timing and would need to adapt control and data scheduling within the affected slot. Therefore, although symbol-level granularity reduces nominal UE interruption time, its system-level benefit may be modest and traffic-dependent, particularly at higher SCS, and should be weighed against the additional specification and implementation complexity. We therefore propose to focus first on slot-level granularity, consistent with 5G-NR, and revisit symbol-level granularity only if the expected system-level benefit justifies the additional complexity."
+    },
+    {
+      "claim": "Interpretation premise: saved receiver time does not directly equal added useful system throughput, because another device can use unavailable resources and the affected device need not be scheduled throughout.",
+      "tdoc_id": "R4-2632068",
+      "passage": "These values represent an upper bound on UE-level throughput benefit because they assume that the UE would otherwise be scheduled throughout every affected resource. The exact symbol-level interruption may be more than this due to the placement of the interruption and any timing mis-alignment. Furthermore, with partial traffic loading, the gain scales approximately with the scheduling probability; for example, at 50% utilization, the reduction for the 30 kHz case is about 0.45 percent. From a system perspective, the network may instead schedule another UE in the affected slot, further reducing the benefit of preserving uninterrupted symbols for the same UE."
+    },
+    {
+      "claim": "Interpretation premise for the final evaluation recommendation: applicability depends on interruption duration and repetition, with generic protection further constrained by carrier timing.",
+      "tdoc_id": "R4-2630453",
+      "passage": "In our view, the throughput impact of UE autonomous interruption depends on the interruption amount, which scales with the measurement periodicity, e.g., with one slot of 0.5 ms interrupted before and after each occasion, the interruption ratio is about 0.16% for a 640 ms measCycleSCell, while it’s already 2.5% for a 40 ms SMTC. In the evaluations presented so far, the assumed interruption was about one slot before and after each 40 ms or 80 ms occasion, and it was also shown that reducing the interruption mitigates the throughput degradation. Thus, the maximum interruption, including the maximum interruption ratio and the length of each interruption, is the key bound for S1-O1, and the bound and the applicable scenarios can be decided together in the WI phase."
+    },
+    {
+      "claim": "Interpretation premise for the final evaluation recommendation: the same duration causes different procedural exposure depending on control-channel protection and feedback dependencies.",
+      "tdoc_id": "R4-2630391",
+      "passage": "This contribution further evaluates S1-O1 and S1-O2 using cross-slot scheduling and models both DL control/data losses and UL ACK/NACK errors. For S1-O1, PDCCH is not protected; therefore, an interruption affecting PDCCH, PDSCH, and HARQ feedback can affect up to three TB transmission opportunities: one due to missing HARQ feedback, one due to interrupted PDSCH reception, and one due to loss of the scheduling DCI for the subsequent transmission. This yields almost worst-case scenario behaviour. Further losses which were not modeled here could stem from multi-slot or cross-carrier grants being lost by an interruption. For S1-O2, PDCCH is modeled as protected from interruption, subject to RAN1 agreement, resulting in up to two affected TB transmission opportunities under the same assumptions, i.e. 1 slot lost of PDSCH and 1 slot lost of HARQ feedback."
+    },
+    {
+      "claim": "Interpretation premise for the final evaluation recommendation: short-autonomy results can approach network-controlled operation under Ericsson's stated full-buffer conditions. A matched evaluation is needed before extending that claim.",
+      "tdoc_id": "R4-2631565",
+      "passage": "Table 2 compares the average DL/UL UE throughput of the gap-based and gapless measurement proposals for 30 UEs with full-buffer traffic. The “no gap no interruption” case represents operation without measurement-related interruptions. S2-O1 (MGRP=80ms, VIL=0.5ms) achieves the highest average DL/UL UE throughput among the evaluated proposals, with less than 0.5% loss relative to this reference case, owing to the short VIL and effective indication of UE interruptions to the NW. The UE-autonomous S1-O1 (MGRP=80ms, VIL=0.5ms) provides throughput comparable to MG (MGRP=80ms, MGL=6ms), despite a theoretical interruption ratio of only 1.25%, compared with 7.5% for the MG. Indicating UE interruptions to the NW enables more efficient scheduling across UEs and mitigates throughput loss. Increasing the VIL to 1ms in S1-O1 (MGRP=80ms) results in approximately 4.5% DL throughput loss. Symbol-level S1-O1 (MGRP=80ms, MGL=6 symbols), with an interruption duration equivalent to 140us plus 33us (MRTD), achieves throughput comparable to S2-O1 (MGRP=80ms, VIL=0.5ms)."
+    }
+  ],
+  "coverage_gaps": [
+    "Original simulation parameter tables and graphical curves are absent from the Nokia R4-2630391 and Ericsson R4-2631565 raw extraction. The analysis uses explicit textual evaluation conditions and results, confines quantitative comparison to Nokia's own reported full-buffer case, and does not rank Nokia against Ericsson or infer missing receiver, channel or scheduler settings.",
+    "Ericsson R4-2631565 conclusion Observation 2 generalizes six-symbol performance to all traffic models, while its cloud-gaming body compares that option with a conventional gap. The article uses only the explicit full-buffer-body result; cloud-gaming claims and ambiguous scenario labels are excluded.",
+    "Nokia R4-2630391 has inconsistent numerical summaries in its later retransmission discussion. Those figures and the retransmission-combining result are not used to explain the residual system loss.",
+    "Referenced October way-forward and topic-summary documents R4-2621632 and R4-2621595 are absent from the snapshot. No October consensus or November outcome is inferred from the incoming papers.",
+    "The August Nokia baseline is historical research, not a new candidate. The November candidates support the new protected-control comparison, shorter-interruption counterexample, bounded-autonomy case and Qualcomm scheduling qualification.",
+    "Full-buffer traffic is used operationally to mean traffic is available to send throughout; generic channel and coding terms are explained in prose from the procedures modeled, without claiming those explanations are verbatim source definitions."
+  ]
+}
