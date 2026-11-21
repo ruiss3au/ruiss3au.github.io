@@ -1,0 +1,248 @@
+{
+  "editorial": {
+    "decision": "publish",
+    "question": "How can a single-radio 6G sensing feasibility or coexistence test retain the benefit of multiple sensing nodes without pretending that a fixed fusion gain guarantees network detection?",
+    "answer": "The new RAN1 reply rules out a generally applicable conversion, while the underlying contributions distinguish three conditional abstractions: strongest-echo node selection, availability of n usable links, and calibration within a complete multi-node simulation. Their difference is what spatial and processing dependencies they preserve. A repeatable radio-interference comparison can measure loss of usable-link support, but cannot certify final detection and false-alarm performance without the specified fusion and geometry.",
+    "mechanism": "Per-node echo quality feeds a detector; detections then undergo clustering, cross-node confirmation, fusion and possibly tracking before object-level metrics are calculated. Multiple viewpoints can reject moving multipath ghosts and cover angular blind zones. Added single-link power or a scalar SNR credit does not reproduce those operations. An nth-best-link statistic retains the requirement that several links clear a common detector threshold, while full simulation additionally retains the object-decision pipeline.",
+    "tradeoff": "ZTE and Sanechips fix selection to the strongest echo and obtain zero fusion gain by definition, discarding multi-node confirmation. Ericsson retains an explicit n-link availability criterion without specifying proprietary fusion, sacrificing a direct object-performance guarantee. vivo derives a threshold from its full six-node simulation, retaining fusion but conditioning the threshold on its deployment, resource accumulation, SNR averaging and processing. CATT and CICTCI explain why geometry, metric and tracking prevent a common scalar; the papers do not supply a matched numerical ranking of the alternatives.",
+    "consequence": "An evaluator can compare adjacent-channel interference against an otherwise identical no-interference case using common detector settings and a declared link-count criterion. An implementer must treat that as a test of available sensing observations, not as a guarantee of network detection or localization. A scenario-calibrated threshold needs its geometry and processing assumptions attached.",
+    "novelty": "Existing RAN4#120bis coverage described the open mapping request. This analysis uses the new R1-2610961 response and original company papers to explain the physical failure of a universal scalar, distinguish actual alternatives and identify what a reproducible coexistence experiment can establish. Waveform progress in R1-2611013 lacks its substantive extracted filter/conclusion blocks; AI-DPoD generalization and gain comparisons lack key result tables; the new 400 MHz TB-mapping coalition papers chiefly renew a design preference. Those angles are held.",
+    "uncertainty": "No matched experiment establishes which abstraction best predicts object-level degradation under interference. vivo provides a textual operating point, SNR definition and methodology but its detailed assumption table and curves are not extracted; the article does not derive a portable numeric RF limit or rank methods quantitatively. Validation linking ranked-link availability to final detection, false alarms and accuracy under matched geometry and processing could strengthen or overturn the proposed intermediate test. RAN1 leaves scenario-specific characterization to RAN4 and does not select a company method.",
+    "source_ids": [
+      "R1-2609012",
+      "R1-2610961",
+      "R1-2610364",
+      "R1-2609650",
+      "R1-2609482",
+      "R1-2609486"
+    ],
+    "analysis_excerpt": "For a two-link confirmation rule, this means checking the second-best link. An excellent strongest link cannot compensate for the second link falling below threshold. This is the useful distinction between the selection and availability approaches: the latter can expose interference that removes corroborating observations even when the best observation survives. It follows from Ericsson's ranking rule and its description of implementations requiring confirmation by multiple TRPs; it is an analytical consequence, not a reported comparison between the proposals. [R1-2610364](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_127/Docs/R1-2610364.zip)."
+  },
+  "claims": [
+    {
+      "claim": "Verified identity and attribution: R1-2609012, LS on network-wide sensing performance for 6G sensing, source field RAN4; original meeting header retained here. R1-2609012 forwards an earlier October RAN4 letter.",
+      "tdoc_id": "R1-2609012",
+      "passage": "3GPP TSG-RAN WG1 Meeting #127\tR1-2609012\nCalgary, Canada, 16th –20th Nov, 2026\n3GPP TSG RAN WG4 Meeting #120bis                                          R4-2622113\nJeju, 12th – 6th October 2026 \nTitle:\tLS on network-wide sensing performance for 6G sensing\nResponse to: \t\nRelease:\tRel-20\nWork Item:\tFS_6G_Radio\nSource:\tRAN WG4\nTo:\tRAN WG1\nCC:\tRAN\nContact Person:\t\nName:\t\t           Mustafa Emara\nE-mail Address:     memara@qti.qualcomm.com"
+    },
+    {
+      "claim": "Verified identity and attribution: R1-2610961, Reply LS on network-wide sensing performance for 6G sensing, source field RAN1; original meeting header retained here. R1-2609012 forwards an earlier October RAN4 letter.",
+      "tdoc_id": "R1-2610961",
+      "passage": "3GPP TSG RAN WG1 #127\t\t\t \t\t\t\t   R1-2610961\nCalgary, CA, Nov. 16th-20th, 2026\nTitle:\tReply LS on network-wide sensing performance for 6G sensing\nResponse to:\tR4-2622113\nRelease:\tRel-20\nWork Item:\tFS_6G_Radio\nSource:\tRAN WG1\nTo:\tRAN WG4\nCc:\tTSG RAN\nContact Person:\t\nName:\tYongqiang Fei\nE-mail Address:\tfeiyongqiang@catt.cn\nSend any reply LS to:\t3GPP Liaisons Coordinator, mailto:3GPPLiaison@etsi.org \nAttachments:\tNone"
+    },
+    {
+      "claim": "Verified identity and attribution: R1-2610364, Discussion on RAN4 LS on network wide sensing performance for 6G sensing, source field Ericsson; original meeting header retained here. R1-2609012 forwards an earlier October RAN4 letter.",
+      "tdoc_id": "R1-2610364",
+      "passage": "3GPP TSG-RAN WG1 Meeting #127\tR1-2610364\nCalgary, Canada, November 16th – 20th, 2026\nAgenda Item:\t5\nSource:\tEricsson\nTitle:\tDiscussion on RAN4 LS on network wide sensing performance for 6G sensing\nWork Item:\tFS_6G_Radio\nDocument for:\tDiscussion"
+    },
+    {
+      "claim": "Verified identity and attribution: R1-2609650, Discussion on network-wide sensing performance for 6G sensing, source field CATT, CICTCI; original meeting header retained here. R1-2609012 forwards an earlier October RAN4 letter.",
+      "tdoc_id": "R1-2609650",
+      "passage": "3GPP TSG RAN WG1 #127\t\tR1-2609650\nCalgary, Canada, Nov. 16th – 20th, 2026\nSource:\tCATT, CICTCI\nTitle:\tDiscussion on network-wide sensing performance for 6G sensing\nAgenda Item:\t5\nDocument for:\tDiscussion and Decision"
+    },
+    {
+      "claim": "Verified identity and attribution: R1-2609482, Discussion for LS on network-wide sensing performance for 6G sensing, source field ZTE Corporation, Sanechips; original meeting header retained here. R1-2609012 forwards an earlier October RAN4 letter.",
+      "tdoc_id": "R1-2609482",
+      "passage": "3GPP TSG RAN WG1 Meeting #127\t\tR1-2609482\nCalgary, Canada, 16th ~ 20th Nov, 2026\nAgenda item:\t5\nSource:\tZTE Corporation, Sanechips\nTitle:\tDiscussion for LS on network-wide sensing performance for 6G sensing\nDocument for:\tDiscussion and decision"
+    },
+    {
+      "claim": "Verified identity and attribution: R1-2609486, Discussion on LS on network-wide sensing performance for 6G sensing, source field vivo; original meeting header retained here. R1-2609012 forwards an earlier October RAN4 letter.",
+      "tdoc_id": "R1-2609486",
+      "passage": "3GPP TSG RAN WG1 #127\t\t\tR1-2609486\nCalgary, Canada, November 16th ~ 20th, 2026\nSource:\tvivo\nTitle:\tDiscussion on LS on network-wide sensing performance for 6G sensing\nAgenda Item:\t5\nDocument for:\tDiscussion and Decision"
+    },
+    {
+      "claim": "RAN1 states it has not established a derivation of single-node SNR/SINR KPIs from network sensing targets.",
+      "tdoc_id": "R1-2610961",
+      "passage": "RAN1 has not studied or established a mechanism to derive single-node KPIs (based on SNR/SINR) from network-wide sensing KPIs in clause 5.1.17 of TR 38.914. "
+    },
+    {
+      "claim": "RAN1 rejects a generally applicable simplified mapping and identifies scenario, deployment, mode, node selection, target and processing dependencies. It leaves scenario-specific RF feasibility/coexistence characterization to RAN4; this does not select an individual company method.",
+      "tdoc_id": "R1-2610961",
+      "passage": "RAN1 considers that no generally applicable simplified mapping (e.g. fusion gain or scaling factor) can be recommended to map between single-node and multi-node sensing performance.\nNetwork-wide sensing KPI may not only depend on a single-node SNR/SINR. It also depends at least on sensing scenario and deployment, sensing mode, selection of participating sensing nodes, sensing target assumptions, assumed detector and processing method (including fusion algorithm and tracking) which are implementation specific. However, it is up to RAN4 whether/how to characterize a scenario-specific fusion gain or scaling factor for an aligned reference scenario and evaluation methodology for RAN4’s RF feasibility and coexistence evaluations."
+    },
+    {
+      "claim": "RAN1 does not currently plan to study mapping multi-node requirements into single-node requirements.",
+      "tdoc_id": "R1-2610961",
+      "passage": "Currently RAN1 does not plan to study how to map multi-node sensing performance requirements into single-node sensing performance requirements.  "
+    },
+    {
+      "claim": "The earlier RAN4 request identifies TR 38.914 network targets, single-base-station RF test scope and single-base-station feasibility/coexistence baseline.",
+      "tdoc_id": "R1-2609012",
+      "passage": "The sensing KPIs in clause 5.1.17 of TR 38.914 apply at network level. \nRAN4 can only define and test RF performance for single BS, as such cannot define nor test network-level requirements. \nRAN4 will study the feasibility of sensing for single BS and evaluate single BS coexistence performance within the network as a baseline."
+    },
+    {
+      "claim": "RAN4 asked about a fusion gain or scaling factor and explicitly had not decided on that approach.",
+      "tdoc_id": "R1-2609012",
+      "passage": "Accordingly, RAN4 is discussing how to derive single-node sensing KPIs (based on SNR/SINR) from the network-level sensing KPIs given in clause 5.1.17 of TR 38.914. \nTo link single-node and multi-node sensing performance, RAN4 may consider a simplified mapping from single BS SNR/SINR to network level sensing KPIs (including detection probability based on false alarm probability). Options for the mapping may include, e.g., a fusion gain or scaling factor. \nRAN4 has not yet made any decision on this approach. RAN1 views would help RAN4 decide."
+    },
+    {
+      "claim": "vivo defines per-node echo/noise SNR on a resource element and antenna port, and a multi-node arithmetic mean across six TRPs. This supports the operational SNR explanation and the inference that an average does not determine individual margins or per-target usable-link counts.",
+      "tdoc_id": "R1-2609486",
+      "passage": "The sensing SNR of the multi-TRP scenario is defined as the arithmetic mean over all sensing SNR samples from all six TRPs. For each TRP, the sensing SNR is the ratio of the target echo power received on a single resource element (RE) and a single antenna port to the corresponding noise power, where the target echo power is the power of the sensing target path. For multi-target scenarios, the average power over the individual sensing target paths is used."
+    },
+    {
+      "claim": "Ericsson distinguishes baseline SNR without adjacent-channel interference from SINR including it, supporting the operational SINR explanation.",
+      "tdoc_id": "R1-2610364",
+      "passage": "For every candidate link, calculate the baseline sensing SNR without the considered adjacent-channel interference and the corresponding sensing SINR with adjacent-channel interference, using otherwise identical assumptions. "
+    },
+    {
+      "claim": "Ericsson describes the evaluation chain from channel and signal generation to per-node processing, optional fusion and tracking, and final metrics.",
+      "tdoc_id": "R1-2610364",
+      "passage": "Clause 6.1 of TR 38.765 defines the following general evaluation procedure:\nSimulation parameter configuration.\nSensing scenario generation, including deployment of sensing transmitters and receivers.\nDropping N targets, with N equal to zero or larger than zero.\nChannel generation and determination of the STX/SRX set for each target.\nSensing-signal generation and passage of the signal through the generated channel.\nSignal processing at each SRX, optionally followed by processing based on fusion from multiple STXs/SRXs and optionally tracking.\nCalculation of the sensing performance metrics."
+    },
+    {
+      "claim": "Ericsson describes final object association with ground truth and metric calculation after processing. Premise for the interpretation that a threshold at the input alone cannot determine final object performance.",
+      "tdoc_id": "R1-2610364",
+      "passage": "The final detected objects were associated one-to-one with ground-truth targets using a company-reported association rule, commonly a three-dimensional distance gate and, in some cases, an additional velocity condition. Missed-detection probability, false-alarm probability Type 1, false-alarm probability Type 2, positioning accuracy and velocity accuracy were then calculated after the complete processing chain. The performance objectives in TR 38.765 are 5% missed detection, 5% Type-1 false alarm, 5% Type-2 false alarm, 10 m horizontal and vertical positioning accuracy at 90% confidence, and 5 m/s velocity accuracy at 90% confidence.\n5G-A RAN1 evaluation does not define a unique conversion from one TRP SNR/SINR to network-level detection probability. The reported network-level result is produced after per-TRP signal processing, optional multi-TRP fusion, object formation and association with ground truth."
+    },
+    {
+      "claim": "CATT and CICTCI explain nonzero-Doppler NLOS rays that mimic additional moving objects, and angular blind zones including above the TRP.",
+      "tdoc_id": "R1-2609650",
+      "passage": "This is due to the fact that, without data fusion from multiple TRPs, it is hard to eliminate the impact of random NLOS ray from target channel (causing false alarm) due to moving targets. These NLOS rays are with non-zero Doppler, which will be easily misunderstood as another sensing target. Thus the FAP type-2 can be significantly increased. Similarly, single-node sensing at TRP side will have blind zone due to the limitation of beam angle, such as the area just above the TRP. So the MDP is hard to reduce as long as the sensing target is located in the blind zone. This is observed in 5G-A UAV sensing study with TRP mono-static sensing mode."
+    },
+    {
+      "claim": "CATT and CICTCI report little change in the discussed false-alarm and missed-detection metrics with base-station transmit power, while qualifying that other metrics can differ. Premise for separating power margin from visibility and spatial confirmation.",
+      "tdoc_id": "R1-2609650",
+      "passage": "Note that the FAP type-2 or MDP does not change too much along with the BS Tx power. This may be different when considering other KPIs, e.g. positioning/velocity accuracy. "
+    },
+    {
+      "claim": "CATT and CICTCI identify multi-node fusion as key to improving missed detection and Type-2 false alarm. Premise for the lead and spatial-diversity interpretation.",
+      "tdoc_id": "R1-2609650",
+      "passage": "Observation 2: For object detection, data fusion from multiple sensing pairs/nodes is key to improving some sensing KPIs such as MDP and FAP type-2. "
+    },
+    {
+      "claim": "CATT and CICTCI identify KPI-specific gains, implementation-specific fusion, observing-node count, neighboring-node blind-zone coverage and geometry-dependent channels as reasons against a scalar mapping. Premises for the inference that additional power cannot supply the missing viewpoint or confirmation operation.",
+      "tdoc_id": "R1-2609650",
+      "passage": "Observation 3: For object detection, it is very difficult to define a common fusion gain or scaling factor that maps single-node sensing performance to network-wide sensing performance, due to the following reasons:\nThe gain from fusion may be different for different sensing KPIs.\nFusion algorithms are up to companies’ implementation and have not been aligned in RAN1.\nFAP type-2 heavily depends on the number of sensing nodes/pairs that can observe the target(s), which is critical to eliminate the random NLOS rays causing false alarm.\nMDP reduction (e.g., ≤ 5%) relies on neighbouring sensing nodes to overcome the ‘blind zone’ of a specific sensing node, especially when the sensing node is TRP and the sensing target (ST) is UAV.\nThe channel characteristics (e.g., LOS probability and channel coefficient) of each STx-ST and ST-SRx link for each sensing pair are quite different, due to the geometric difference. This is scenario dependent and sensing mode specific."
+    },
+    {
+      "claim": "CATT and CICTCI describe geometry-dependent channels and implementation-specific fusion, detector and clustering choices. This supports the interpretation that a universal scalar removes relevant dependencies.",
+      "tdoc_id": "R1-2609650",
+      "passage": "At the same time, the wireless channel between sensing target and each sensing node is different, due to the geometric difference. Moreover, such difference may be varying with different scenarios and sensing modes. Therefore, it is difficult to deduce any closed-form mapping between network-wide sensing KPIs and single-node sensing KPIs. \nThe fusion algorithm is also up to companies’ implementation, and thus it is hard to achieve a common algorithm. For example, the CFAR (constant false alarm rate) algorithm selection, clustering algorithm, thresholds of each method, etc. could all be different among companies and hard to tell which is optimal.\nAs an obvious result, it is difficult to calculate a common fusion gain or scaling factor that maps single-node sensing performance to network-wide sensing performance."
+    },
+    {
+      "claim": "CATT and CICTCI say temporal tracking can improve even a single node, is optional, and can also improve network-wide sensing. This qualifies any implication that multiple nodes are universally necessary.",
+      "tdoc_id": "R1-2609650",
+      "passage": "Other than data fusion, temporal tracking may also improve the sensing performance even with single node sensing, compared to single-shot detection. This is similar to using channels in different time to eliminate the negative impact due to random NLOS link. Therefore, with tracking, even by single node sensing, a satisfactory performance can be achieved compared to object detection without tracking.\nHowever, tracking is ‘optional’ in both 5G-A and 6G sensing studies. Meanwhile, network-wide sensing can also leverage tracking to improve the performance. But due to the lack of complete study in 6G, it is also very difficult to define a common fusion gain or scaling factor that maps single-node sensing performance to network-wide sensing performance for tracking."
+    },
+    {
+      "claim": "CATT and CICTCI say tracking fusion gain can differ from detection gain. Premise for requiring another check before transferring detection calibration to tracking.",
+      "tdoc_id": "R1-2609650",
+      "passage": "Observation 5: The fusion gain for tracking may be different from that for detection."
+    },
+    {
+      "claim": "ZTE and Sanechips oppose direct decomposition of network-level KPIs because sensing-method diversity changes the single-node requirement.",
+      "tdoc_id": "R1-2609482",
+      "passage": "Proposal 1: RAN1 proposes that the single-node KPI should not be derived by directly decomposing the network-level KPIs of clause 5.1.17 of TR 38.914, considering the diversity of different sensing method from companies."
+    },
+    {
+      "claim": "ZTE and Sanechips say a mapping must absorb fusion rule, node count, observation correlation and operating point, and is not constant.",
+      "tdoc_id": "R1-2609482",
+      "passage": "Given different method for jointly fusing sensing measurement, a scaling factor between the single-node and the multi-node performance has to absorb the fusion rule, the number of the nodes, the correlation of their observations and the per-node operating point, and it is therefore not a constant."
+    },
+    {
+      "claim": "ZTE and Sanechips propose strongest-target-echo selection, equate network KPI with selected-node KPI and therefore assign zero-decibel fusion gain. The zero is conditional on that selection model.",
+      "tdoc_id": "R1-2609482",
+      "passage": "Instead, the mapping can instead be defined by the selection of the node: the sensing node that receives the strongest echo of the target, i.e., the node whose sensing link has the highest RSRP, is taken as the single node, and the network-level KPI is then the KPI of that node, so that the fusion gain is 0 dB. Based on such observation, KPI of Urban Macro could be reused for KPI of selected single node for UAV scenarios."
+    },
+    {
+      "claim": "ZTE and Sanechips explicitly condition the simplified mapping on strongest-echo selection. Premise for the inference that their model omits multi-node corroboration, not evidence that fusion never helps.",
+      "tdoc_id": "R1-2609482",
+      "passage": "Proposal 2: Consider one simplified sensing fusion method to derive single sensing node KPI:\nIf sensing fusion method could be fixed as selecting of the sensing node that receives the strongest echo of the target, so that the single-node KPI and the multi-node KPI could be mapping with same value, and the fusion gain is 0 dB,"
+    },
+    {
+      "claim": "Ericsson describes company-specific estimation and multiple-node confirmation rules, including at least two, more than two and at least three unique TRPs. This grounds the conditional two-link example, not a universal requirement.",
+      "tdoc_id": "R1-2610364",
+      "passage": "Where multi-TRP processing was used, companies generally transformed or pooled per-TRP detections, clustered spatially consistent points, applied a voting or validity rule across distinct TRPs, and formed a final object estimate using weighted averaging, weighted least squares, strongest-point selection, or another company-specific method. The minimum number of agreeing TRPs was not uniform: explicitly reported validity rules included at least two TRPs, more than two TRPs, and at least three unique TRPs. Several evaluations processed a candidate pool larger than three TRPs even where the confirmation threshold was two or three."
+    },
+    {
+      "claim": "Ericsson argues a fixed SNR fusion gain cannot represent methods that do not share coherent combining, input count or confirmation rule.",
+      "tdoc_id": "R1-2610364",
+      "passage": "A fixed fusion gain added to a single-node SNR/SINR does not represent the diversity of the reported RAN1 fusion methods. The methods do not perform a common coherent-combining method, and do not use a common number of inputs or common confirmation rule."
+    },
+    {
+      "claim": "Ericsson proposes nth-best-link quality as a multi-link-availability abstraction, leaving n for RAN4 methodology rather than fixing it in RAN1.",
+      "tdoc_id": "R1-2610364",
+      "passage": "However, the evaluations consistently show that multi-TRP support can be represented at a higher level through link availability. A suitable abstraction for RAN4 is therefore the SNR/SINR of the nth-best sensing link for each target, where n is not fixed by RAN1 and may be selected by RAN4 for its coexistence methodology. This means that the target needs to be “detected” in the detector of at least n BSs (or TRPs) before it even enters the clustering and fusion pipeline."
+    },
+    {
+      "claim": "Ericsson specifies per-target candidate links, matched no-interference/interference calculations, ranking and an nth-best-link distribution against a detector threshold. Premise for the inference that the second-best link must clear threshold in a two-link criterion, regardless of the strongest-link margin.",
+      "tdoc_id": "R1-2610364",
+      "passage": "The proposed nth-best-link coexistence methodology is as follows: \nFor each target and simulation realization, determine all candidate sensing links according to the RAN4 deployment, association and link-selection assumptions. \nFor every candidate link, calculate the baseline sensing SNR without the considered adjacent-channel interference and the corresponding sensing SINR with adjacent-channel interference, using otherwise identical assumptions. \nFor each target and realization, rank the candidate-link values from highest to lowest and retain the nth-best value, denoted by SNR(n) for the no-ACI case and SINR(n) for the ACI case. \nBuild the CDFs of SNR(n) and SINR(n) over the evaluated targets and realizations. For any common single-node detector threshold γth, the CDF directly indicates the fraction of cases in which at least n links exceed γth."
+    },
+    {
+      "claim": "Ericsson explicitly excludes complete fusion and later object processing from its availability abstraction. This grounds the tradeoff and the warning against treating availability as detection certification.",
+      "tdoc_id": "R1-2610364",
+      "passage": "The proposed nth-best-link abstraction does not reproduce the complete RAN1 fusion process and does not claim that every implementation uses the same number of TRPs/BSs. It provides a reproducible connection between single-link SNR/SINR and the availability of multiple usable sensing links, while leaving any potential clustering, fusion, object association and tracking gains outside the abstraction."
+    },
+    {
+      "claim": "Ericsson requires a common detector configuration, search bins, resources, processing interval and detection/false-alarm criteria to derive a threshold. Premise for the inference that an unspecified threshold hides method variation.",
+      "tdoc_id": "R1-2610364",
+      "passage": "The detector threshold should be established for a common detector configuration, including the relevant number of delay/Doppler/angle bins, sensing carriers/resources, pulses or CPI and agreed single-node Pd/Pfa criterion. A representative threshold or threshold range may be derived from company detector evaluations."
+    },
+    {
+      "claim": "Ericsson proposes matched no-adjacent-channel-interference and interference comparisons with the same threshold and n-link criterion. Premise for a repeatable intermediate coexistence result without a final network-performance guarantee.",
+      "tdoc_id": "R1-2610364",
+      "passage": "For coexistence evaluation, the same detector threshold and n-link criterion can be applied first without the considered ACI and then with ACI. The no-ACI result is the baseline and RAN4 can evaluate the degradation when ACI is applied."
+    },
+    {
+      "claim": "vivo describes six selected TRPs sensing targets, fusion of measurements and comparison to ground truth, and a separate single-TRP case. These conditions limit the portability of its operating point.",
+      "tdoc_id": "R1-2609486",
+      "passage": "To ensure effective coverage of the sensing area, area-based TRP selection scheme is employed in the simulation. For multi-TRP scenario, TRPs associated with the three target-dropping sectors (marked in red) and the 3 nearest neighboring sectors (marked in green) are selected to sense the 15 targets dropped in the central sectors, as illustrated in Figure 1.\nFigure 1: TRP selection based on sensing area, 6-TRP with network-level fusion.\nIn the simulation, all 15 targets are modeled in the channels of the selected TRPs. The final sensing results are obtained by fusing the measurement data from participating TRPs. Position/velocity accuracy and detection metrics are calculated by comparing the fused results against the ground truth.\nFor single-TRP scenario, the TRP associated with the target-dropping sector (marked in red) is selected to sense the target dropped in the central sector, as illustrated in Figure 2."
+    },
+    {
+      "claim": "vivo reports detection and false-alarm performance below its 5% targets at about -20.6 dB sensing SNR and 23.6 dB post-processing SNR in the six-TRP case. The article reports a conditional calibration result, not an independently established RF limit.",
+      "tdoc_id": "R1-2609486",
+      "passage": "For the six-TRP sensing scenario, when the sensing SNR reaches approximately −20.6 dB and the corresponding post-processing sensing SNR reaches approximately 23.6 dB, both the missed detection probability and the false alarm probability fall below 5%, e.g., 4.67% and 1.04%, respectively. At this operating point, the horizontal and vertical positioning RMSE are approximately 1.32 m and 0.35 m, respectively, and the horizontal and vertical velocity RMSE are approximately 0.90 m/s and 0.23 m/s, respectively, which satisfy the corresponding requirements in TS 22.137."
+    },
+    {
+      "claim": "vivo reports its single-TRP scenario cannot meet network targets and cannot simultaneously control missed detections and false alarms below 5%.",
+      "tdoc_id": "R1-2609486",
+      "passage": "The single-TRP sensing scenario cannot meet the network-level sensing KPI targets. In this scenario, it is difficult to simultaneously control the missed detection probability and the false alarm probability below the required 5% threshold."
+    },
+    {
+      "claim": "vivo proposes deriving a single-base-station requirement from the successful operating point of the complete multi-TRP simulation rather than first deriving a standalone single-node KPI.",
+      "tdoc_id": "R1-2609486",
+      "passage": "Therefore, for RAN4’s purpose of defining and testing single BS RF requirements, it is more practical to anchor the single BS SNR/SINR requirement on the system-level evaluations that RAN1 has already aligned. The mapping between the per-TRP sensing SNR/SINR and the network-level sensing performance can be obtained from the agreed multi-TRP SLS, as in Section 2.2, and the required single BS SNR/SINR is the per-TRP sensing SNR at which the network-level KPIs are just satisfied, e.g., about −20.6 dB for the UMa-AV UAV scenario in this evaluation. In this way, the single BS requirement is directly linked to the network-level KPIs without needing any intermediate single-node KPI derivation."
+    },
+    {
+      "claim": "vivo defines post-processing SNR to include coherent gain and identifies the evaluated resource and accumulation conditions in prose. Premise for separating input echo quality from accumulation benefit.",
+      "tdoc_id": "R1-2609486",
+      "passage": "The post-processing sensing SNR further accounts for the two-dimensional coherent processing gain. In our evaluation, with 273 RBs, a frequency density of 3 REs per RB, a time-domain periodicity of 5 slots, a CPI of 80 ms, and 32 effective time-domain samples, the corresponding delay-Doppler accumulation gain is"
+    },
+    {
+      "claim": "vivo says network performance depends on multiple links, per-node detection/false-alarm control and fusion, with geometry and node-count dependence. Premise for the inference that its successful mean SNR cannot certify every radio or target.",
+      "tdoc_id": "R1-2609486",
+      "passage": "As shown in Section 2.2, the network-level sensing performance is determined by the combination of multiple sensing links, the detection and false alarm control per TRP, and the network-level fusion of the detection results. The single-TRP performance cannot meet the network-level KPIs within the evaluated SNR range, and its relation to the multi-TRP performance depends on the TRP-target geometry, the number of TRPs participating in sensing, and the fusion method. In other words, the network-level KPIs cannot be decomposed into an equivalent single-node KPI in a deterministic way."
+    },
+    {
+      "claim": "vivo reports no single SNR offset aligns its single- and six-node curves and qualitatively different false-alarm behavior. This is contrary evidence to a universal fixed gain, even within its comparison.",
+      "tdoc_id": "R1-2609486",
+      "passage": "In our evaluation, the SNR offset between the single-TRP and 6-TRP scenarios varies with the TRP Tx power and no single scaling factor can align the two performance curves, and the false alarm behaviour differs qualitatively between the two scenarios."
+    },
+    {
+      "claim": "Extraction qualification: vivo identifies a simulation assumption table; the snapshot has its heading but no table contents. Its prose supports the stated method, not every underlying radio parameter.",
+      "tdoc_id": "R1-2609486",
+      "passage": "Table 1 summarizes the simulation assumptions used in this contribution.\nTable 1: Simulation assumptions of the network-level sensing SLS"
+    },
+    {
+      "claim": "Extraction qualification: vivo identifies curves of multi-node detection, false alarm, position and velocity performance; their captions are extracted but the curves are absent. No matched quantitative ranking is inferred.",
+      "tdoc_id": "R1-2609486",
+      "passage": "Figure 4 to Figure 6 show the missed detection probability and false alarm probability, position RMSE, and velocity RMSE versus the sensing SNR for the 6-TRP scenario with network-level fusion, respectively.\nFigure 4: Missed detection probability and false alarm probability vs. sensing SNR, 6-TRP with network-level fusion.\nFigure 5: Position RMSE vs. sensing SNR, 6-TRP with network-level fusion.\nFigure 6: Velocity RMSE vs. sensing SNR, 6-TRP with network-level fusion."
+    },
+    {
+      "claim": "Interpretation premise for the proposed decisive experiment: Ericsson identifies link selection, detector, uncertainty, clustering, voting, association and metric dependence. Comparing usable-link losses with final object losses is proposed validation, not a reported outcome.",
+      "tdoc_id": "R1-2610364",
+      "passage": "Network-level sensing performance is not solely a function of one receiving node’s post-processing SNR/SINR. It also depends on STX/SRX determination, detector configuration, per-TRP processing, measurement uncertainty, clustering, voting, object association and the selected performance metric."
+    }
+  ],
+  "coverage_gaps": [
+    "No retrieved matched evaluation compares strongest-echo selection, nth-best-link availability and complete fusion under identical targets, deployment, detector and interference. The article compares preserved dependencies, not numerical performance.",
+    "R1-2609486 has no extracted contents for its detailed assumption table or curves. Its -20.6 dB and 23.6 dB values, averaging definition, six-node setup and single-node limitation are explicit in prose. They are reported as conditional operating points only; RF threshold portability cannot be assessed.",
+    "R1-2610364 references detailed TR 38.765 company-processing descriptions, but its table is absent. The article uses explicit prose on the processing chain and confirmation-rule variation and assigns no per-company algorithms from the missing table.",
+    "R1-2609012 forwards October RAN4 letter R4-2622113, which is not a separate extracted row in this snapshot. Its inner header has a malformed day range. The article dates the request to October only and does not infer a November RAN4 decision.",
+    "R1-2610961 is the new RAN1 reply, not an adopted conformance requirement or a RAN4 decision. Scenario-specific characterization is left to RAN4 without selecting a company abstraction.",
+    "Related-work research included RP-251881, RP-252912 and workplan-linked RP-253876, confirming the study split between sensing-performance evaluation and RF/coexistence/testability. These older papers provide scope context rather than news. No position is inferred from contacts, tags or generated analysis.",
+    "Candidate comparison: R1-2611013 lacks extracted progress/filter blocks needed for a substantive waveform net-gain update. R4-2630503 and Ericsson R4-2631468/R4-2631470 expose AI-DPoD conditions but lack key comparative tables. R1-2610900 and R1-2610926 renew a full-bandwidth single-transport-block preference without new discriminating evaluation in those papers. These angles remain for later research.",
+    "Coverage diagnostics record partial extraction and pending analysis. They were warnings; no analysis purchase, crawling, extraction repair or database modification was performed."
+  ]
+}
