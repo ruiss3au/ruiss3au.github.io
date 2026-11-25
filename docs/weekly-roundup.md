@@ -28,6 +28,8 @@ Saturday schedules research; it does not promise a post. The writer compares pro
 
 A ready article must explain a mechanism, a tradeoff, a conditional practical consequence and the evidence that could change its argument. The source ledger now includes an `editorial` assessment recording the question, answer, mechanism, tradeoff, consequence, novelty, uncertainty, verified source IDs and an exact excerpt of the reasoning in the published prose. At least two distinct cited primary documents must support that assessment. A table of proposed values is not enough; the prose must explain the assumptions behind the alternatives.
 
+Headlines must express the individual finding in natural language. The writer reviews recent titles for repeated openings and structures; replacing a repeated question opener with a colon formula is not an editorial improvement.
+
 The runner rejects missing assessments, unverified assessment sources and excerpts absent from the article. These are auditable requirements, not a machine test for interesting writing: field completion, citation totals and length do not prove insight. The prompt requires a reader-focused editorial revision and explicitly permits `no_news` for weak angles. Typical developed analyses may need 1,200-2,000 words; there is no hard length rule and padding is prohibited. You still review the argument before pushing.
 
 Old saved drafts without this assessment cannot be committed through `--resume` until editorially reworked. Already committed articles are not automatically rewritten or withdrawn by this change.
