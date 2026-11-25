@@ -1,248 +1,672 @@
 {
   "editorial": {
     "decision": "publish",
-    "question": "How can a single-radio 6G sensing feasibility or coexistence test retain the benefit of multiple sensing nodes without pretending that a fixed fusion gain guarantees network detection?",
-    "answer": "The new RAN1 reply rules out a generally applicable conversion, while the underlying contributions distinguish three conditional abstractions: strongest-echo node selection, availability of n usable links, and calibration within a complete multi-node simulation. Their difference is what spatial and processing dependencies they preserve. A repeatable radio-interference comparison can measure loss of usable-link support, but cannot certify final detection and false-alarm performance without the specified fusion and geometry.",
-    "mechanism": "Per-node echo quality feeds a detector; detections then undergo clustering, cross-node confirmation, fusion and possibly tracking before object-level metrics are calculated. Multiple viewpoints can reject moving multipath ghosts and cover angular blind zones. Added single-link power or a scalar SNR credit does not reproduce those operations. An nth-best-link statistic retains the requirement that several links clear a common detector threshold, while full simulation additionally retains the object-decision pipeline.",
-    "tradeoff": "ZTE and Sanechips fix selection to the strongest echo and obtain zero fusion gain by definition, discarding multi-node confirmation. Ericsson retains an explicit n-link availability criterion without specifying proprietary fusion, sacrificing a direct object-performance guarantee. vivo derives a threshold from its full six-node simulation, retaining fusion but conditioning the threshold on its deployment, resource accumulation, SNR averaging and processing. CATT and CICTCI explain why geometry, metric and tracking prevent a common scalar; the papers do not supply a matched numerical ranking of the alternatives.",
-    "consequence": "An evaluator can compare adjacent-channel interference against an otherwise identical no-interference case using common detector settings and a declared link-count criterion. An implementer must treat that as a test of available sensing observations, not as a guarantee of network detection or localization. A scenario-calibrated threshold needs its geometry and processing assumptions attached.",
-    "novelty": "Existing RAN4#120bis coverage described the open mapping request. This analysis uses the new R1-2610961 response and original company papers to explain the physical failure of a universal scalar, distinguish actual alternatives and identify what a reproducible coexistence experiment can establish. Waveform progress in R1-2611013 lacks its substantive extracted filter/conclusion blocks; AI-DPoD generalization and gain comparisons lack key result tables; the new 400 MHz TB-mapping coalition papers chiefly renew a design preference. Those angles are held.",
-    "uncertainty": "No matched experiment establishes which abstraction best predicts object-level degradation under interference. vivo provides a textual operating point, SNR definition and methodology but its detailed assumption table and curves are not extracted; the article does not derive a portable numeric RF limit or rank methods quantitatively. Validation linking ranked-link availability to final detection, false alarms and accuracy under matched geometry and processing could strengthen or overturn the proposed intermediate test. RAN1 leaves scenario-specific characterization to RAN4 and does not select a company method.",
+    "question": "Which important RAN1 and RAN4 choices are advancing, and what dependencies remain?",
+    "answer": "Control signaling and mobility capability reuse advance, while beamforming cost, learned channel models, satellite access and sensing still depend on explicit implementation assumptions.",
+    "mechanism": "An uplink grant can influence which logical channels are served through logical-channel prioritization.; Digital and analog spatial filtering move conversion and distribution costs between blocks.; Cross-site prediction depends on channel correlation that simple visibility labels do not supply.; Per-cell limits apply individually while across-cell resources cover the total candidate set.; Synchronization visibility and usable random-access occasions must follow beam activation.; Multiple views, detector processing and self-interference shape the result beyond echo signal quality.",
+    "tradeoff": "Useful service differentiation versus control-message size and common access burden.; More digital chains versus removal of analog distribution and beamforming components.; Reproducible evaluation versus realistic deployment variation and model complexity.; Reuse of existing capabilities versus correct accounting across multiple configurations.; Reduced common-channel burden versus backward compatibility and specification scope.; Simple radio tests versus the geometry and processing required for network detection.",
+    "consequence": "Keep the field small and evaluate it in the intended configured format.; Compare complete architectures and keep protocol compatibility separate from power and cost evidence.; Establish the evaluation relationship before treating prediction as a replacement for measurement.; Clarify shared-cell counting before assuming all candidate combinations fit.; Obtain plenary guidance and settle activation-window mapping.; Calibrate the abstraction against object-level performance under the same scenario.",
+    "novelty": "Restores meeting-wide analysis across independent areas, distinguishing company positions from recorded replies and linking algorithm, protocol and radio constraints.",
+    "uncertainty": "RAN4 company implementation and feasibility papers are not presented as adopted Calgary conclusions.; Detailed tables are absent in several extracted replies; no missing CSI-compression agreements or numerical distortion results are reconstructed.; The outgoing eight-SSB letter requests plenary direction and is not a plenary approval.; Waveform, channel coding, complete energy-saving down-selection and other Release-20 work remain outside this report rather than inferred from incomplete summaries.",
     "source_ids": [
-      "R1-2609012",
+      "R1-2610953",
+      "R1-2610954",
+      "R1-2610995",
+      "R1-2610949",
       "R1-2610961",
-      "R1-2610364",
+      "R4-2630939",
+      "R4-2631809",
+      "R1-2609604",
+      "R1-2609858",
+      "R4-2630057",
+      "R4-2631857",
+      "R1-2610977",
+      "R1-2609841",
+      "R4-2630009",
+      "RP-260232",
+      "R1-2610984",
+      "R1-2610934",
+      "R1-2609880",
       "R1-2609650",
-      "R1-2609482",
-      "R1-2609486"
+      "R1-2610364"
     ],
-    "analysis_excerpt": "For a two-link confirmation rule, this means checking the second-best link. An excellent strongest link cannot compensate for the second link falling below threshold. This is the useful distinction between the selection and availability approaches: the latter can expose interference that removes corroborating observations even when the best observation survives. It follows from Ericsson's ranking rule and its description of implementations requiring confirmation by multiple TRPs; it is an analytical consequence, not a reported comparison between the proposals. [R1-2610364](https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_127/Docs/R1-2610364.zip)."
+    "analysis_excerpt": "The two threads need to meet in an aligned evaluation. Passing a radio leakage or switching test does not prove that the selected set of observations produces acceptable detections. Conversely, a network result using helpful additional nodes does not automatically establish that each radio can meet its assumed input conditions. A scenario-specific test should keep the node geometry, detector settings and hardware assumptions visible from the RF measurement through the object decision."
+  },
+  "coverage": {
+    "topics": [
+      {
+        "domain": "control_access",
+        "heading": "Service differentiation enters an already constrained control channel",
+        "working_groups": [
+          "RAN1"
+        ],
+        "source_ids": [
+          "R1-2610953",
+          "R1-2609604",
+          "R1-2609858"
+        ],
+        "finding": "An additional service indication is feasible, with a constrained scope.",
+        "mechanism": "An uplink grant can influence which logical channels are served through logical-channel prioritization.",
+        "tradeoff": "Useful service differentiation versus control-message size and common access burden.",
+        "next_step": "Keep the field small and evaluate it in the intended configured format.",
+        "analysis_excerpt": "The next useful evidence is a concrete field design in its actual control format: what behavior it selects, how configuration governs its presence, and what size or decoding cost it introduces. RAN1's reply answers whether the direction is possible. The balance between useful differentiation and control overhead still depends on the detailed design."
+      },
+      {
+        "domain": "mimo_csi_beamforming",
+        "heading": "Digital beamforming clears a protocol question rather than a cost test",
+        "working_groups": [
+          "RAN1",
+          "RAN4"
+        ],
+        "source_ids": [
+          "R1-2610995",
+          "R4-2630057",
+          "R4-2630939"
+        ],
+        "finding": "RAN1 leaves device beamforming architecture to implementation; RAN4 cost arguments remain conditional.",
+        "mechanism": "Digital and analog spatial filtering move conversion and distribution costs between blocks.",
+        "tradeoff": "More digital chains versus removal of analog distribution and beamforming components.",
+        "next_step": "Compare complete architectures and keep protocol compatibility separate from power and cost evidence.",
+        "analysis_excerpt": "The implementation freedom preserved by RAN1 makes that comparison more important. If several architectures fit the same procedures, the standard need not pick a winner through an unsupported universal cost claim. RAN4 can describe which receiver behavior a test assumes and which architecture assumptions underpin a result. A protocol-compatible implementation and an economically preferable implementation are separate conclusions."
+      },
+      {
+        "domain": "ai_ml",
+        "heading": "Learned prediction still lacks an agreed cross-site channel basis",
+        "working_groups": [
+          "RAN1",
+          "RAN4"
+        ],
+        "source_ids": [
+          "R4-2631857",
+          "R1-2610949",
+          "R1-2610977",
+          "R1-2609841"
+        ],
+        "finding": "RAN1 does not recommend the three proposed model shortcuts for non-collocated prediction.",
+        "mechanism": "Cross-site prediction depends on channel correlation that simple visibility labels do not supply.",
+        "tradeoff": "Reproducible evaluation versus realistic deployment variation and model complexity.",
+        "next_step": "Establish the evaluation relationship before treating prediction as a replacement for measurement.",
+        "analysis_excerpt": "Apple's earlier interoperability proposal identifies compatibility parameters such as pairing identity, ports, subbands and payload size. That helps define what an encoder and decoder must agree on, but it does not resolve either the channel-model relationship for prediction or the waveform assumptions for a learned feedback signal. The Calgary work is separating these contracts; an accuracy number cannot stand in for all of them."
+      },
+      {
+        "domain": "mobility_measurements",
+        "heading": "Mobility capability reuse now has an explicit counting problem",
+        "working_groups": [
+          "RAN1",
+          "RAN4"
+        ],
+        "source_ids": [
+          "R4-2630009",
+          "R1-2610954",
+          "RP-260232"
+        ],
+        "finding": "RAN1 confirms capability reuse but requests clarification for a secondary cell shared by configurations.",
+        "mechanism": "Per-cell limits apply individually while across-cell resources cover the total candidate set.",
+        "tradeoff": "Reuse of existing capabilities versus correct accounting across multiple configurations.",
+        "next_step": "Clarify shared-cell counting before assuming all candidate combinations fit.",
+        "analysis_excerpt": "The work-item objective remains activation of secondary cells as part of the special-cell switch, with reuse of candidate measurement procedures where possible. The new reply advances capability alignment, but does not supply a measured interruption gain or settle every activation timing requirement. For implementers, progress is the narrower ability to apply known capability fields under explicit per-cell and shared limits, while tracking the unresolved shared-secondary-cell case."
+      },
+      {
+        "domain": "satellite_ntn",
+        "heading": "More satellite synchronization beams need matching access windows",
+        "working_groups": [
+          "RAN1"
+        ],
+        "source_ids": [
+          "R1-2610984",
+          "R1-2610934",
+          "R1-2609880"
+        ],
+        "finding": "The eight-block extension is referred to plenary with access mapping and compatibility issues.",
+        "mechanism": "Synchronization visibility and usable random-access occasions must follow beam activation.",
+        "tradeoff": "Reduced common-channel burden versus backward compatibility and specification scope.",
+        "next_step": "Obtain plenary guidance and settle activation-window mapping.",
+        "analysis_excerpt": "This is related to, but distinct from, the 6G compensation work described before Calgary. Apple's satellite proposal allocates feeder-link Doppler compensation to the network and makes assumptions about how the device obtains timing and satellite information. The Release-20 beam-hopping extension adds a scheduling window for when access is usable. Neither an available synchronization beam nor a corrected frequency alone establishes that an access opportunity is valid at the needed time."
+      },
+      {
+        "domain": "sensing",
+        "heading": "Sensing moves from a universal margin toward declared scenarios",
+        "working_groups": [
+          "RAN1",
+          "RAN4"
+        ],
+        "source_ids": [
+          "R1-2610961",
+          "R1-2609650",
+          "R1-2610364",
+          "R4-2631809"
+        ],
+        "finding": "RAN1 rejects a general single-node-to-network mapping while RAN4 tests remain implementation dependent.",
+        "mechanism": "Multiple views, detector processing and self-interference shape the result beyond echo signal quality.",
+        "tradeoff": "Simple radio tests versus the geometry and processing required for network detection.",
+        "next_step": "Calibrate the abstraction against object-level performance under the same scenario.",
+        "analysis_excerpt": "The two threads need to meet in an aligned evaluation. Passing a radio leakage or switching test does not prove that the selected set of observations produces acceptable detections. Conversely, a network result using helpful additional nodes does not automatically establish that each radio can meet its assumed input conditions. A scenario-specific test should keep the node geometry, detector settings and hardware assumptions visible from the RF measurement through the object decision."
+      }
+    ]
   },
   "claims": [
     {
-      "claim": "Verified identity and attribution: R1-2609012, LS on network-wide sensing performance for 6G sensing, source field RAN4; original meeting header retained here. R1-2609012 forwards an earlier October RAN4 letter.",
-      "tdoc_id": "R1-2609012",
-      "passage": "3GPP TSG-RAN WG1 Meeting #127\tR1-2609012\nCalgary, Canada, 16th –20th Nov, 2026\n3GPP TSG RAN WG4 Meeting #120bis                                          R4-2622113\nJeju, 12th – 6th October 2026 \nTitle:\tLS on network-wide sensing performance for 6G sensing\nResponse to: \t\nRelease:\tRel-20\nWork Item:\tFS_6G_Radio\nSource:\tRAN WG4\nTo:\tRAN WG1\nCC:\tRAN\nContact Person:\t\nName:\t\t           Mustafa Emara\nE-mail Address:     memara@qti.qualcomm.com"
+      "claim": "The Calgary record contains progress on several fronts, with different kinds of closure. Radio Access Network Working Group 1 (RAN1) accepts the feasibility of a service indication in uplink scheduling and confirms reuse of existing mobility capabilities. It finds no physical-layer change specific to a digital-beamforming device architecture. Yet its answers on learned measurement prediction and network sensing leave substantial evaluation work unresolved. Those distinctions matter to Radio Access Network Working Group 4 (RAN4), where company papers translate the proposed functions into hardware, measurement and testing choices.",
+      "tdoc_id": "R1-2610953",
+      "passage": "From the DCI design perspective, it is feasible to include an additional indication in the UL DCI to enable service differentiation for the LCH(s) served during the LCP. From RAN1 perspective, the number of bits for the indication should be minimized unless there are sufficient justifications."
     },
     {
-      "claim": "Verified identity and attribution: R1-2610961, Reply LS on network-wide sensing performance for 6G sensing, source field RAN1; original meeting header retained here. R1-2609012 forwards an earlier October RAN4 letter.",
+      "claim": "The Calgary record contains progress on several fronts, with different kinds of closure. Radio Access Network Working Group 1 (RAN1) accepts the feasibility of a service indication in uplink scheduling and confirms reuse of existing mobility capabilities. It finds no physical-layer change specific to a digital-beamforming device architecture. Yet its answers on learned measurement prediction and network sensing leave substantial evaluation work unresolved. Those distinctions matter to Radio Access Network Working Group 4 (RAN4), where company papers translate the proposed functions into hardware, measurement and testing choices.",
+      "tdoc_id": "R1-2610954",
+      "passage": "RAN1 thanks RAN2 for the LS on UE capability for Mobility Enh Ph5. RAN1 discussed the RAN2 agreements on the reuse of the Rel-18/Rel-19 LTM UE capabilities and has no concern. RAN1 confirms that the following UE capabilities, including all their components, can be reused for the LTM SCell activation improvement, where the candidate cell in the field description includes both the LTM candidate SpCell and the LTM candidate SCell:"
+    },
+    {
+      "claim": "The Calgary record contains progress on several fronts, with different kinds of closure. Radio Access Network Working Group 1 (RAN1) accepts the feasibility of a service indication in uplink scheduling and confirms reuse of existing mobility capabilities. It finds no physical-layer change specific to a digital-beamforming device architecture. Yet its answers on learned measurement prediction and network sensing leave substantial evaluation work unresolved. Those distinctions matter to Radio Access Network Working Group 4 (RAN4), where company papers translate the proposed functions into hardware, measurement and testing choices.",
+      "tdoc_id": "R1-2610995",
+      "passage": "RAN1 notes that 6GR Layer 1 procedures are not specific to a particular UE RF beamforming architecture. At this stage, RAN1 has not identified L1 procedure or specification changes specific to UE digital beamforming architecture for FR2."
+    },
+    {
+      "claim": "The Calgary record contains progress on several fronts, with different kinds of closure. Radio Access Network Working Group 1 (RAN1) accepts the feasibility of a service indication in uplink scheduling and confirms reuse of existing mobility capabilities. It finds no physical-layer change specific to a digital-beamforming device architecture. Yet its answers on learned measurement prediction and network sensing leave substantial evaluation work unresolved. Those distinctions matter to Radio Access Network Working Group 4 (RAN4), where company papers translate the proposed functions into hardware, measurement and testing choices.",
+      "tdoc_id": "R1-2610949",
+      "passage": "None of the options 1, 2, and 3 seem readily applicable from RAN1 perspective to enable the studies outlined by RAN4 and requires further study and discussion in RAN1 to determine potential viable solutions."
+    },
+    {
+      "claim": "The Calgary record contains progress on several fronts, with different kinds of closure. Radio Access Network Working Group 1 (RAN1) accepts the feasibility of a service indication in uplink scheduling and confirms reuse of existing mobility capabilities. It finds no physical-layer change specific to a digital-beamforming device architecture. Yet its answers on learned measurement prediction and network sensing leave substantial evaluation work unresolved. Those distinctions matter to Radio Access Network Working Group 4 (RAN4), where company papers translate the proposed functions into hardware, measurement and testing choices.",
       "tdoc_id": "R1-2610961",
-      "passage": "3GPP TSG RAN WG1 #127\t\t\t \t\t\t\t   R1-2610961\nCalgary, CA, Nov. 16th-20th, 2026\nTitle:\tReply LS on network-wide sensing performance for 6G sensing\nResponse to:\tR4-2622113\nRelease:\tRel-20\nWork Item:\tFS_6G_Radio\nSource:\tRAN WG1\nTo:\tRAN WG4\nCc:\tTSG RAN\nContact Person:\t\nName:\tYongqiang Fei\nE-mail Address:\tfeiyongqiang@catt.cn\nSend any reply LS to:\t3GPP Liaisons Coordinator, mailto:3GPPLiaison@etsi.org \nAttachments:\tNone"
+      "passage": "RAN1 considers that no generally applicable simplified mapping (e.g. fusion gain or scaling factor) can be recommended to map between single-node and multi-node sensing performance."
     },
     {
-      "claim": "Verified identity and attribution: R1-2610364, Discussion on RAN4 LS on network wide sensing performance for 6G sensing, source field Ericsson; original meeting header retained here. R1-2609012 forwards an earlier October RAN4 letter.",
-      "tdoc_id": "R1-2610364",
-      "passage": "3GPP TSG-RAN WG1 Meeting #127\tR1-2610364\nCalgary, Canada, November 16th – 20th, 2026\nAgenda Item:\t5\nSource:\tEricsson\nTitle:\tDiscussion on RAN4 LS on network wide sensing performance for 6G sensing\nWork Item:\tFS_6G_Radio\nDocument for:\tDiscussion"
+      "claim": "An outgoing working-group response establishes only the position stated in that response. The RAN4 implementation comparisons remain attributed to their authors; their inclusion here does not imply that Calgary adopted every proposed requirement.",
+      "tdoc_id": "R1-2610995",
+      "passage": "RAN1 does not specify the UE beamforming architecture for FR2; it is up to UE implementation."
     },
     {
-      "claim": "Verified identity and attribution: R1-2609650, Discussion on network-wide sensing performance for 6G sensing, source field CATT, CICTCI; original meeting header retained here. R1-2609012 forwards an earlier October RAN4 letter.",
-      "tdoc_id": "R1-2609650",
-      "passage": "3GPP TSG RAN WG1 #127\t\tR1-2609650\nCalgary, Canada, Nov. 16th – 20th, 2026\nSource:\tCATT, CICTCI\nTitle:\tDiscussion on network-wide sensing performance for 6G sensing\nAgenda Item:\t5\nDocument for:\tDiscussion and Decision"
+      "claim": "An outgoing working-group response establishes only the position stated in that response. The RAN4 implementation comparisons remain attributed to their authors; their inclusion here does not imply that Calgary adopted every proposed requirement.",
+      "tdoc_id": "R4-2630939",
+      "passage": "Proposal 1:\tRAN4 should document the key cost drivers and qualitative cost trade-offs between ABF and DBF in the 6G RAN4 TR, based on the differences in their RF and baseband architectures."
     },
     {
-      "claim": "Verified identity and attribution: R1-2609482, Discussion for LS on network-wide sensing performance for 6G sensing, source field ZTE Corporation, Sanechips; original meeting header retained here. R1-2609012 forwards an earlier October RAN4 letter.",
-      "tdoc_id": "R1-2609482",
-      "passage": "3GPP TSG RAN WG1 Meeting #127\t\tR1-2609482\nCalgary, Canada, 16th ~ 20th Nov, 2026\nAgenda item:\t5\nSource:\tZTE Corporation, Sanechips\nTitle:\tDiscussion for LS on network-wide sensing performance for 6G sensing\nDocument for:\tDiscussion and decision"
+      "claim": "An outgoing working-group response establishes only the position stated in that response. The RAN4 implementation comparisons remain attributed to their authors; their inclusion here does not imply that Calgary adopted every proposed requirement.",
+      "tdoc_id": "R4-2631809",
+      "passage": "Proposal 4: \tNo TX/RX switching time requirement need to be defined since cannot adequately capture all complex dependencies nor actual needs."
     },
     {
-      "claim": "Verified identity and attribution: R1-2609486, Discussion on LS on network-wide sensing performance for 6G sensing, source field vivo; original meeting header retained here. R1-2609012 forwards an earlier October RAN4 letter.",
-      "tdoc_id": "R1-2609486",
-      "passage": "3GPP TSG RAN WG1 #127\t\t\tR1-2609486\nCalgary, Canada, November 16th ~ 20th, 2026\nSource:\tvivo\nTitle:\tDiscussion on LS on network-wide sensing performance for 6G sensing\nAgenda Item:\t5\nDocument for:\tDiscussion and Decision"
+      "claim": "RAN1's reply on service differentiation says an additional indication in uplink downlink control information (DCI) is feasible from the control-format perspective. The wording refers to logical channels served during logical-channel prioritization. That gives a physical-layer route to differentiate which traffic uses an uplink grant, rather than treating every grant as a resource allocation with no service context.",
+      "tdoc_id": "R1-2610953",
+      "passage": "From the DCI design perspective, it is feasible to include an additional indication in the UL DCI to enable service differentiation for the LCH(s) served during the LCP. From RAN1 perspective, the number of bits for the indication should be minimized unless there are sufficient justifications."
     },
     {
-      "claim": "RAN1 states it has not established a derivation of single-node SNR/SINR KPIs from network sensing targets.",
+      "claim": "The reply also limits the design. RAN1 asks for the number of bits to be minimized unless justified, and places the field in a configured non-fallback uplink DCI format. It notes that this format can depend on device-specific radio resource control configuration. The response therefore establishes feasibility in a configured format; it does not specify an unlimited common service label that every device must decode before configuration.",
+      "tdoc_id": "R1-2610953",
+      "passage": "From the DCI design perspective, it is feasible to include an additional indication in the UL DCI to enable service differentiation for the LCH(s) served during the LCP. From RAN1 perspective, the number of bits for the indication should be minimized unless there are sufficient justifications."
+    },
+    {
+      "claim": "The reply also limits the design. RAN1 asks for the number of bits to be minimized unless justified, and places the field in a configured non-fallback uplink DCI format. It notes that this format can depend on device-specific radio resource control configuration. The response therefore establishes feasibility in a configured format; it does not specify an unlimited common service label that every device must decode before configuration.",
+      "tdoc_id": "R1-2610953",
+      "passage": "From RAN1 perspective, the indication field can be present in the non-fallback UL DCI based on configuration. "
+    },
+    {
+      "claim": "The reply also limits the design. RAN1 asks for the number of bits to be minimized unless justified, and places the field in a configured non-fallback uplink DCI format. It notes that this format can depend on device-specific radio resource control configuration. The response therefore establishes feasibility in a configured format; it does not specify an unlimited common service label that every device must decode before configuration.",
+      "tdoc_id": "R1-2610953",
+      "passage": "Note: RAN1 assumes non-fallback UL DCI can be dependent on UE-specific RRC configuration."
+    },
+    {
+      "claim": "That choice sits beside wider control-channel proposals. Samsung studies full-band control resources and larger frequency-allocation granularity, while Apple argues that initial control coverage must preserve access for the lowest-bandwidth devices. The parameters solve different problems, but each changes the control burden a receiver faces. Adding service information to a configured grant should not silently change the common initial-access assumptions.",
+      "tdoc_id": "R1-2609604",
+      "passage": "Proposal 10. Support full-band control resources in 6GR (as UEs are already required to support full-band PDSCH reception), i.e., Option 1 for the maximum number of RBs in a 6GR PDCCH CORESET (RAN1#126bis agreement)."
+    },
+    {
+      "claim": "That choice sits beside wider control-channel proposals. Samsung studies full-band control resources and larger frequency-allocation granularity, while Apple argues that initial control coverage must preserve access for the lowest-bandwidth devices. The parameters solve different problems, but each changes the control burden a receiver faces. Adding service information to a configured grant should not silently change the common initial-access assumptions.",
+      "tdoc_id": "R1-2609604",
+      "passage": "Proposal 11. Study bitmap with larger granularity (e.g., 12 or 24RBs) or RIV-like indication with 6RB granularity for 200MHz or 400MHz CORESET BW. "
+    },
+    {
+      "claim": "That choice sits beside wider control-channel proposals. Samsung studies full-band control resources and larger frequency-allocation granularity, while Apple argues that initial control coverage must preserve access for the lowest-bandwidth devices. The parameters solve different problems, but each changes the control burden a receiver faces. Adding service information to a configured grant should not silently change the common initial-access assumptions.",
+      "tdoc_id": "R1-2609858",
+      "passage": "From our perspective, coverage technique should not only extend coverage of PDCCH but also support the coexistence of all device types. In particular, if the number of PRBs for CORESET for SIB1-PDCCH monitoring is larger than the smallest maximum channel bandwidth of the lowest-tier devices, intra-slot PDCCH repetition is supported for SIB1-PDCCH. More discussion can be found in our companion contribution [1]."
+    },
+    {
+      "claim": "That choice sits beside wider control-channel proposals. Samsung studies full-band control resources and larger frequency-allocation granularity, while Apple argues that initial control coverage must preserve access for the lowest-bandwidth devices. The parameters solve different problems, but each changes the control burden a receiver faces. Adding service information to a configured grant should not silently change the common initial-access assumptions.",
+      "tdoc_id": "R1-2610953",
+      "passage": "From RAN1 perspective, the indication field can be present in the non-fallback UL DCI based on configuration. "
+    },
+    {
+      "claim": "The next useful evidence is a concrete field design in its actual control format: what behavior it selects, how configuration governs its presence, and what size or decoding cost it introduces. RAN1's reply answers whether the direction is possible. The balance between useful differentiation and control overhead still depends on the detailed design.",
+      "tdoc_id": "R1-2610953",
+      "passage": "From the DCI design perspective, it is feasible to include an additional indication in the UL DCI to enable service differentiation for the LCH(s) served during the LCP. From RAN1 perspective, the number of bits for the indication should be minimized unless there are sufficient justifications."
+    },
+    {
+      "claim": "The next useful evidence is a concrete field design in its actual control format: what behavior it selects, how configuration governs its presence, and what size or decoding cost it introduces. RAN1's reply answers whether the direction is possible. The balance between useful differentiation and control overhead still depends on the detailed design.",
+      "tdoc_id": "R1-2610953",
+      "passage": "From RAN1 perspective, the indication field can be present in the non-fallback UL DCI based on configuration. "
+    },
+    {
+      "claim": "RAN1 tells RAN4 that it has not identified physical-layer procedure or specification changes specific to a device's digital beamforming architecture in Frequency Range 2 (FR2). It does not specify that architecture and leaves it to implementation. This removes one potential reason to require a separate physical-layer procedure, without certifying the cost, power or measurement performance of a particular device design.",
+      "tdoc_id": "R1-2610995",
+      "passage": "RAN1 notes that 6GR Layer 1 procedures are not specific to a particular UE RF beamforming architecture. At this stage, RAN1 has not identified L1 procedure or specification changes specific to UE digital beamforming architecture for FR2."
+    },
+    {
+      "claim": "RAN1 tells RAN4 that it has not identified physical-layer procedure or specification changes specific to a device's digital beamforming architecture in Frequency Range 2 (FR2). It does not specify that architecture and leaves it to implementation. This removes one potential reason to require a separate physical-layer procedure, without certifying the cost, power or measurement performance of a particular device design.",
+      "tdoc_id": "R1-2610995",
+      "passage": "RAN1 does not specify the UE beamforming architecture for FR2; it is up to UE implementation."
+    },
+    {
+      "claim": "BeammWave's RAN4 contribution argues that its evaluated digital design does not require additional base-station hardware and is not expected to require mandatory software changes beyond the baseline. Before the reply, it explicitly made the software assessment subject to RAN1 feedback. Its implementation case includes a distributed architecture in which spatial processing occurs in the device. The later protocol response addresses that compatibility question, not every proprietary design assumption behind the implementation comparison.",
+      "tdoc_id": "R4-2630057",
+      "passage": "Supporting DBF UEs is not expected to introduce additional base station hardware requirements beyond those foreseen for supporting ABF UEs in the 6G baseline. This assessment considers up to two MIMO layers per UE, consistent with the study scope agreed in [2]. As discussed in our previous contribution [4], DBF spatial-filter acquisition and digital spatial processing are performed within the UE, using the baseline reference signals and physical-layer signalling."
+    },
+    {
+      "claim": "BeammWave's RAN4 contribution argues that its evaluated digital design does not require additional base-station hardware and is not expected to require mandatory software changes beyond the baseline. Before the reply, it explicitly made the software assessment subject to RAN1 feedback. Its implementation case includes a distributed architecture in which spatial processing occurs in the device. The later protocol response addresses that compatibility question, not every proprietary design assumption behind the implementation comparison.",
+      "tdoc_id": "R4-2630057",
+      "passage": "Relative to the foreseen 6G baseline, no mandatory base station software changes are currently expected for supporting DBF UEs. However, this expectation remains to be confirmed by RAN1, particularly regarding beam management and reference-signal scheduling, in response to the LS sent at RAN4#120-bis [3]."
+    },
+    {
+      "claim": "BeammWave's RAN4 contribution argues that its evaluated digital design does not require additional base-station hardware and is not expected to require mandatory software changes beyond the baseline. Before the reply, it explicitly made the software assessment subject to RAN1 feedback. Its implementation case includes a distributed architecture in which spatial processing occurs in the device. The later protocol response addresses that compatibility question, not every proprietary design assumption behind the implementation comparison.",
+      "tdoc_id": "R1-2610995",
+      "passage": "RAN1 notes that 6GR Layer 1 procedures are not specific to a particular UE RF beamforming architecture. At this stage, RAN1 has not identified L1 procedure or specification changes specific to UE digital beamforming architecture for FR2."
+    },
+    {
+      "claim": "Murata supplies a more general caution. Digital beamforming adds converters, mixers and digital processing paths, but can remove analog beamformers and radio-frequency distribution losses. It argues that converter resolution, integration, oscillator architecture and the location of spatial filtering all change the balance. BeammWave proposes recording a favorable silicon-area comparison for its evaluated implementations; Murata says an architecture-level block count cannot establish that either analog or digital is generally cheaper.",
+      "tdoc_id": "R4-2630939",
+      "passage": "Compared with ABF, DBF requires more ADCs, DACs, mixers and associated signal paths. On the other hand, DBF does not require analog RF signal distribution or analog beamformers. It can therefore remove some RF components and reduce the insertion loss that may require additional amplifier stages in ABF. The cost impact should be considered based on the overall architecture, rather than only on the number of RF chains or data converters."
+    },
+    {
+      "claim": "Murata supplies a more general caution. Digital beamforming adds converters, mixers and digital processing paths, but can remove analog beamformers and radio-frequency distribution losses. It argues that converter resolution, integration, oscillator architecture and the location of spatial filtering all change the balance. BeammWave proposes recording a favorable silicon-area comparison for its evaluated implementations; Murata says an architecture-level block count cannot establish that either analog or digital is generally cheaper.",
+      "tdoc_id": "R4-2630939",
+      "passage": "As described above, both ABF and DBF contain cost-increase and cost-decrease factors. The final balance depends on the selected RF architecture, LO architecture, location of digital spatial filtering, IC partitioning, packaging, integration level and semiconductor process. Therefore, a general conclusion that either ABF or DBF is lower cost cannot be derived only from the architecture-level block count."
+    },
+    {
+      "claim": "Murata supplies a more general caution. Digital beamforming adds converters, mixers and digital processing paths, but can remove analog beamformers and radio-frequency distribution losses. It argues that converter resolution, integration, oscillator architecture and the location of spatial filtering all change the balance. BeammWave proposes recording a favorable silicon-area comparison for its evaluated implementations; Murata says an architecture-level block count cannot establish that either analog or digital is generally cheaper.",
+      "tdoc_id": "R4-2630057",
+      "passage": "Proposal 2: \tCapture in the TR under “Cost” the qualitative conclusion that, for the evaluated implementations and assumptions, the estimated silicon die area for DBF is on par with or lower than for ABF. The TR text should not include numerical die-area estimates."
+    },
+    {
+      "claim": "The implementation freedom preserved by RAN1 makes that comparison more important. If several architectures fit the same procedures, the standard need not pick a winner through an unsupported universal cost claim. RAN4 can describe which receiver behavior a test assumes and which architecture assumptions underpin a result. A protocol-compatible implementation and an economically preferable implementation are separate conclusions.",
+      "tdoc_id": "R1-2610995",
+      "passage": "RAN1 does not specify the UE beamforming architecture for FR2; it is up to UE implementation."
+    },
+    {
+      "claim": "The implementation freedom preserved by RAN1 makes that comparison more important. If several architectures fit the same procedures, the standard need not pick a winner through an unsupported universal cost claim. RAN4 can describe which receiver behavior a test assumes and which architecture assumptions underpin a result. A protocol-compatible implementation and an economically preferable implementation are separate conclusions.",
+      "tdoc_id": "R4-2630939",
+      "passage": "Observation 3:\tThe digital-processing cost depends on the implementation architecture, including the location of spatial filtering relative to FFT/IFFT. Considering the RF and baseband cost factors together, it cannot be generally concluded that either ABF or DBF has lower implementation cost."
+    },
+    {
+      "claim": "The implementation freedom preserved by RAN1 makes that comparison more important. If several architectures fit the same procedures, the standard need not pick a winner through an unsupported universal cost claim. RAN4 can describe which receiver behavior a test assumes and which architecture assumptions underpin a result. A protocol-compatible implementation and an economically preferable implementation are separate conclusions.",
+      "tdoc_id": "R4-2630057",
+      "passage": "Observation 1: \tFor the evaluated implementations and assumptions, the estimated silicon die area for DBF is on par with or lower than for ABF."
+    },
+    {
+      "claim": "RAN4's non-collocated prediction study seeks to infer a target cell's layer-three received power from measurements at a different site and frequency. Nokia warns that the model could learn the particular cross-site realization used in training and fail to generalize. Its proposal was to await RAN1's channel-model guidance rather than assume that a familiar model already supplied the required relationship.",
+      "tdoc_id": "R4-2631857",
+      "passage": "In AI-RRM Sub-case 2, the AI/ML model is trained to predict L3 cell-level measurements of non-collocated cell(s) on a target frequency layer, which are not on the same site as measured cell(s). The cross-site correlation learned by the model is determined by the channel model realization used for training, e.g., cross-site correlation. If the model is insufficiently generalized, it may perform well only for the realization it was trained on and degrade under different realizations, deployments, or UE speeds. This may lead to frequent model switching or fallback to legacy measurements, thereby losing the expected gains. Therefore, RAN4 should consider generalization aspects when selecting channel model for AI RRM Sub-case 2."
+    },
+    {
+      "claim": "RAN4's non-collocated prediction study seeks to infer a target cell's layer-three received power from measurements at a different site and frequency. Nokia warns that the model could learn the particular cross-site realization used in training and fail to generalize. Its proposal was to await RAN1's channel-model guidance rather than assume that a familiar model already supplied the required relationship.",
+      "tdoc_id": "R4-2631857",
+      "passage": "RAN4 to wait for RAN1 reply to RAN4 LS (R4-2621658) on channel model aspects for AI RRM Sub-case 2. In the meantime, RAN4 to prioritize discussions on other agreed 6G AI-RRM Sub-Case(s)."
+    },
+    {
+      "claim": "RAN1's reply does not provide a ready replacement. It says it is not studying this channel-model case and does not recommend the three proposed options as readily applicable. Environmental objects developed for sensing were not designed to create inter-base-station channel correlations. Correlated line-of-sight states are not equivalent to channel spatial and frequency correlation. Map-based ray tracing adds cross-company alignment difficulties involving maps, materials and modeling.",
+      "tdoc_id": "R1-2610949",
+      "passage": "RAN1 is not currently studying channel modelling for non-collocated inter-frequency scenario. The following are answers to questions asked by RAN4."
+    },
+    {
+      "claim": "RAN1's reply does not provide a ready replacement. It says it is not studying this channel-model case and does not recommend the three proposed options as readily applicable. Environmental objects developed for sensing were not designed to create inter-base-station channel correlations. Correlated line-of-sight states are not equivalent to channel spatial and frequency correlation. Map-based ray tracing adds cross-company alignment difficulties involving maps, materials and modeling.",
+      "tdoc_id": "R1-2610949",
+      "passage": "RAN1 does not recommend Option 1 as the models were intended for environmental models for sensing, and are not intended for enabling inter-BS correlations."
+    },
+    {
+      "claim": "RAN1's reply does not provide a ready replacement. It says it is not studying this channel-model case and does not recommend the three proposed options as readily applicable. Environmental objects developed for sensing were not designed to create inter-base-station channel correlations. Correlated line-of-sight states are not equivalent to channel spatial and frequency correlation. Map-based ray tracing adds cross-company alignment difficulties involving maps, materials and modeling.",
+      "tdoc_id": "R1-2610949",
+      "passage": "RAN1 does not recommend Option 2 as LOS/NLOS state correlation is not equivalent to channel spatial/frequency correlation, and may require some changes to TRP-UE links which have not been studied or evaluated."
+    },
+    {
+      "claim": "RAN1's reply does not provide a ready replacement. It says it is not studying this channel-model case and does not recommend the three proposed options as readily applicable. Environmental objects developed for sensing were not designed to create inter-base-station channel correlations. Correlated line-of-sight states are not equivalent to channel spatial and frequency correlation. Map-based ray tracing adds cross-company alignment difficulties involving maps, materials and modeling.",
+      "tdoc_id": "R1-2610949",
+      "passage": "RAN1 does not recommend Option 3, as there are difficulties for alignment (in map, material, and modeling) among companies, deterministic channel generation limiting uses for generalized study, and complexity associated with ray tracing."
+    },
+    {
+      "claim": "The consequence for the prediction claim is specific. A model can produce a good score because the simulator generated a convenient relationship between its inputs and targets. Unless that relationship is both meaningful and reproducible, the score does not show how many real measurements can safely be omitted. Nokia's generalization concern and RAN1's modeling objections therefore identify a prerequisite to the claimed radio-resource-management benefit, rather than simply a preference for another simulator.",
+      "tdoc_id": "R4-2631857",
+      "passage": "In AI-RRM Sub-case 2, the AI/ML model is trained to predict L3 cell-level measurements of non-collocated cell(s) on a target frequency layer, which are not on the same site as measured cell(s). The cross-site correlation learned by the model is determined by the channel model realization used for training, e.g., cross-site correlation. If the model is insufficiently generalized, it may perform well only for the realization it was trained on and degrade under different realizations, deployments, or UE speeds. This may lead to frequent model switching or fallback to legacy measurements, thereby losing the expected gains. Therefore, RAN4 should consider generalization aspects when selecting channel model for AI RRM Sub-case 2."
+    },
+    {
+      "claim": "The consequence for the prediction claim is specific. A model can produce a good score because the simulator generated a convenient relationship between its inputs and targets. Unless that relationship is both meaningful and reproducible, the score does not show how many real measurements can safely be omitted. Nokia's generalization concern and RAN1's modeling objections therefore identify a prerequisite to the claimed radio-resource-management benefit, rather than simply a preference for another simulator.",
+      "tdoc_id": "R1-2610949",
+      "passage": "None of the options 1, 2, and 3 seem readily applicable from RAN1 perspective to enable the studies outlined by RAN4 and requires further study and discussion in RAN1 to determine potential viable solutions."
+    },
+    {
+      "claim": "A separate reply on learned channel-state information (CSI) compression reaches another testing boundary. RAN1 says an existing error vector magnitude metric can in principle be followed for the discussed option when modulation points have approximately equal probability and comparable average power. The unequal-probability case and the proper error limit require further study. Its text also says companies use their own projection matrices, encoders and target datasets. This is conditional guidance, not evidence that those implementations already share a common tested signal.",
+      "tdoc_id": "R1-2610977",
+      "passage": "From RAN 1 perspective, in principle, the existing EVM metric definition can be followed at least for Option 1 with handling to achieve approximately equal probability/equal probability of modulation constellation points with a comparable average power as conventional modulations. Further study is needed for option 1 without handling to achieve approximately equal probability/equal probability of modulation constellation points with a comparable average power as conventional modulations. Some further study is needed for the proper EVM limit for JSCM with Option 1."
+    },
+    {
+      "claim": "A separate reply on learned channel-state information (CSI) compression reaches another testing boundary. RAN1 says an existing error vector magnitude metric can in principle be followed for the discussed option when modulation points have approximately equal probability and comparable average power. The unequal-probability case and the proper error limit require further study. Its text also says companies use their own projection matrices, encoders and target datasets. This is conditional guidance, not evidence that those implementations already share a common tested signal.",
+      "tdoc_id": "R1-2610977",
+      "passage": "For Option 1 with handling to achieve approximately equal probability/equal probability of modulation constellation points, the output signal distribution can be understood as similar to conventional modulations. For Option 1 without handling to achieve approximately equal probability/equal probability of modulation constellation points, RAN 1 is studying on the components of the Tx chain on pre-/post processing for JSCM. In current RAN 1 evaluations, each company considered its own projection matrices, encoders, and target CSI dataset generation. "
+    },
+    {
+      "claim": "Apple's earlier interoperability proposal identifies compatibility parameters such as pairing identity, ports, subbands and payload size. That helps define what an encoder and decoder must agree on, but it does not resolve either the channel-model relationship for prediction or the waveform assumptions for a learned feedback signal. The Calgary work is separating these contracts; an accuracy number cannot stand in for all of them.",
+      "tdoc_id": "R1-2609841",
+      "passage": "Pairing ID, Tx port configuration (N1, N2, and portMappingMethod for more than 32 ports), subband configuration and payload size configuration should be included. These are the parameters that identify the dataset/model configuration that the encoder was trained for, and they are consistent with the metadata proposed for dataset exchange in Section 2.1 and with the candidate UE data collection configuration agreed in RAN1 125."
+    },
+    {
+      "claim": "Apple's earlier interoperability proposal identifies compatibility parameters such as pairing identity, ports, subbands and payload size. That helps define what an encoder and decoder must agree on, but it does not resolve either the channel-model relationship for prediction or the waveform assumptions for a learned feedback signal. The Calgary work is separating these contracts; an accuracy number cannot stand in for all of them.",
+      "tdoc_id": "R1-2610949",
+      "passage": "None of the options 1, 2, and 3 seem readily applicable from RAN1 perspective to enable the studies outlined by RAN4 and requires further study and discussion in RAN1 to determine potential viable solutions."
+    },
+    {
+      "claim": "Apple's earlier interoperability proposal identifies compatibility parameters such as pairing identity, ports, subbands and payload size. That helps define what an encoder and decoder must agree on, but it does not resolve either the channel-model relationship for prediction or the waveform assumptions for a learned feedback signal. The Calgary work is separating these contracts; an accuracy number cannot stand in for all of them.",
+      "tdoc_id": "R1-2610977",
+      "passage": "From RAN 1 perspective, in principle, the existing EVM metric definition can be followed at least for Option 1 with handling to achieve approximately equal probability/equal probability of modulation constellation points with a comparable average power as conventional modulations. Further study is needed for option 1 without handling to achieve approximately equal probability/equal probability of modulation constellation points with a comparable average power as conventional modulations. Some further study is needed for the proper EVM limit for JSCM with Option 1."
+    },
+    {
+      "claim": "The October request from RAN2 asked whether Release-18 and Release-19 Layer 1/Layer 2 Triggered Mobility (LTM) capabilities could cover both candidate special cells and candidate secondary cells. RAN1's Calgary reply has no concern with reuse and confirms that the listed capabilities, including their components, apply to the secondary-cell activation improvement. This is a concrete response to a dependency left open in the earlier discussion.",
+      "tdoc_id": "R4-2630009",
+      "passage": "The highlighted agreements above are relevant to RAN1/RAN4, as these agreements assume reuse of the relevant R18/R19 LTM UE capabilities defined by RAN1/RAN4. In addition, the candidate cell scope under these capabilities is extended to include both LTM candidate SpCell and LTM candidate SCell. For these reasons, RAN2 considers it necessary to align with RAN1/RAN4 regarding such reuse."
+    },
+    {
+      "claim": "The October request from RAN2 asked whether Release-18 and Release-19 Layer 1/Layer 2 Triggered Mobility (LTM) capabilities could cover both candidate special cells and candidate secondary cells. RAN1's Calgary reply has no concern with reuse and confirms that the listed capabilities, including their components, apply to the secondary-cell activation improvement. This is a concrete response to a dependency left open in the earlier discussion.",
+      "tdoc_id": "R1-2610954",
+      "passage": "RAN1 thanks RAN2 for the LS on UE capability for Mobility Enh Ph5. RAN1 discussed the RAN2 agreements on the reuse of the Rel-18/Rel-19 LTM UE capabilities and has no concern. RAN1 confirms that the following UE capabilities, including all their components, can be reused for the LTM SCell activation improvement, where the candidate cell in the field description includes both the LTM candidate SpCell and the LTM candidate SCell:"
+    },
+    {
+      "claim": "Reuse comes with accounting rules. RAN1 says existing value ranges are retained without extension. Per-cell components apply independently to each candidate special cell and secondary cell, while across-cell components cover the total across both roles. The maximum cell count also treats candidate special and secondary cells separately. These distinctions prevent a network from interpreting a per-cell capability as an unlimited shared pool.",
+      "tdoc_id": "R1-2610954",
+      "passage": "RAN1 also confirms that the current value ranges of these capabilities are reused without extension. The PerCell components (maxNumberJointTCI-PerCell-r18, maxNumberDL-TCI-PerCell-r18, maxNumberUL-TCI-PerCell-r18) apply independently to each LTM candidate SpCell and each LTM candidate SCell, while the AcrossCells components and maxNumberCells-r18 apply to the total across LTM candidate SpCells and LTM candidate SCells. "
+    },
+    {
+      "claim": "Reuse comes with accounting rules. RAN1 says existing value ranges are retained without extension. Per-cell components apply independently to each candidate special cell and secondary cell, while across-cell components cover the total across both roles. The maximum cell count also treats candidate special and secondary cells separately. These distinctions prevent a network from interpreting a per-cell capability as an unlimited shared pool.",
+      "tdoc_id": "R1-2610954",
+      "passage": "RAN1 understands that an LTM candidate SpCell and an LTM candidate SCell are counted separately in maxNumberCells-r18. It is unclear for RAN1 regarding maxNumberCells-r18 and in the AcrossCells TCI-state components when an LTM candidate SCell configured under more than one LTM candidate configurations but would like to leave this for RAN2. "
+    },
+    {
+      "claim": "The remaining ambiguity is a secondary cell configured under more than one candidate configuration. RAN1 leaves clarification of that case to RAN2. Counting the configuration references and counting the underlying cell are different operations; the reply identifies the case without resolving it. A network assembling several possible switches needs a consistent interpretation of that limit before relying on all of them simultaneously.",
+      "tdoc_id": "R1-2610954",
+      "passage": "RAN1 understands that an LTM candidate SpCell and an LTM candidate SCell are counted separately in maxNumberCells-r18. It is unclear for RAN1 regarding maxNumberCells-r18 and in the AcrossCells TCI-state components when an LTM candidate SCell configured under more than one LTM candidate configurations but would like to leave this for RAN2. "
+    },
+    {
+      "claim": "The work-item objective remains activation of secondary cells as part of the special-cell switch, with reuse of candidate measurement procedures where possible. The new reply advances capability alignment, but does not supply a measured interruption gain or settle every activation timing requirement. For implementers, progress is the narrower ability to apply known capability fields under explicit per-cell and shared limits, while tracking the unresolved shared-secondary-cell case.",
+      "tdoc_id": "RP-260232",
+      "passage": "Specify the necessary configuration and UE procedures for NW triggering of LTM SCell activation as part of the SpCell LTM cell switch [RAN2, RAN3]. "
+    },
+    {
+      "claim": "The work-item objective remains activation of secondary cells as part of the special-cell switch, with reuse of candidate measurement procedures where possible. The new reply advances capability alignment, but does not supply a measured interruption gain or settle every activation timing requirement. For implementers, progress is the narrower ability to apply known capability fields under explicit per-cell and shared limits, while tracking the unresolved shared-secondary-cell case.",
+      "tdoc_id": "RP-260232",
+      "passage": "NOTE 1: Reuse the candidate cell LTM measurement and reporting procedures where possible for the SCell activation improvements"
+    },
+    {
+      "claim": "The work-item objective remains activation of secondary cells as part of the special-cell switch, with reuse of candidate measurement procedures where possible. The new reply advances capability alignment, but does not supply a measured interruption gain or settle every activation timing requirement. For implementers, progress is the narrower ability to apply known capability fields under explicit per-cell and shared limits, while tracking the unresolved shared-secondary-cell case.",
+      "tdoc_id": "R1-2610954",
+      "passage": "RAN1 also confirms that the current value ranges of these capabilities are reused without extension. The PerCell components (maxNumberJointTCI-PerCell-r18, maxNumberDL-TCI-PerCell-r18, maxNumberUL-TCI-PerCell-r18) apply independently to each LTM candidate SpCell and each LTM candidate SCell, while the AcrossCells components and maxNumberCells-r18 apply to the total across LTM candidate SpCells and LTM candidate SCells. "
+    },
+    {
+      "claim": "The work-item objective remains activation of secondary cells as part of the special-cell switch, with reuse of candidate measurement procedures where possible. The new reply advances capability alignment, but does not supply a measured interruption gain or settle every activation timing requirement. For implementers, progress is the narrower ability to apply known capability fields under explicit per-cell and shared limits, while tracking the unresolved shared-secondary-cell case.",
+      "tdoc_id": "R1-2610954",
+      "passage": "RAN1 understands that an LTM candidate SpCell and an LTM candidate SCell are counted separately in maxNumberCells-r18. It is unclear for RAN1 regarding maxNumberCells-r18 and in the AcrossCells TCI-state components when an LTM candidate SCell configured under more than one LTM candidate configurations but would like to leave this for RAN2. "
+    },
+    {
+      "claim": "RAN1's outgoing satellite letter records discussion of eight synchronization-signal blocks (SSBs) below 3 GHz and a change to random-access occasion mapping based on the beam activation window. The issue is not only how many synchronization signals a satellite cell can expose. A device that discovers a beam needs random-access resources that are valid while that beam is actually serving it.",
+      "tdoc_id": "R1-2610984",
+      "passage": "        ◦ 8 SSBs for NR NTN at below 3GHz for FR1"
+    },
+    {
+      "claim": "RAN1's outgoing satellite letter records discussion of eight synchronization-signal blocks (SSBs) below 3 GHz and a change to random-access occasion mapping based on the beam activation window. The issue is not only how many synchronization signals a satellite cell can expose. A device that discovers a beam needs random-access resources that are valid while that beam is actually serving it.",
+      "tdoc_id": "R1-2610984",
+      "passage": "        ◦ Modify the RO mapping based on beam activation window."
+    },
+    {
+      "claim": "RAN1's outgoing satellite letter records discussion of eight synchronization-signal blocks (SSBs) below 3 GHz and a change to random-access occasion mapping based on the beam activation window. The issue is not only how many synchronization signals a satellite cell can expose. A device that discovers a beam needs random-access resources that are valid while that beam is actually serving it.",
+      "tdoc_id": "R1-2610934",
+      "passage": "According to current spec, for all ROs associated to one specific SSB, it’s obvious that only part of the ROs are valid for transmission (e.g., within the service/dwell time of UL beam), which is identified in RAN4 LS. Based on the discussion in RAN1#126, following conclusion is achieved with corresponding reply LS:"
+    },
+    {
+      "claim": "The moderator's earlier account explains the beam-hopping motivation. When a satellite serves footprints at different times, common-channel transmission and access occasions must be matched to those dwell intervals. The proposed active window has an offset, duration and periodicity; access occasions outside the window would not be valid. Those proposal details explain the mechanism, but the outgoing letter still marks activation-window configuration values as for further study.",
+      "tdoc_id": "R1-2610934",
+      "passage": "Observation 1: Within Rel-19 framework, supporting more SSB indexes is critical for NTN operation."
+    },
+    {
+      "claim": "The moderator's earlier account explains the beam-hopping motivation. When a satellite serves footprints at different times, common-channel transmission and access occasions must be matched to those dwell intervals. The proposed active window has an offset, duration and periodicity; access occasions outside the window would not be valid. Those proposal details explain the mechanism, but the outgoing letter still marks activation-window configuration values as for further study.",
+      "tdoc_id": "R1-2610934",
+      "passage": "n technical modifications.\nCompanies are encouraged to provide comments within the following table:\nProposal 3.2-5\nFor RO enhancement, the “active time window” is supported via RRC signalling (e.g., SIB1) for one c"
+    },
+    {
+      "claim": "The moderator's earlier account explains the beam-hopping motivation. When a satellite serves footprints at different times, common-channel transmission and access occasions must be matched to those dwell intervals. The proposed active window has an offset, duration and periodicity; access occasions outside the window would not be valid. Those proposal details explain the mechanism, but the outgoing letter still marks activation-window configuration values as for further study.",
+      "tdoc_id": "R1-2610934",
+      "passage": "Note: Only the RO within duration of active time window is considered to be valid."
+    },
+    {
+      "claim": "The moderator's earlier account explains the beam-hopping motivation. When a satellite serves footprints at different times, common-channel transmission and access occasions must be matched to those dwell intervals. The proposed active window has an offset, duration and periodicity; access occasions outside the window would not be valid. Those proposal details explain the mechanism, but the outgoing letter still marks activation-window configuration values as for further study.",
+      "tdoc_id": "R1-2610984",
+      "passage": "            ▪ The configuration values (activePeriodicity, activeOffset, activeDuration) of ActiveTimeConfiguration-r20 are FFS."
+    },
+    {
+      "claim": "The letter also identifies possible backward-compatibility issues with legacy satellite devices and changes in the radio-resource-management specification TS 38.133. RAN1 says the work might not align with the guidance for a technical enhancement item and asks plenary how to proceed. That makes the specification route part of the engineering issue: a small-looking signal-count extension can change device behavior and access timing across groups.",
+      "tdoc_id": "R1-2610984",
+      "passage": "        ◦ Potential backward compatibility issue with legacy NR-NTN UEs"
+    },
+    {
+      "claim": "The letter also identifies possible backward-compatibility issues with legacy satellite devices and changes in the radio-resource-management specification TS 38.133. RAN1 says the work might not align with the guidance for a technical enhancement item and asks plenary how to proceed. That makes the specification route part of the engineering issue: a small-looking signal-count extension can change device behavior and access timing across groups.",
+      "tdoc_id": "R1-2610984",
+      "passage": "    • RAN1 has identified that there might be some minimal changes needed in TS 38.133, including Table 8.1C.1-2 and Table 8.1E.1-2. RAN1 understood that this proposal may not be aligned with TEI guidance."
+    },
+    {
+      "claim": "The letter also identifies possible backward-compatibility issues with legacy satellite devices and changes in the radio-resource-management specification TS 38.133. RAN1 says the work might not align with the guidance for a technical enhancement item and asks plenary how to proceed. That makes the specification route part of the engineering issue: a small-looking signal-count extension can change device behavior and access timing across groups.",
+      "tdoc_id": "R1-2610984",
+      "passage": "    • RAN1 respectfully requests RAN to take the above information into account and advise RAN1 (and potentially RAN4/2) on how to proceed with this work."
+    },
+    {
+      "claim": "This is related to, but distinct from, the 6G compensation work described before Calgary. Apple's satellite proposal allocates feeder-link Doppler compensation to the network and makes assumptions about how the device obtains timing and satellite information. The Release-20 beam-hopping extension adds a scheduling window for when access is usable. Neither an available synchronization beam nor a corrected frequency alone establishes that an access opportunity is valid at the needed time.",
+      "tdoc_id": "R1-2609880",
+      "passage": "Proposal 1: For the feeder link in a transparent payload case, UE assumes that the feeder link Doppler is fully pre-compensated by the network.  "
+    },
+    {
+      "claim": "This is related to, but distinct from, the 6G compensation work described before Calgary. Apple's satellite proposal allocates feeder-link Doppler compensation to the network and makes assumptions about how the device obtains timing and satellite information. The Release-20 beam-hopping extension adds a scheduling window for when access is usable. Neither an available synchronization beam nor a corrected frequency alone establishes that an access opportunity is valid at the needed time.",
+      "tdoc_id": "R1-2610934",
+      "passage": "Note: Only the RO within duration of active time window is considered to be valid."
+    },
+    {
+      "claim": "This is related to, but distinct from, the 6G compensation work described before Calgary. Apple's satellite proposal allocates feeder-link Doppler compensation to the network and makes assumptions about how the device obtains timing and satellite information. The Release-20 beam-hopping extension adds a scheduling window for when access is usable. Neither an available synchronization beam nor a corrected frequency alone establishes that an access opportunity is valid at the needed time.",
+      "tdoc_id": "R1-2610984",
+      "passage": "        ◦ Modify the RO mapping based on beam activation window."
+    },
+    {
+      "claim": "RAN1 tells RAN4 it cannot recommend a generally applicable conversion from one radio's signal quality to network-wide sensing performance. Its reply lists deployment, sensing mode, node selection, target assumptions, detector processing, fusion and tracking as dependencies. It leaves scenario-specific characterization to RAN4 and says it does not currently plan to study a general mapping. This closes the expectation of receiving one universal conversion factor, rather than ending the sensing feasibility work.",
       "tdoc_id": "R1-2610961",
-      "passage": "RAN1 has not studied or established a mechanism to derive single-node KPIs (based on SNR/SINR) from network-wide sensing KPIs in clause 5.1.17 of TR 38.914. "
+      "passage": "RAN1 considers that no generally applicable simplified mapping (e.g. fusion gain or scaling factor) can be recommended to map between single-node and multi-node sensing performance."
     },
     {
-      "claim": "RAN1 rejects a generally applicable simplified mapping and identifies scenario, deployment, mode, node selection, target and processing dependencies. It leaves scenario-specific RF feasibility/coexistence characterization to RAN4; this does not select an individual company method.",
+      "claim": "RAN1 tells RAN4 it cannot recommend a generally applicable conversion from one radio's signal quality to network-wide sensing performance. Its reply lists deployment, sensing mode, node selection, target assumptions, detector processing, fusion and tracking as dependencies. It leaves scenario-specific characterization to RAN4 and says it does not currently plan to study a general mapping. This closes the expectation of receiving one universal conversion factor, rather than ending the sensing feasibility work.",
       "tdoc_id": "R1-2610961",
-      "passage": "RAN1 considers that no generally applicable simplified mapping (e.g. fusion gain or scaling factor) can be recommended to map between single-node and multi-node sensing performance.\nNetwork-wide sensing KPI may not only depend on a single-node SNR/SINR. It also depends at least on sensing scenario and deployment, sensing mode, selection of participating sensing nodes, sensing target assumptions, assumed detector and processing method (including fusion algorithm and tracking) which are implementation specific. However, it is up to RAN4 whether/how to characterize a scenario-specific fusion gain or scaling factor for an aligned reference scenario and evaluation methodology for RAN4’s RF feasibility and coexistence evaluations."
+      "passage": "RAN1 thanks RAN4 for the LS on mapping between network-wide sensing KPIs and single-node KPIs [1]. RAN1 would like to provide the following replies to RAN4’s questions."
     },
     {
-      "claim": "RAN1 does not currently plan to study mapping multi-node requirements into single-node requirements.",
+      "claim": "RAN1 tells RAN4 it cannot recommend a generally applicable conversion from one radio's signal quality to network-wide sensing performance. Its reply lists deployment, sensing mode, node selection, target assumptions, detector processing, fusion and tracking as dependencies. It leaves scenario-specific characterization to RAN4 and says it does not currently plan to study a general mapping. This closes the expectation of receiving one universal conversion factor, rather than ending the sensing feasibility work.",
       "tdoc_id": "R1-2610961",
       "passage": "Currently RAN1 does not plan to study how to map multi-node sensing performance requirements into single-node sensing performance requirements.  "
     },
     {
-      "claim": "The earlier RAN4 request identifies TR 38.914 network targets, single-base-station RF test scope and single-base-station feasibility/coexistence baseline.",
-      "tdoc_id": "R1-2609012",
-      "passage": "The sensing KPIs in clause 5.1.17 of TR 38.914 apply at network level. \nRAN4 can only define and test RF performance for single BS, as such cannot define nor test network-level requirements. \nRAN4 will study the feasibility of sensing for single BS and evaluate single BS coexistence performance within the network as a baseline."
-    },
-    {
-      "claim": "RAN4 asked about a fusion gain or scaling factor and explicitly had not decided on that approach.",
-      "tdoc_id": "R1-2609012",
-      "passage": "Accordingly, RAN4 is discussing how to derive single-node sensing KPIs (based on SNR/SINR) from the network-level sensing KPIs given in clause 5.1.17 of TR 38.914. \nTo link single-node and multi-node sensing performance, RAN4 may consider a simplified mapping from single BS SNR/SINR to network level sensing KPIs (including detection probability based on false alarm probability). Options for the mapping may include, e.g., a fusion gain or scaling factor. \nRAN4 has not yet made any decision on this approach. RAN1 views would help RAN4 decide."
-    },
-    {
-      "claim": "vivo defines per-node echo/noise SNR on a resource element and antenna port, and a multi-node arithmetic mean across six TRPs. This supports the operational SNR explanation and the inference that an average does not determine individual margins or per-target usable-link counts.",
-      "tdoc_id": "R1-2609486",
-      "passage": "The sensing SNR of the multi-TRP scenario is defined as the arithmetic mean over all sensing SNR samples from all six TRPs. For each TRP, the sensing SNR is the ratio of the target echo power received on a single resource element (RE) and a single antenna port to the corresponding noise power, where the target echo power is the power of the sensing target path. For multi-target scenarios, the average power over the individual sensing target paths is used."
-    },
-    {
-      "claim": "Ericsson distinguishes baseline SNR without adjacent-channel interference from SINR including it, supporting the operational SINR explanation.",
-      "tdoc_id": "R1-2610364",
-      "passage": "For every candidate link, calculate the baseline sensing SNR without the considered adjacent-channel interference and the corresponding sensing SINR with adjacent-channel interference, using otherwise identical assumptions. "
-    },
-    {
-      "claim": "Ericsson describes the evaluation chain from channel and signal generation to per-node processing, optional fusion and tracking, and final metrics.",
-      "tdoc_id": "R1-2610364",
-      "passage": "Clause 6.1 of TR 38.765 defines the following general evaluation procedure:\nSimulation parameter configuration.\nSensing scenario generation, including deployment of sensing transmitters and receivers.\nDropping N targets, with N equal to zero or larger than zero.\nChannel generation and determination of the STX/SRX set for each target.\nSensing-signal generation and passage of the signal through the generated channel.\nSignal processing at each SRX, optionally followed by processing based on fusion from multiple STXs/SRXs and optionally tracking.\nCalculation of the sensing performance metrics."
-    },
-    {
-      "claim": "Ericsson describes final object association with ground truth and metric calculation after processing. Premise for the interpretation that a threshold at the input alone cannot determine final object performance.",
-      "tdoc_id": "R1-2610364",
-      "passage": "The final detected objects were associated one-to-one with ground-truth targets using a company-reported association rule, commonly a three-dimensional distance gate and, in some cases, an additional velocity condition. Missed-detection probability, false-alarm probability Type 1, false-alarm probability Type 2, positioning accuracy and velocity accuracy were then calculated after the complete processing chain. The performance objectives in TR 38.765 are 5% missed detection, 5% Type-1 false alarm, 5% Type-2 false alarm, 10 m horizontal and vertical positioning accuracy at 90% confidence, and 5 m/s velocity accuracy at 90% confidence.\n5G-A RAN1 evaluation does not define a unique conversion from one TRP SNR/SINR to network-level detection probability. The reported network-level result is produced after per-TRP signal processing, optional multi-TRP fusion, object formation and association with ground truth."
-    },
-    {
-      "claim": "CATT and CICTCI explain nonzero-Doppler NLOS rays that mimic additional moving objects, and angular blind zones including above the TRP.",
+      "claim": "CATT and CICTCI explain the geometry behind that answer: different sites can observe blind zones and help distinguish misleading reflections from additional targets. Ericsson's RAN1 contribution offers a narrower abstraction, checking whether the required number of ranked links exceeds a common detector threshold. That retains the availability of several observations, without pretending to reproduce the later object association and tracking result.",
       "tdoc_id": "R1-2609650",
-      "passage": "This is due to the fact that, without data fusion from multiple TRPs, it is hard to eliminate the impact of random NLOS ray from target channel (causing false alarm) due to moving targets. These NLOS rays are with non-zero Doppler, which will be easily misunderstood as another sensing target. Thus the FAP type-2 can be significantly increased. Similarly, single-node sensing at TRP side will have blind zone due to the limitation of beam angle, such as the area just above the TRP. So the MDP is hard to reduce as long as the sensing target is located in the blind zone. This is observed in 5G-A UAV sensing study with TRP mono-static sensing mode."
+      "passage": "This is due to the fact that, without data fusion from multiple TRPs, it is hard to eliminate the impact of random NLOS ray from target channel (causing false alarm) due to moving targets. These NLOS rays are with non-zero Doppler, which will be easily misunderstood as another sensing target. Thus the FAP type-2 can be significantly increased. Similarly, single-node sensing at TRP side will have blind zone due to the limitation of beam angle, such as the area just above the TRP. So the MDP is hard to reduce as long as the sensing target is located in the blind zone. This is observed in 5G-A UAV sensing study with TRP mono-static sensing mode. "
     },
     {
-      "claim": "CATT and CICTCI report little change in the discussed false-alarm and missed-detection metrics with base-station transmit power, while qualifying that other metrics can differ. Premise for separating power margin from visibility and spatial confirmation.",
+      "claim": "CATT and CICTCI explain the geometry behind that answer: different sites can observe blind zones and help distinguish misleading reflections from additional targets. Ericsson's RAN1 contribution offers a narrower abstraction, checking whether the required number of ranked links exceeds a common detector threshold. That retains the availability of several observations, without pretending to reproduce the later object association and tracking result.",
       "tdoc_id": "R1-2609650",
-      "passage": "Note that the FAP type-2 or MDP does not change too much along with the BS Tx power. This may be different when considering other KPIs, e.g. positioning/velocity accuracy. "
+      "passage": "Reviewing the submitted results in 5G-A, it can be observed that in most sources with single-node sensing, high false alarm probability (FAP) type-2 and high missed detection probability (MDP) are reported. The FAP type-2 can be almost 90%, while MDP can also be larger than 20%. "
     },
     {
-      "claim": "CATT and CICTCI identify multi-node fusion as key to improving missed detection and Type-2 false alarm. Premise for the lead and spatial-diversity interpretation.",
-      "tdoc_id": "R1-2609650",
-      "passage": "Observation 2: For object detection, data fusion from multiple sensing pairs/nodes is key to improving some sensing KPIs such as MDP and FAP type-2. "
-    },
-    {
-      "claim": "CATT and CICTCI identify KPI-specific gains, implementation-specific fusion, observing-node count, neighboring-node blind-zone coverage and geometry-dependent channels as reasons against a scalar mapping. Premises for the inference that additional power cannot supply the missing viewpoint or confirmation operation.",
-      "tdoc_id": "R1-2609650",
-      "passage": "Observation 3: For object detection, it is very difficult to define a common fusion gain or scaling factor that maps single-node sensing performance to network-wide sensing performance, due to the following reasons:\nThe gain from fusion may be different for different sensing KPIs.\nFusion algorithms are up to companies’ implementation and have not been aligned in RAN1.\nFAP type-2 heavily depends on the number of sensing nodes/pairs that can observe the target(s), which is critical to eliminate the random NLOS rays causing false alarm.\nMDP reduction (e.g., ≤ 5%) relies on neighbouring sensing nodes to overcome the ‘blind zone’ of a specific sensing node, especially when the sensing node is TRP and the sensing target (ST) is UAV.\nThe channel characteristics (e.g., LOS probability and channel coefficient) of each STx-ST and ST-SRx link for each sensing pair are quite different, due to the geometric difference. This is scenario dependent and sensing mode specific."
-    },
-    {
-      "claim": "CATT and CICTCI describe geometry-dependent channels and implementation-specific fusion, detector and clustering choices. This supports the interpretation that a universal scalar removes relevant dependencies.",
-      "tdoc_id": "R1-2609650",
-      "passage": "At the same time, the wireless channel between sensing target and each sensing node is different, due to the geometric difference. Moreover, such difference may be varying with different scenarios and sensing modes. Therefore, it is difficult to deduce any closed-form mapping between network-wide sensing KPIs and single-node sensing KPIs. \nThe fusion algorithm is also up to companies’ implementation, and thus it is hard to achieve a common algorithm. For example, the CFAR (constant false alarm rate) algorithm selection, clustering algorithm, thresholds of each method, etc. could all be different among companies and hard to tell which is optimal.\nAs an obvious result, it is difficult to calculate a common fusion gain or scaling factor that maps single-node sensing performance to network-wide sensing performance."
-    },
-    {
-      "claim": "CATT and CICTCI say temporal tracking can improve even a single node, is optional, and can also improve network-wide sensing. This qualifies any implication that multiple nodes are universally necessary.",
-      "tdoc_id": "R1-2609650",
-      "passage": "Other than data fusion, temporal tracking may also improve the sensing performance even with single node sensing, compared to single-shot detection. This is similar to using channels in different time to eliminate the negative impact due to random NLOS link. Therefore, with tracking, even by single node sensing, a satisfactory performance can be achieved compared to object detection without tracking.\nHowever, tracking is ‘optional’ in both 5G-A and 6G sensing studies. Meanwhile, network-wide sensing can also leverage tracking to improve the performance. But due to the lack of complete study in 6G, it is also very difficult to define a common fusion gain or scaling factor that maps single-node sensing performance to network-wide sensing performance for tracking."
-    },
-    {
-      "claim": "CATT and CICTCI say tracking fusion gain can differ from detection gain. Premise for requiring another check before transferring detection calibration to tracking.",
-      "tdoc_id": "R1-2609650",
-      "passage": "Observation 5: The fusion gain for tracking may be different from that for detection."
-    },
-    {
-      "claim": "ZTE and Sanechips oppose direct decomposition of network-level KPIs because sensing-method diversity changes the single-node requirement.",
-      "tdoc_id": "R1-2609482",
-      "passage": "Proposal 1: RAN1 proposes that the single-node KPI should not be derived by directly decomposing the network-level KPIs of clause 5.1.17 of TR 38.914, considering the diversity of different sensing method from companies."
-    },
-    {
-      "claim": "ZTE and Sanechips say a mapping must absorb fusion rule, node count, observation correlation and operating point, and is not constant.",
-      "tdoc_id": "R1-2609482",
-      "passage": "Given different method for jointly fusing sensing measurement, a scaling factor between the single-node and the multi-node performance has to absorb the fusion rule, the number of the nodes, the correlation of their observations and the per-node operating point, and it is therefore not a constant."
-    },
-    {
-      "claim": "ZTE and Sanechips propose strongest-target-echo selection, equate network KPI with selected-node KPI and therefore assign zero-decibel fusion gain. The zero is conditional on that selection model.",
-      "tdoc_id": "R1-2609482",
-      "passage": "Instead, the mapping can instead be defined by the selection of the node: the sensing node that receives the strongest echo of the target, i.e., the node whose sensing link has the highest RSRP, is taken as the single node, and the network-level KPI is then the KPI of that node, so that the fusion gain is 0 dB. Based on such observation, KPI of Urban Macro could be reused for KPI of selected single node for UAV scenarios."
-    },
-    {
-      "claim": "ZTE and Sanechips explicitly condition the simplified mapping on strongest-echo selection. Premise for the inference that their model omits multi-node corroboration, not evidence that fusion never helps.",
-      "tdoc_id": "R1-2609482",
-      "passage": "Proposal 2: Consider one simplified sensing fusion method to derive single sensing node KPI:\nIf sensing fusion method could be fixed as selecting of the sensing node that receives the strongest echo of the target, so that the single-node KPI and the multi-node KPI could be mapping with same value, and the fusion gain is 0 dB,"
-    },
-    {
-      "claim": "Ericsson describes company-specific estimation and multiple-node confirmation rules, including at least two, more than two and at least three unique TRPs. This grounds the conditional two-link example, not a universal requirement.",
+      "claim": "CATT and CICTCI explain the geometry behind that answer: different sites can observe blind zones and help distinguish misleading reflections from additional targets. Ericsson's RAN1 contribution offers a narrower abstraction, checking whether the required number of ranked links exceeds a common detector threshold. That retains the availability of several observations, without pretending to reproduce the later object association and tracking result.",
       "tdoc_id": "R1-2610364",
-      "passage": "Where multi-TRP processing was used, companies generally transformed or pooled per-TRP detections, clustered spatially consistent points, applied a voting or validity rule across distinct TRPs, and formed a final object estimate using weighted averaging, weighted least squares, strongest-point selection, or another company-specific method. The minimum number of agreeing TRPs was not uniform: explicitly reported validity rules included at least two TRPs, more than two TRPs, and at least three unique TRPs. Several evaluations processed a candidate pool larger than three TRPs even where the confirmation threshold was two or three."
+      "passage": "However, the evaluations consistently show that multi-TRP support can be represented at a higher level through link availability. A suitable abstraction for RAN4 is therefore the SNR/SINR of the nth-best sensing link for each target, where n is not fixed by RAN1 and may be selected by RAN4 for its coexistence methodology. This means that the target needs to be “detected” in the detector of at least n BSs (or TRPs) before it even enters the clustering and fusion pipeline.  "
     },
     {
-      "claim": "Ericsson argues a fixed SNR fusion gain cannot represent methods that do not share coherent combining, input count or confirmation rule.",
-      "tdoc_id": "R1-2610364",
-      "passage": "A fixed fusion gain added to a single-node SNR/SINR does not represent the diversity of the reported RAN1 fusion methods. The methods do not perform a common coherent-combining method, and do not use a common number of inputs or common confirmation rule."
-    },
-    {
-      "claim": "Ericsson proposes nth-best-link quality as a multi-link-availability abstraction, leaving n for RAN4 methodology rather than fixing it in RAN1.",
-      "tdoc_id": "R1-2610364",
-      "passage": "However, the evaluations consistently show that multi-TRP support can be represented at a higher level through link availability. A suitable abstraction for RAN4 is therefore the SNR/SINR of the nth-best sensing link for each target, where n is not fixed by RAN1 and may be selected by RAN4 for its coexistence methodology. This means that the target needs to be “detected” in the detector of at least n BSs (or TRPs) before it even enters the clustering and fusion pipeline."
-    },
-    {
-      "claim": "Ericsson specifies per-target candidate links, matched no-interference/interference calculations, ranking and an nth-best-link distribution against a detector threshold. Premise for the inference that the second-best link must clear threshold in a two-link criterion, regardless of the strongest-link margin.",
-      "tdoc_id": "R1-2610364",
-      "passage": "The proposed nth-best-link coexistence methodology is as follows: \nFor each target and simulation realization, determine all candidate sensing links according to the RAN4 deployment, association and link-selection assumptions. \nFor every candidate link, calculate the baseline sensing SNR without the considered adjacent-channel interference and the corresponding sensing SINR with adjacent-channel interference, using otherwise identical assumptions. \nFor each target and realization, rank the candidate-link values from highest to lowest and retain the nth-best value, denoted by SNR(n) for the no-ACI case and SINR(n) for the ACI case. \nBuild the CDFs of SNR(n) and SINR(n) over the evaluated targets and realizations. For any common single-node detector threshold γth, the CDF directly indicates the fraction of cases in which at least n links exceed γth."
-    },
-    {
-      "claim": "Ericsson explicitly excludes complete fusion and later object processing from its availability abstraction. This grounds the tradeoff and the warning against treating availability as detection certification.",
-      "tdoc_id": "R1-2610364",
-      "passage": "The proposed nth-best-link abstraction does not reproduce the complete RAN1 fusion process and does not claim that every implementation uses the same number of TRPs/BSs. It provides a reproducible connection between single-link SNR/SINR and the availability of multiple usable sensing links, while leaving any potential clustering, fusion, object association and tracking gains outside the abstraction."
-    },
-    {
-      "claim": "Ericsson requires a common detector configuration, search bins, resources, processing interval and detection/false-alarm criteria to derive a threshold. Premise for the inference that an unspecified threshold hides method variation.",
-      "tdoc_id": "R1-2610364",
-      "passage": "The detector threshold should be established for a common detector configuration, including the relevant number of delay/Doppler/angle bins, sensing carriers/resources, pulses or CPI and agreed single-node Pd/Pfa criterion. A representative threshold or threshold range may be derived from company detector evaluations."
-    },
-    {
-      "claim": "Ericsson proposes matched no-adjacent-channel-interference and interference comparisons with the same threshold and n-link criterion. Premise for a repeatable intermediate coexistence result without a final network-performance guarantee.",
-      "tdoc_id": "R1-2610364",
-      "passage": "For coexistence evaluation, the same detector threshold and n-link criterion can be applied first without the considered ACI and then with ACI. The no-ACI result is the baseline and RAN4 can evaluate the degradation when ACI is applied."
-    },
-    {
-      "claim": "vivo describes six selected TRPs sensing targets, fusion of measurements and comparison to ground truth, and a separate single-TRP case. These conditions limit the portability of its operating point.",
-      "tdoc_id": "R1-2609486",
-      "passage": "To ensure effective coverage of the sensing area, area-based TRP selection scheme is employed in the simulation. For multi-TRP scenario, TRPs associated with the three target-dropping sectors (marked in red) and the 3 nearest neighboring sectors (marked in green) are selected to sense the 15 targets dropped in the central sectors, as illustrated in Figure 1.\nFigure 1: TRP selection based on sensing area, 6-TRP with network-level fusion.\nIn the simulation, all 15 targets are modeled in the channels of the selected TRPs. The final sensing results are obtained by fusing the measurement data from participating TRPs. Position/velocity accuracy and detection metrics are calculated by comparing the fused results against the ground truth.\nFor single-TRP scenario, the TRP associated with the target-dropping sector (marked in red) is selected to sense the target dropped in the central sector, as illustrated in Figure 2."
-    },
-    {
-      "claim": "vivo reports detection and false-alarm performance below its 5% targets at about -20.6 dB sensing SNR and 23.6 dB post-processing SNR in the six-TRP case. The article reports a conditional calibration result, not an independently established RF limit.",
-      "tdoc_id": "R1-2609486",
-      "passage": "For the six-TRP sensing scenario, when the sensing SNR reaches approximately −20.6 dB and the corresponding post-processing sensing SNR reaches approximately 23.6 dB, both the missed detection probability and the false alarm probability fall below 5%, e.g., 4.67% and 1.04%, respectively. At this operating point, the horizontal and vertical positioning RMSE are approximately 1.32 m and 0.35 m, respectively, and the horizontal and vertical velocity RMSE are approximately 0.90 m/s and 0.23 m/s, respectively, which satisfy the corresponding requirements in TS 22.137."
-    },
-    {
-      "claim": "vivo reports its single-TRP scenario cannot meet network targets and cannot simultaneously control missed detections and false alarms below 5%.",
-      "tdoc_id": "R1-2609486",
-      "passage": "The single-TRP sensing scenario cannot meet the network-level sensing KPI targets. In this scenario, it is difficult to simultaneously control the missed detection probability and the false alarm probability below the required 5% threshold."
-    },
-    {
-      "claim": "vivo proposes deriving a single-base-station requirement from the successful operating point of the complete multi-TRP simulation rather than first deriving a standalone single-node KPI.",
-      "tdoc_id": "R1-2609486",
-      "passage": "Therefore, for RAN4’s purpose of defining and testing single BS RF requirements, it is more practical to anchor the single BS SNR/SINR requirement on the system-level evaluations that RAN1 has already aligned. The mapping between the per-TRP sensing SNR/SINR and the network-level sensing performance can be obtained from the agreed multi-TRP SLS, as in Section 2.2, and the required single BS SNR/SINR is the per-TRP sensing SNR at which the network-level KPIs are just satisfied, e.g., about −20.6 dB for the UMa-AV UAV scenario in this evaluation. In this way, the single BS requirement is directly linked to the network-level KPIs without needing any intermediate single-node KPI derivation."
-    },
-    {
-      "claim": "vivo defines post-processing SNR to include coherent gain and identifies the evaluated resource and accumulation conditions in prose. Premise for separating input echo quality from accumulation benefit.",
-      "tdoc_id": "R1-2609486",
-      "passage": "The post-processing sensing SNR further accounts for the two-dimensional coherent processing gain. In our evaluation, with 273 RBs, a frequency density of 3 REs per RB, a time-domain periodicity of 5 slots, a CPI of 80 ms, and 32 effective time-domain samples, the corresponding delay-Doppler accumulation gain is"
-    },
-    {
-      "claim": "vivo says network performance depends on multiple links, per-node detection/false-alarm control and fusion, with geometry and node-count dependence. Premise for the inference that its successful mean SNR cannot certify every radio or target.",
-      "tdoc_id": "R1-2609486",
-      "passage": "As shown in Section 2.2, the network-level sensing performance is determined by the combination of multiple sensing links, the detection and false alarm control per TRP, and the network-level fusion of the detection results. The single-TRP performance cannot meet the network-level KPIs within the evaluated SNR range, and its relation to the multi-TRP performance depends on the TRP-target geometry, the number of TRPs participating in sensing, and the fusion method. In other words, the network-level KPIs cannot be decomposed into an equivalent single-node KPI in a deterministic way."
-    },
-    {
-      "claim": "vivo reports no single SNR offset aligns its single- and six-node curves and qualitatively different false-alarm behavior. This is contrary evidence to a universal fixed gain, even within its comparison.",
-      "tdoc_id": "R1-2609486",
-      "passage": "In our evaluation, the SNR offset between the single-TRP and 6-TRP scenarios varies with the TRP Tx power and no single scaling factor can align the two performance curves, and the false alarm behaviour differs qualitatively between the two scenarios."
-    },
-    {
-      "claim": "Extraction qualification: vivo identifies a simulation assumption table; the snapshot has its heading but no table contents. Its prose supports the stated method, not every underlying radio parameter.",
-      "tdoc_id": "R1-2609486",
-      "passage": "Table 1 summarizes the simulation assumptions used in this contribution.\nTable 1: Simulation assumptions of the network-level sensing SLS"
-    },
-    {
-      "claim": "Extraction qualification: vivo identifies curves of multi-node detection, false alarm, position and velocity performance; their captions are extracted but the curves are absent. No matched quantitative ranking is inferred.",
-      "tdoc_id": "R1-2609486",
-      "passage": "Figure 4 to Figure 6 show the missed detection probability and false alarm probability, position RMSE, and velocity RMSE versus the sensing SNR for the 6-TRP scenario with network-level fusion, respectively.\nFigure 4: Missed detection probability and false alarm probability vs. sensing SNR, 6-TRP with network-level fusion.\nFigure 5: Position RMSE vs. sensing SNR, 6-TRP with network-level fusion.\nFigure 6: Velocity RMSE vs. sensing SNR, 6-TRP with network-level fusion."
-    },
-    {
-      "claim": "Interpretation premise for the proposed decisive experiment: Ericsson identifies link selection, detector, uncertainty, clustering, voting, association and metric dependence. Comparing usable-link losses with final object losses is proposed validation, not a reported outcome.",
+      "claim": "CATT and CICTCI explain the geometry behind that answer: different sites can observe blind zones and help distinguish misleading reflections from additional targets. Ericsson's RAN1 contribution offers a narrower abstraction, checking whether the required number of ranked links exceeds a common detector threshold. That retains the availability of several observations, without pretending to reproduce the later object association and tracking result.",
       "tdoc_id": "R1-2610364",
       "passage": "Network-level sensing performance is not solely a function of one receiving node’s post-processing SNR/SINR. It also depends on STX/SRX determination, detector configuration, per-TRP processing, measurement uncertainty, clustering, voting, object association and the selected performance metric."
+    },
+    {
+      "claim": "Ericsson's RAN4 feasibility paper discusses a different part of the chain. Full-duplex sensing must control leakage from its own transmitter; pulsed sensing introduces a blind zone determined by the pulse and switching behavior. The paper argues that another sensing mode or another node can cover a local blind zone, so one fixed switching-time limit would not represent all implementations. It proposes leaving synchronization choices open where relative over-the-air references can meet the task.",
+      "tdoc_id": "R4-2631809",
+      "passage": "Observation 3:\tSBFD assumes 45 dB frequency sub-band isolation which cannot be used for FD sensing operation. RAN1 assumed physical Tx and Rx antenna isolation of 65 to 80 dB to avoid receiver blocking"
+    },
+    {
+      "claim": "Ericsson's RAN4 feasibility paper discusses a different part of the chain. Full-duplex sensing must control leakage from its own transmitter; pulsed sensing introduces a blind zone determined by the pulse and switching behavior. The paper argues that another sensing mode or another node can cover a local blind zone, so one fixed switching-time limit would not represent all implementations. It proposes leaving synchronization choices open where relative over-the-air references can meet the task.",
+      "tdoc_id": "R4-2631809",
+      "passage": "Observation 4: \tContiguous range coverage with full-duplex operation for short-range objects and pulsed operation for longer-range objects requires the full-duplex sensing range to overlap with the pulsed-mode blind zone. Since the full-duplex sensing max range depends on a multitude of factors, it cannot be captured by a single value, and then neither can the allowable pulsed-mode blind zone."
+    },
+    {
+      "claim": "Ericsson's RAN4 feasibility paper discusses a different part of the chain. Full-duplex sensing must control leakage from its own transmitter; pulsed sensing introduces a blind zone determined by the pulse and switching behavior. The paper argues that another sensing mode or another node can cover a local blind zone, so one fixed switching-time limit would not represent all implementations. It proposes leaving synchronization choices open where relative over-the-air references can meet the task.",
+      "tdoc_id": "R4-2631809",
+      "passage": "Observation 7: \tThe blind zone around a certain sensing node could be covered by other sensing nodes in the area or sensing modes (e.g. a bi-static mode) hence from a system view a blind zone around a specific node may or may not be limiting."
+    },
+    {
+      "claim": "Ericsson's RAN4 feasibility paper discusses a different part of the chain. Full-duplex sensing must control leakage from its own transmitter; pulsed sensing introduces a blind zone determined by the pulse and switching behavior. The paper argues that another sensing mode or another node can cover a local blind zone, so one fixed switching-time limit would not represent all implementations. It proposes leaving synchronization choices open where relative over-the-air references can meet the task.",
+      "tdoc_id": "R4-2631809",
+      "passage": "Proposal 6:\tFor intra-BS with BS-BS bistatic/multi-static sensing and among its existing synchronization alternatives, there exists methods that does not require strict inter node synchronization. A standard should not restrict implementation to a specific synchronization method. Based on this there is no need or purpose to specify synchronization requirements that are not required (and even so it would anyway not adequately represent all use cases and their varying needs) and like existing agreement for BS phase continuity this could be handled by implementation [14]. "
+    },
+    {
+      "claim": "The two threads need to meet in an aligned evaluation. Passing a radio leakage or switching test does not prove that the selected set of observations produces acceptable detections. Conversely, a network result using helpful additional nodes does not automatically establish that each radio can meet its assumed input conditions. A scenario-specific test should keep the node geometry, detector settings and hardware assumptions visible from the RF measurement through the object decision.",
+      "tdoc_id": "R1-2610961",
+      "passage": "RAN1 thanks RAN4 for the LS on mapping between network-wide sensing KPIs and single-node KPIs [1]. RAN1 would like to provide the following replies to RAN4’s questions."
+    },
+    {
+      "claim": "The two threads need to meet in an aligned evaluation. Passing a radio leakage or switching test does not prove that the selected set of observations produces acceptable detections. Conversely, a network result using helpful additional nodes does not automatically establish that each radio can meet its assumed input conditions. A scenario-specific test should keep the node geometry, detector settings and hardware assumptions visible from the RF measurement through the object decision.",
+      "tdoc_id": "R1-2610364",
+      "passage": "Network-level sensing performance is not solely a function of one receiving node’s post-processing SNR/SINR. It also depends on STX/SRX determination, detector configuration, per-TRP processing, measurement uncertainty, clustering, voting, object association and the selected performance metric."
+    },
+    {
+      "claim": "The two threads need to meet in an aligned evaluation. Passing a radio leakage or switching test does not prove that the selected set of observations produces acceptable detections. Conversely, a network result using helpful additional nodes does not automatically establish that each radio can meet its assumed input conditions. A scenario-specific test should keep the node geometry, detector settings and hardware assumptions visible from the RF measurement through the object decision.",
+      "tdoc_id": "R4-2631809",
+      "passage": "Observation 4: \tContiguous range coverage with full-duplex operation for short-range objects and pulsed operation for longer-range objects requires the full-duplex sensing range to overlap with the pulsed-mode blind zone. Since the full-duplex sensing max range depends on a multitude of factors, it cannot be captured by a single value, and then neither can the allowable pulsed-mode blind zone."
+    },
+    {
+      "claim": "The two threads need to meet in an aligned evaluation. Passing a radio leakage or switching test does not prove that the selected set of observations produces acceptable detections. Conversely, a network result using helpful additional nodes does not automatically establish that each radio can meet its assumed input conditions. A scenario-specific test should keep the node geometry, detector settings and hardware assumptions visible from the RF measurement through the object decision.",
+      "tdoc_id": "R4-2631809",
+      "passage": "Observation 7: \tThe blind zone around a certain sensing node could be covered by other sensing nodes in the area or sensing modes (e.g. a bi-static mode) hence from a system view a blind zone around a specific node may or may not be limiting."
     }
   ],
   "coverage_gaps": [
-    "No retrieved matched evaluation compares strongest-echo selection, nth-best-link availability and complete fusion under identical targets, deployment, detector and interference. The article compares preserved dependencies, not numerical performance.",
-    "R1-2609486 has no extracted contents for its detailed assumption table or curves. Its -20.6 dB and 23.6 dB values, averaging definition, six-node setup and single-node limitation are explicit in prose. They are reported as conditional operating points only; RF threshold portability cannot be assessed.",
-    "R1-2610364 references detailed TR 38.765 company-processing descriptions, but its table is absent. The article uses explicit prose on the processing chain and confirmation-rule variation and assigns no per-company algorithms from the missing table.",
-    "R1-2609012 forwards October RAN4 letter R4-2622113, which is not a separate extracted row in this snapshot. Its inner header has a malformed day range. The article dates the request to October only and does not infer a November RAN4 decision.",
-    "R1-2610961 is the new RAN1 reply, not an adopted conformance requirement or a RAN4 decision. Scenario-specific characterization is left to RAN4 without selecting a company abstraction.",
-    "Related-work research included RP-251881, RP-252912 and workplan-linked RP-253876, confirming the study split between sensing-performance evaluation and RF/coexistence/testability. These older papers provide scope context rather than news. No position is inferred from contacts, tags or generated analysis.",
-    "Candidate comparison: R1-2611013 lacks extracted progress/filter blocks needed for a substantive waveform net-gain update. R4-2630503 and Ericsson R4-2631468/R4-2631470 expose AI-DPoD conditions but lack key comparative tables. R1-2610900 and R1-2610926 renew a full-bandwidth single-transport-block preference without new discriminating evaluation in those papers. These angles remain for later research.",
-    "Coverage diagnostics record partial extraction and pending analysis. They were warnings; no analysis purchase, crawling, extraction repair or database modification was performed."
-  ]
+    "RAN4 company implementation and feasibility papers are not presented as adopted Calgary conclusions.",
+    "Detailed tables are absent in several extracted replies; no missing CSI-compression agreements or numerical distortion results are reconstructed.",
+    "The outgoing eight-SSB letter requests plenary direction and is not a plenary approval.",
+    "Waveform, channel coding, complete energy-saving down-selection and other Release-20 work remain outside this report rather than inferred from incomplete summaries."
+  ],
+  "source_metadata": {
+    "R1-2610953": {
+      "title": "Reply LS on service differentiation in UL grant/DCI",
+      "source": "RAN1",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_127/Docs/R1-2610953.zip",
+      "wg_name": "RAN1"
+    },
+    "R1-2610954": {
+      "title": "Reply LS on UE capability for Mobility Enh Ph5",
+      "source": "RAN1",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_127/Docs/R1-2610954.zip",
+      "wg_name": "RAN1"
+    },
+    "R1-2610995": {
+      "title": "Reply LS to RAN4 on 6G FR2 UE digital beamforming architecture",
+      "source": "RAN1",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_127/Docs/R1-2610995.zip",
+      "wg_name": "RAN1"
+    },
+    "R1-2610949": {
+      "title": "Reply LS on channel modelling for FR1 L3 non-collocated inter-frequency cell-level prediction",
+      "source": "RAN1",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_127/Docs/R1-2610949.zip",
+      "wg_name": "RAN1"
+    },
+    "R1-2610961": {
+      "title": "Reply LS on network-wide sensing performance for 6G sensing",
+      "source": "RAN1",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_127/Docs/R1-2610961.zip",
+      "wg_name": "RAN1"
+    },
+    "R4-2630939": {
+      "title": "Views on digital beamforming for UE in FR2",
+      "source": "Murata Manufacturing Co Ltd.",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_121/Docs/R4-2630939.zip",
+      "wg_name": "RAN4"
+    },
+    "R4-2631809": {
+      "title": "6G ISAC on: “Feasibility study (RF, RRM)”",
+      "source": "Ericsson",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_121/Docs/R4-2631809.zip",
+      "wg_name": "RAN4"
+    },
+    "R1-2609604": {
+      "title": "Discussion on downlink transmission scheme(s) for downlink control channels",
+      "source": "Samsung",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_127/Docs/R1-2609604.zip",
+      "wg_name": "RAN1"
+    },
+    "R1-2609858": {
+      "title": "Transmission for downlink control channels",
+      "source": "Apple",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_127/Docs/R1-2609858.zip",
+      "wg_name": "RAN1"
+    },
+    "R4-2630057": {
+      "title": "On 6G FR2 UE RF Digital Beamforming Architecture",
+      "source": "BeammWave AB",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_121/Docs/R4-2630057.zip",
+      "wg_name": "RAN4"
+    },
+    "R4-2631857": {
+      "title": "AI-RRM Sub-Case 2: FR1 L3 frequency domain (within the same FR) cell-level prediction (inter-cell, non-collocated)",
+      "source": "Nokia",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_121/Docs/R4-2631857.zip",
+      "wg_name": "RAN4"
+    },
+    "R1-2610977": {
+      "title": "Reply LS on JSCM-based CSI compression with AI",
+      "source": "RAN1",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_127/Docs/R1-2610977.zip",
+      "wg_name": "RAN1"
+    },
+    "R1-2609841": {
+      "title": "On remaining details for inter-vendor training collaboration for two-sided AI/ML models",
+      "source": "Apple",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_127/Docs/R1-2609841.zip",
+      "wg_name": "RAN1"
+    },
+    "R4-2630009": {
+      "title": "LS on UE capability for Mobility Enh Ph5",
+      "source": "RAN2",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_121/Docs/R4-2630009.zip",
+      "wg_name": "RAN4"
+    },
+    "RP-260232": {
+      "title": "Revised Work Item:  NR mobility enhancements Phase 5",
+      "source": "Apple Inc",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/TSG_RAN/TSGR_111/Docs/RP-260232.zip",
+      "wg_name": "Plenary"
+    },
+    "R1-2610984": {
+      "title": "LS on Rel-20 TEI about introducing 8 SSBs in NR NTN for below 3GHz",
+      "source": "RAN1",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_127/Docs/R1-2610984.zip",
+      "wg_name": "RAN1"
+    },
+    "R1-2610934": {
+      "title": "Summary of email discussion on Rel-20 TEI about introducing 8 SSBs in NR NTN for below 3 GHz",
+      "source": "Moderator (CSCN)",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_127/Docs/R1-2610934.zip",
+      "wg_name": "RAN1"
+    },
+    "R1-2609880": {
+      "title": "On NTN specific requirement and design",
+      "source": "Apple",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_127/Docs/R1-2609880.zip",
+      "wg_name": "RAN1"
+    },
+    "R1-2609650": {
+      "title": "Discussion on network-wide sensing performance for 6G sensing",
+      "source": "CATT, CICTCI",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_127/Docs/R1-2609650.zip",
+      "wg_name": "RAN1"
+    },
+    "R1-2610364": {
+      "title": "Discussion on RAN4 LS on network wide sensing performance for 6G sensing",
+      "source": "Ericsson",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_127/Docs/R1-2610364.zip",
+      "wg_name": "RAN1"
+    }
+  }
 }

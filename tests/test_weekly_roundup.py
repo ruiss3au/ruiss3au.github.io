@@ -20,7 +20,7 @@ def row(key='1', doc='R1-2609005', fingerprint='new', days=1):
     return {'key': key, 'tdoc_id': doc, 'fingerprint': fingerprint,
             'latest': (NOW - dt.timedelta(days=days)).isoformat(),
             'tdoc_url': 'https://www.3gpp.org/ftp/test/' + doc + '.zip',
-            'raw_text': PASSAGE}
+            'raw_text': PASSAGE, 'wg_name': 'RAN4' if key in ('3', '4') else 'RAN1', 'meeting_number': '127', 'agenda_item': key}
 
 
 ANALYSIS = 'Receiver performance remains unresolved, so the transmitter results alone cannot establish the net gain.'
@@ -40,8 +40,29 @@ def source_ledger():
             'analysis_excerpt': ANALYSIS,
         },
         'claims': [{'claim': 'Receiver evaluation requested', 'tdoc_id': doc, 'passage': PASSAGE}
-                   for doc in ('R1-2609005', 'R1-2609006')],
+                   for doc in ('R1-2609005', 'R1-2609006', 'R1-2609007', 'R1-2609008', 'R1-2609009', 'R1-2609010')],
+        'coverage': {'topics': [
+            {'domain': domain, 'heading': heading, 'working_groups': [group], 'source_ids': ids,
+             'finding': 'Conditional evaluation result', 'mechanism': 'Receiver and transmitter constraints interact',
+             'tradeoff': 'Efficiency versus implementation cost', 'next_step': 'Verify the assumptions',
+             'analysis_excerpt': ANALYSIS}
+            for domain, heading, group, ids in [
+                ('waveform_modulation', 'Waveform losses', 'RAN1', ['R1-2609005', 'R1-2609006']),
+                ('mobility_measurements', 'Measurement scheduling', 'RAN4', ['R1-2609007', 'R1-2609008']),
+                ('energy_saving', 'Wake-up operation', 'RAN1', ['R1-2609009', 'R1-2609010'])]]},
     }
+
+
+def fixture_sources():
+    return [row(str(n + 1), 'R1-' + str(2609005 + n)) for n in range(6)]
+
+
+def fixture_body():
+    blocks = []
+    for topic in source_ledger()['coverage']['topics']:
+        blocks.append('## ' + topic['heading'] + '\n\n' + ANALYSIS + ' ' + ' '.join(
+            '[' + doc + '](' + row(doc=doc)['tdoc_url'] + ')' for doc in topic['source_ids']))
+    return '\n\n'.join(blocks) + '\n'
 
 
 class EvidenceTests(unittest.TestCase):
@@ -57,6 +78,13 @@ class EvidenceTests(unittest.TestCase):
         state = {'seen': {}, 'initial_since': (NOW - dt.timedelta(days=14)).isoformat()}
         self.assertEqual(r.select_candidates([row(days=30)], state, set(), NOW), [])
         self.assertEqual(len(r.select_candidates([row(days=10)], state, set(), NOW)), 1)
+
+    def test_research_inventory_preserves_both_agendas_without_raw_text(self):
+        rows = fixture_sources()
+        index = r.research_inventory(rows, rows)
+        self.assertEqual({x['working_group'] for x in index['agenda']}, {'RAN1', 'RAN4'})
+        self.assertEqual(sum(len(x['documents']) for x in index['agenda']), 6)
+        self.assertNotIn('raw_text', json.dumps(index))
 
     def test_snapshot_and_partial_failure_diagnostics(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -94,15 +122,15 @@ class ValidationTests(unittest.TestCase):
         self.ledger = self.work / 'ledger.json'
         self.source = row()
         self.context = row('2', 'R1-2609006')
-        self.article.write_text('---\ntitle: Radio study\ndescription: Receiver work\ndate: 2026-11-07\ntags: [3GPP]\ndraft: false\nfeatured: true\nllm: generated\n---\nRAN4 requested receiver evaluation [R1-2609005](' + self.source['tdoc_url'] + ').\n')
-        self.article.write_text(self.article.read_text() + ANALYSIS + ' [R1-2609006](' + self.context['tdoc_url'] + ').\n')
+        self.sources = fixture_sources()
+        self.article.write_text('---\ntitle: Radio study\ndescription: Receiver work\ndate: 2026-11-07\ntags: [3GPP]\ndraft: false\nfeatured: true\nllm: generated\n---\n' + fixture_body())
         self.ledger.write_text(json.dumps(source_ledger()))
 
     def validate(self):
-        return r.validate(self.work, self.article, self.ledger, [self.source, self.context], {'status': 'ready'})
+        return r.validate(self.work, self.article, self.ledger, self.sources, {'status': 'ready'})
 
     def test_verified_citation(self):
-        self.assertEqual(self.validate(), ['R1-2609005', 'R1-2609006'])
+        self.assertEqual(len(self.validate()), 6)
 
     def test_wrong_url_rejected(self):
         self.article.write_text(self.article.read_text().replace('/ftp/test/', '/wrong/'))
@@ -116,7 +144,7 @@ class ValidationTests(unittest.TestCase):
 
     def test_old_context_alone_cannot_make_new_post(self):
         with self.assertRaisesRegex(ValueError, 'no new candidate'):
-            r.validate(self.work, self.article, self.ledger, [row('3', 'R1-2609007')], {'status': 'ready'}, [self.source, self.context])
+            r.validate(self.work, self.article, self.ledger, [row('99', 'R1-2699999')], {'status': 'ready'}, self.sources)
 
     def test_no_news_must_not_leave_article(self):
         with self.assertRaisesRegex(ValueError, 'unexpectedly includes'):
@@ -154,6 +182,55 @@ class ValidationTests(unittest.TestCase):
         data['editorial']['consequence'] = ''
         self.ledger.write_text(json.dumps(data))
         with self.assertRaisesRegex(ValueError, 'Missing editorial reasoning: consequence'):
+            self.validate()
+
+    def test_one_issue_with_several_headings_rejected(self):
+        data = source_ledger()
+        for topic in data['coverage']['topics']:
+            topic['domain'] = 'sensing'
+        self.ledger.write_text(json.dumps(data))
+        with self.assertRaisesRegex(ValueError, 'distinct technical areas'):
+            self.validate()
+
+    def test_single_working_group_report_rejected_when_both_have_evidence(self):
+        data = source_ledger()
+        data['coverage']['topics'][1]['working_groups'] = ['RAN1']
+        self.ledger.write_text(json.dumps(data))
+        with self.assertRaisesRegex(ValueError, 'working groups must match'):
+            self.validate()
+
+    def test_coverage_reasoning_must_be_in_the_claimed_section(self):
+        data = source_ledger()
+        data['coverage']['topics'][1]['analysis_excerpt'] = 'Private reasoning only'
+        self.ledger.write_text(json.dumps(data))
+        with self.assertRaisesRegex(ValueError, 'relevant article section'):
+            self.validate()
+
+    def test_new_working_group_cannot_be_silently_omitted(self):
+        data = source_ledger()
+        sources = fixture_sources()
+        for source in sources:
+            source['wg_name'] = 'RAN1'
+        for topic in data['coverage']['topics']:
+            topic['working_groups'] = ['RAN1']
+        self.ledger.write_text(json.dumps(data))
+        new_ran4 = row('99', 'R4-2639999')
+        new_ran4['wg_name'] = 'RAN4'
+        with self.assertRaisesRegex(ValueError, 'omits a working group'):
+            r.validate(self.work, self.article, self.ledger, sources + [new_ran4], {'status': 'ready'}, sources)
+
+    def test_sources_from_other_sections_do_not_establish_coverage(self):
+        data = source_ledger()
+        data['coverage']['topics'][0]['source_ids'] = ['R1-2609007', 'R1-2609008']
+        self.ledger.write_text(json.dumps(data))
+        with self.assertRaisesRegex(ValueError, 'cited in its section'):
+            self.validate()
+
+    def test_legacy_single_issue_ledger_rejected(self):
+        data = source_ledger()
+        del data['coverage']
+        self.ledger.write_text(json.dumps(data))
+        with self.assertRaisesRegex(ValueError, 'three distinct technical areas'):
             self.validate()
 
 
@@ -212,6 +289,9 @@ class PublishingTests(unittest.TestCase):
         source['latest'] = dt.datetime.now(dt.timezone.utc).isoformat()
         context_source = row('2', 'R1-2609006')
         context_source['latest'] = source['latest']
+        sources = fixture_sources()
+        for item in sources:
+            item['latest'] = source['latest']
         def fake_command(args, **kwargs):
             if 'codex' in args and 'exec' in args:
                 prompt = kwargs['input']
@@ -222,8 +302,7 @@ class PublishingTests(unittest.TestCase):
                     return subprocess.CompletedProcess(args, 0)
                 article = work / params['article']
                 article.parent.mkdir(parents=True, exist_ok=True)
-                article.write_text('---\ntitle: Radio study\ndescription: Receiver work\ndate: ' + params['date'] + '\ntags: [3GPP]\ndraft: false\nfeatured: true\nllm: generated\n---\nRAN4 requested receiver evaluation [R1-2609005](' + source['tdoc_url'] + ').\n')
-                article.write_text(article.read_text() + ANALYSIS + ' [R1-2609006](' + row('2', 'R1-2609006')['tdoc_url'] + ').\n')
+                article.write_text('---\ntitle: Radio study\ndescription: Receiver work\ndate: ' + params['date'] + '\ntags: [3GPP]\ndraft: false\nfeatured: true\nllm: generated\n---\n' + fixture_body())
                 ledger = source_ledger()
                 if summary_only:
                     ledger.pop('editorial')
@@ -237,7 +316,7 @@ class PublishingTests(unittest.TestCase):
                     (repo / 'user-draft.md').write_text('User work created during drafting')
                 return subprocess.CompletedProcess(args, 0)
             return original_command(args, **kwargs)
-        with patch.object(r, 'command', side_effect=fake_command), patch.object(r, 'snapshot', side_effect=lambda source, dest: sqlite3.connect(dest).close()), patch.object(r, 'evidence', return_value=([source, context_source], {'partial_failures': 222})):
+        with patch.object(r, 'command', side_effect=fake_command), patch.object(r, 'snapshot', side_effect=lambda source, dest: sqlite3.connect(dest).close()), patch.object(r, 'evidence', return_value=(sources, {'partial_failures': 222})):
             code = r.run(repo, logs)
         return repo, logs, initial, code
 
@@ -293,13 +372,16 @@ class PublishingTests(unittest.TestCase):
         source['latest'] = dt.datetime.now(dt.timezone.utc).isoformat()
         context_source = row('2', 'R1-2609006')
         context_source['latest'] = source['latest']
+        sources = fixture_sources()
+        for item in sources:
+            item['latest'] = source['latest']
         def no_model(args, **kwargs):
             if 'codex' in args:
                 raise AssertionError('Resume must not invoke a model')
             if args[0] == str(repo.parent / 'hugo'):
                 return subprocess.CompletedProcess(args, 0)
             return original_command(args, **kwargs)
-        with patch.object(r, 'command', side_effect=no_model), patch.object(r, 'snapshot', side_effect=lambda source, dest: sqlite3.connect(dest).close()), patch.object(r, 'evidence', return_value=([source, context_source], {})):
+        with patch.object(r, 'command', side_effect=no_model), patch.object(r, 'snapshot', side_effect=lambda source, dest: sqlite3.connect(dest).close()), patch.object(r, 'evidence', return_value=(sources, {})):
             self.assertEqual(r.run(repo, logs, resume=saved), 0)
         self.assertNotEqual(r.git(repo, 'rev-parse', 'HEAD'), initial)
         self.assertEqual(json.loads((logs / 'latest-status.json').read_text())['status'], 'committed')

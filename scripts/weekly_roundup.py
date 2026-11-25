@@ -16,6 +16,68 @@ from zoneinfo import ZoneInfo
 UTC = dt.timezone.utc
 STATE = 'docs/weekly-roundup-state.json'
 ID = r'(?:R[1-6]|RP|S[1-6]|SP|C[1-6]|CP)-\d{6,}'
+DOMAINS = {'waveform_modulation', 'control_access', 'mimo_csi_beamforming',
+           'mobility_measurements', 'energy_saving', 'ai_ml', 'spectrum_rf',
+           'satellite_ntn', 'sensing', 'release20_features'}
+
+
+def research_inventory(rows, candidates):
+    """Make the whole candidate agenda visible before the writer selects coverage."""
+    groups = {}
+    for row in candidates:
+        group = row.get('wg_name', 'Context')
+        key = (group, str(row.get('meeting_number', '')), row.get('agenda_item') or 'Unassigned')
+        entry = groups.setdefault(key, {'working_group': group, 'meeting': key[1],
+                                      'agenda': key[2], 'description': row.get('agenda_description'),
+                                      'documents': []})
+        entry['documents'].append({k: row.get(k) for k in ('tdoc_id', 'title', 'source')})
+    return {'agenda': [groups[k] for k in sorted(groups)],
+            'context_available': sorted({r.get('wg_name', 'Context') for r in rows}),
+            'instruction': 'Survey all RAN1 and RAN4 agenda areas. Classifications are research leads, not evidence.'}
+
+
+def validate_coverage(verified, body, sources, candidates):
+    coverage = verified.get('coverage', {})
+    topics = coverage.get('topics', []) if isinstance(coverage, dict) else []
+    if len(topics) < 3:
+        raise ValueError('Roundup requires at least three distinct technical areas')
+    domains, headings, groups, used = set(), set(), set(), set()
+    for topic in topics:
+        domain, heading = topic.get('domain'), topic.get('heading')
+        if domain not in DOMAINS or domain in domains:
+            raise ValueError('Coverage domains must be distinct technical areas')
+        if not isinstance(heading, str) or heading in headings:
+            raise ValueError('Each coverage area requires its own article section')
+        match = re.search(r'^## ' + re.escape(heading) + r'\s*\n(.*?)(?=^## |\Z)', body, re.M | re.S)
+        if not match:
+            raise ValueError('Coverage heading missing from article')
+        section = match[1]
+        ids = topic.get('source_ids', [])
+        cited = set(re.findall(r'\[(' + ID + r')\]\(', section))
+        if not isinstance(ids, list) or len(set(ids)) < 2 or not set(ids) <= (cited & sources.keys()):
+            raise ValueError('Each coverage area requires two verified sources cited in its section')
+        for field in ('finding', 'mechanism', 'tradeoff', 'next_step', 'analysis_excerpt'):
+            value = topic.get(field)
+            if not isinstance(value, str) or not value.strip():
+                raise ValueError(f'Missing coverage reasoning: {field}')
+        if topic['analysis_excerpt'] not in section:
+            raise ValueError('Coverage analysis must appear in the relevant article section')
+        claimed_groups = set(topic.get('working_groups', []))
+        actual_groups = {sources[i].get('wg_name') for i in ids}
+        if not claimed_groups or not claimed_groups <= (actual_groups & {'RAN1', 'RAN4'}):
+            raise ValueError('Coverage working groups must match their primary sources')
+        groups.update(claimed_groups)
+        used.update(ids)
+        domains.add(domain)
+        headings.add(heading)
+    if len(used) < 6:
+        raise ValueError('Roundup coverage requires six distinct primary sources')
+    available = {r.get('wg_name') for r in candidates} & {'RAN1', 'RAN4'}
+    if not available <= groups:
+        raise ValueError('Roundup omits a working group with new candidate evidence')
+    for group in groups:
+        if not any(r['tdoc_id'] in used and r.get('wg_name') == group for r in candidates):
+            raise ValueError('Each covered working group needs new evidence')
 
 
 def command(args, cwd=None, timeout=120, **kwargs):
@@ -164,6 +226,7 @@ def validate(work, article, ledger, candidates, result, context=None):
     excerpt = editorial.get('analysis_excerpt', '')
     if not isinstance(excerpt, str) or not excerpt.strip() or excerpt not in body:
         raise ValueError('Editorial analysis excerpt must appear verbatim in the article')
+    validate_coverage(verified, body, sources, candidates)
     # Quotes are optional; if used they must be an exact contiguous source substring.
     for quote in re.findall(r'“([^”]+)”|"([^"\n]+)"', body):
         value = next(part for part in quote if part)
@@ -236,6 +299,7 @@ def run(repo, base, check_only=False, resume=None):
         for post in (repo / 'content').rglob('*.md'):
             existing.update(re.findall(ID, post.read_text()))
         candidates = select_candidates(rows, state, existing, now)
+        write_json(run_dir / 'research-index.json', research_inventory(rows, candidates))
         if not state and not check_only:
             candidate_keys = {row['key'] for row in candidates}
             state = {'schema_version': 2, 'initial_since': (now - dt.timedelta(days=7)).isoformat(), 'seen': {row['key']: row['fingerprint'] for row in rows if row['key'] not in candidate_keys}}
@@ -269,6 +333,7 @@ def run(repo, base, check_only=False, resume=None):
         prompt += '\n\nRun parameters (absolute paths):\n' + json.dumps({
             'date': label, 'database': str(database), 'candidates': str(run_dir / 'candidates.json'),
             'coverage': str(run_dir / 'coverage.json'), 'result': str(result_path),
+            'research_index': str(run_dir / 'research-index.json'),
             'article': article_rel, 'ledger': ledger_rel,
             'source_guide': str(repo.parent / '3gppedia/knowledge-base/AGENTS.md')}, indent=2)
         # AGENTS.md is locally ignored; carry its editorial rules into the isolated run.

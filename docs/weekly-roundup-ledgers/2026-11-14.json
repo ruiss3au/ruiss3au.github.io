@@ -1,275 +1,638 @@
 {
   "editorial": {
     "decision": "publish",
-    "question": "Why can replacing a known measurement gap with shorter autonomous receiver interruptions reduce throughput, and what evidence would justify preserving autonomous operation?",
-    "answer": "Unavailable airtime is not a throughput-loss bound. Nokia isolates losses from control/data/feedback dependencies and mistaken link adaptation, while Ericsson shows that shorter autonomous interruptions can approach coordinated operation in one full-buffer case. Apple makes a bounded-autonomy case for infrequent measurements; Qualcomm explains why saved symbols need not become additional system throughput. The defensible distinction is interruption visibility plus duration, repetition and traffic conditions, not gapless versus gap-based naming.",
-    "mechanism": "An unannounced interruption can erase current data, feedback on earlier data, and the grant for later data. Missing or unreliable feedback can also lower the modulation and coding scheme despite unchanged radio conditions. Protecting the control channel removes one dependency but leaves data and feedback losses. Network-known timing permits scheduling around the interruption; ideal feedback handling removes only one component of the loss.",
-    "tradeoff": "Nokia prioritizes network-visible timing and evaluates 0.5 ms interruptions around 40 ms occasions, including an 84-device full-buffer case. Ericsson reports a favorable six-symbol autonomous case with 30 devices and 80 ms periodicity. Apple prioritizes implementation flexibility under bounded, network-authorized measurements and contrasts 640 ms and 40 ms repetition, arguing that generic control-channel avoidance is costly across differently timed carriers. Qualcomm prioritizes slot-level simplicity because finer timing adds scheduler complexity and gains depend on traffic and numerology. These are different operating assumptions, not matched estimates of one universal penalty.",
-    "consequence": "Evaluators should compare realistic control/data/feedback dependencies under matched repetition, interruption duration, load and timing assumptions before recommending autonomous operation. Implementers cannot infer a throughput guarantee from a small interruption ratio or from control-channel protection alone; nor does available evidence justify excluding every infrequent autonomous measurement.",
-    "novelty": "Existing coverage develops waveform power, transmitter distortion and prepared mobility, but does not explain the measurement-interruption feedback loop. The August Nokia baseline already warned about link adaptation; the November evidence tests protected versus unprotected control, retains a substantial residual under ideal link adaptation, and supplies a shorter-interruption counterexample plus a sparse-measurement applicability argument.",
-    "uncertainty": "The extracted parameter tables do not permit a matched Nokia/Ericsson receiver-and-scheduler comparison. October way-forward references R4-2621632 and R4-2621595 are absent from the snapshot. The article will not claim an adopted outcome or a cross-company numerical ranking. A matched short-interruption experiment covering decoding, feedback, control, timing alignment, traffic and sparse versus frequent measurements could change the scope recommendation.",
+    "question": "Which important RAN1 and RAN4 choices are advancing, and what dependencies remain?",
+    "answer": "Access for narrowband devices, network sleep, filter removal, measurement scheduling, model interoperability and satellite operation enter the Calgary discussions together.",
+    "mechanism": "Control and system-information resources must be decodable before a device can report its capabilities.; The sleeping network must receive a request and transmit a response; the device must obtain configuration and wait.; Oscillator position and resource allocation change distortion products and protected-band exposure.; Lost control and feedback affect subsequent scheduling and link adaptation.; Encoder and decoder assumptions must match; evaluation channels must preserve the correlations used for prediction.; Feeder-link compensation and moving multi-beam interference have different network and device dependencies.",
+    "tradeoff": "Wider resources versus access by lower-bandwidth devices.; Access latency versus network and device energy.; Less filtering versus power back-off and retuning interruptions.; Device autonomy versus network scheduling visibility.; Configuration detail versus signaling overhead and generalization.; Device processing simplicity versus explicit deployment assumptions.",
+    "consequence": "Evaluate coverage with the lowest-tier device included.; Separate request-specific gains from gains available through sparse periodic operation.; Test allocation, retuning and receiver blocking together.; Compare timing visibility with realistic feedback and traffic.; Verify compatibility metadata and cross-deployment evaluation before claiming measurement savings.; State the compensation reference and victim geometry before comparing results.",
+    "novelty": "Restores meeting-wide analysis across independent areas, distinguishing company positions from recorded replies and linking algorithm, protocol and radio constraints.",
+    "uncertainty": "This is a pre-meeting survey; no Calgary company proposal is presented as adopted.; Complete channel-coding, sensing and Release-20 work-item coverage is deferred rather than inferred from titles.; Numerical results are attributed to their company evaluation and are not pooled across different assumptions.",
     "source_ids": [
-      "R4-2611989",
+      "R1-2609858",
+      "R1-2609626",
+      "R4-2631947",
+      "R4-2631857",
+      "R1-2609604",
+      "R1-2609857",
+      "R1-2610788",
+      "R4-2630536",
+      "R4-2630492",
       "R4-2630391",
       "R4-2631565",
       "R4-2630453",
-      "R4-2632068"
+      "R1-2609841",
+      "R1-2609578",
+      "R1-2609880",
+      "R4-2631693"
     ],
-    "analysis_excerpt": "This qualifies the earlier baseline. Nokia's August discussion described ideal adaptation as almost aligning throughput with uninterrupted operation. The November model explicitly includes more control and feedback dependencies and retains a substantial residual under ideal adaptation. These are different experiments, so their percentages cannot establish a measured trend. They do show why a mitigation demonstrated against one loss mechanism must be tested again when the surrounding procedure is modeled more completely. [R4-2611989](https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_120/Docs/R4-2611989.zip), [R4-2630391](https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_121/Docs/R4-2630391.zip)."
+    "analysis_excerpt": "RAN1's compensation design and RAN4's protection study therefore need explicit deployment descriptions before their results can be combined. A device-frequency-error assumption does not define the distribution of aggregate interference, and a coexistence loss metric does not specify how the device obtains timing. The Calgary agenda has to preserve those separate dependencies while deciding which assumptions belong in common requirements and which remain implementation choices."
+  },
+  "coverage": {
+    "topics": [
+      {
+        "domain": "control_access",
+        "heading": "A wider control channel must still admit narrowband devices",
+        "working_groups": [
+          "RAN1"
+        ],
+        "source_ids": [
+          "R1-2609858",
+          "R1-2609604",
+          "R1-2609857"
+        ],
+        "finding": "Control coverage and device bandwidth must be evaluated together.",
+        "mechanism": "Control and system-information resources must be decodable before a device can report its capabilities.",
+        "tradeoff": "Wider resources versus access by lower-bandwidth devices.",
+        "next_step": "Evaluate coverage with the lowest-tier device included.",
+        "analysis_excerpt": "The decisions should be judged together. A wider control region may help one coverage condition while additional configuration bits or a wider minimum receiver burden another. The relevant evaluation needs the actual system-information size, the control repetition rule and the lowest-bandwidth receiver in the same setup. A gain measured only for a wideband receiver would leave the initial-access question unanswered."
+      },
+      {
+        "domain": "energy_saving",
+        "heading": "A wake-up request can spend the energy that sleep saves",
+        "working_groups": [
+          "RAN1"
+        ],
+        "source_ids": [
+          "R1-2609626",
+          "R1-2610788"
+        ],
+        "finding": "Wake-up benefit depends on the baseline and use case.",
+        "mechanism": "The sleeping network must receive a request and transmit a response; the device must obtain configuration and wait.",
+        "tradeoff": "Access latency versus network and device energy.",
+        "next_step": "Separate request-specific gains from gains available through sparse periodic operation.",
+        "analysis_excerpt": "The access and sleep discussions consequently share a prerequisite: the device needs enough timing and configuration to request the signals it lacks. A standalone cell that transmits nothing before the request creates a different feasibility problem from an assisted carrier. The next evaluation should preserve those deployment differences and compare the request against a practical sparse periodic baseline, with both network and device energy included."
+      },
+      {
+        "domain": "spectrum_rf",
+        "heading": "Removing a filter can give the scheduler a new constraint",
+        "working_groups": [
+          "RAN4"
+        ],
+        "source_ids": [
+          "R4-2630536",
+          "R4-2631947",
+          "R4-2630492"
+        ],
+        "finding": "Filterless radio operation may need implementation-aware scheduling.",
+        "mechanism": "Oscillator position and resource allocation change distortion products and protected-band exposure.",
+        "tradeoff": "Less filtering versus power back-off and retuning interruptions.",
+        "next_step": "Test allocation, retuning and receiver blocking together.",
+        "analysis_excerpt": "These are separate proposals, but they constrain the same act of scheduling a transmission. A filterless device may need a restricted allocation or a retuning guard; a shared-spectrum deployment may restrict where that allocation can move. Assessing component savings in isolation would miss the network information and scheduling freedom needed to realize them. Receiver blocking remains an additional check, not something a transmitter back-off calculation resolves."
+      },
+      {
+        "domain": "mobility_measurements",
+        "heading": "The scheduler needs to know when the receiver is absent",
+        "working_groups": [
+          "RAN4"
+        ],
+        "source_ids": [
+          "R4-2630391",
+          "R4-2631565",
+          "R4-2630453",
+          "R4-2631947"
+        ],
+        "finding": "Interruption duration alone does not predict throughput.",
+        "mechanism": "Lost control and feedback affect subsequent scheduling and link adaptation.",
+        "tradeoff": "Device autonomy versus network scheduling visibility.",
+        "next_step": "Compare timing visibility with realistic feedback and traffic.",
+        "analysis_excerpt": "This connects directly to oscillator retuning in filterless designs, without making the two procedures identical. In each case, an implementation-level transition can create a scheduling-visible absence. The relevant contract is what the network knows about affected carriers and timing, and how its feedback handling responds. Reporting only the fraction of receiver time lost would not capture those dependencies."
+      },
+      {
+        "domain": "ai_ml",
+        "heading": "A learned radio function needs a compatibility contract",
+        "working_groups": [
+          "RAN1",
+          "RAN4"
+        ],
+        "source_ids": [
+          "R1-2609841",
+          "R1-2609578",
+          "R4-2631857"
+        ],
+        "finding": "Model interoperability and reproducible prediction are separate prerequisites.",
+        "mechanism": "Encoder and decoder assumptions must match; evaluation channels must preserve the correlations used for prediction.",
+        "tradeoff": "Configuration detail versus signaling overhead and generalization.",
+        "next_step": "Verify compatibility metadata and cross-deployment evaluation before claiming measurement savings.",
+        "analysis_excerpt": "The connection is not that both tasks need the same model. Both need a stated boundary between what is exchanged or assumed and what performance is promised. Compression needs an encoder that the intended decoder can use. Measurement prediction needs a channel relationship that survives the evaluation conditions. An attractive accuracy result in a matched setup does not establish either interoperability across implementations or generalization across deployments."
+      },
+      {
+        "domain": "satellite_ntn",
+        "heading": "Satellite compensation and interference models face different geometries",
+        "working_groups": [
+          "RAN1",
+          "RAN4"
+        ],
+        "source_ids": [
+          "R1-2609880",
+          "R4-2631693"
+        ],
+        "finding": "Satellite designs depend on where compensation and interference assumptions are placed.",
+        "mechanism": "Feeder-link compensation and moving multi-beam interference have different network and device dependencies.",
+        "tradeoff": "Device processing simplicity versus explicit deployment assumptions.",
+        "next_step": "State the compensation reference and victim geometry before comparing results.",
+        "analysis_excerpt": "RAN1's compensation design and RAN4's protection study therefore need explicit deployment descriptions before their results can be combined. A device-frequency-error assumption does not define the distribution of aggregate interference, and a coexistence loss metric does not specify how the device obtains timing. The Calgary agenda has to preserve those separate dependencies while deciding which assumptions belong in common requirements and which remain implementation choices."
+      }
+    ]
   },
   "claims": [
     {
-      "claim": "Verified document identity and attribution: R4-2611989; database title: Discussion on measurement gaps for 6G; database source: Nokia. The original header establishes meeting, location, dates and discussion status, not a meeting outcome.",
-      "tdoc_id": "R4-2611989",
-      "passage": "3GPP TSG-RAN WG4 Meeting #120\tR4-2611989\nMaastricht, Netherlands, 24th – 28th August 2026\nSource:\tNokia\nTitle:\tDiscussion on measurement gaps for 6G\nAgenda item:\t8.6.1\nDocument for:\tDiscussion"
+      "claim": "The Calgary agenda reaches from the first information a device must decode to the radio components it can leave out. Radio Access Network Working Group 1 (RAN1) is considering broader control resources, simpler bandwidth signaling and requests that wake a sleeping network. Radio Access Network Working Group 4 (RAN4) has to determine how much of that flexibility survives transmitter constraints, receiver interruptions and reproducible testing. Several of these proposals reduce one burden by placing a new condition on access, scheduling or testing.",
+      "tdoc_id": "R1-2609858",
+      "passage": "Proposal 5: If the number of PRBs for CORESET for SIB1-PDCCH monitoring is larger than the smallest maximum channel bandwidth of the lowest-tier devices, intra-slot PDCCH repetition is supported for SIB1-PDCCH."
     },
     {
-      "claim": "Verified document identity and attribution: R4-2630391; database title: Simulations of 6G measurements with and without gaps; database source: Nokia. The original header establishes meeting, location, dates and discussion status, not a meeting outcome.",
+      "claim": "The Calgary agenda reaches from the first information a device must decode to the radio components it can leave out. Radio Access Network Working Group 1 (RAN1) is considering broader control resources, simpler bandwidth signaling and requests that wake a sleeping network. Radio Access Network Working Group 4 (RAN4) has to determine how much of that flexibility survives transmitter constraints, receiver interruptions and reproducible testing. Several of these proposals reduce one burden by placing a new condition on access, scheduling or testing.",
+      "tdoc_id": "R1-2609626",
+      "passage": "The introduction of UL WUS itself may reduce the intended NES gain. For example, additional UE power consumption for UL WUS transmission and response monitoring, as well as additional network signaling overhead, may offset the benefit expected from NES operation. Furthermore, if the UL WUS transmission procedure is complex, the associated complexity and overhead may outweigh the benefit of compensating for the UE performance degradation. In such a case, the need for UL WUs should be carefully evaluated. "
+    },
+    {
+      "claim": "The Calgary agenda reaches from the first information a device must decode to the radio components it can leave out. Radio Access Network Working Group 1 (RAN1) is considering broader control resources, simpler bandwidth signaling and requests that wake a sleeping network. Radio Access Network Working Group 4 (RAN4) has to determine how much of that flexibility survives transmitter constraints, receiver interruptions and reproducible testing. Several of these proposals reduce one burden by placing a new condition on access, scheduling or testing.",
+      "tdoc_id": "R4-2631947",
+      "passage": "Proposal-2: At least non-transparent LO switching scheme should be controlled by network if additional guard time is needed."
+    },
+    {
+      "claim": "The Calgary agenda reaches from the first information a device must decode to the radio components it can leave out. Radio Access Network Working Group 1 (RAN1) is considering broader control resources, simpler bandwidth signaling and requests that wake a sleeping network. Radio Access Network Working Group 4 (RAN4) has to determine how much of that flexibility survives transmitter constraints, receiver interruptions and reproducible testing. Several of these proposals reduce one burden by placing a new condition on access, scheduling or testing.",
+      "tdoc_id": "R4-2631857",
+      "passage": "Map-based ray tracing (TR 38.901 clause 8) is not suitable as a common evaluation assumption for AI-RRM Sub-case 2, since cross-company reproducibility would require alignment on maps, site and UE placements, propagation assumptions, and calibration, which is not a trivial task."
+    },
+    {
+      "claim": "This is a pre-meeting account of proposals available before the 16-20 November RAN1#127 and RAN4#121 meetings. Company proposals remain proposals; a result under one device, channel or traffic assumption is not presented as a general 6G requirement.",
+      "tdoc_id": "R1-2609858",
+      "passage": "Calgary, CA, Nov. 16th-20th, 2026"
+    },
+    {
+      "claim": "This is a pre-meeting account of proposals available before the 16-20 November RAN1#127 and RAN4#121 meetings. Company proposals remain proposals; a result under one device, channel or traffic assumption is not presented as a general 6G requirement.",
+      "tdoc_id": "R4-2631947",
+      "passage": "Calgary, Canada, 16 – 20 Nov，2026\t"
+    },
+    {
+      "claim": "A cell cannot rely on a device's later capability report to fix an initial-access format that the device cannot receive. Apple's downlink-control paper applies that constraint to the physical downlink control channel (PDCCH) scheduling the first system-information block (SIB1). It argues that a control resource set wider than the smallest maximum bandwidth of low-tier devices would prevent those devices accessing the cell, even if the wider transmission improved coverage for other equipment.",
+      "tdoc_id": "R1-2609858",
+      "passage": "It can be observed that Uma O2I has the largest coverage gap. In particular, the gap is around 5.5dB for SIB1-PDCCH and around 7dB for SIB1-PDSCH. Therefore, improving coverage for both SIB1-PDCCH and SIB1-PDSCH is critical for 7GHz band. It has been discussed in AI 10.5.1.3 on whether to support a configuration with the bandwidth of CORESET for SIB1-PDCCH monitoring and schedulable frequency domain resources of SIB1-PDSCH larger than the smallest maximum channel bandwidth of the lowest-tier devices (i.e., 20MHz). However, if this configuration is deployed, the low-tier devices would not be able to access the cell. For TN, the SIB1 coverage concern is for upper 6GHz band e.g., 7GHz. If improving coverage for this band by wider CORESET/SIB1-PDSCH bandwidth while preventing the lower-tier devices accessible to the band is not forward compatible from 6G design perspectives. RAN1 made the following agreements related to the CORESET for SIB1-PDCCH monitoring:"
+    },
+    {
+      "claim": "A cell cannot rely on a device's later capability report to fix an initial-access format that the device cannot receive. Apple's downlink-control paper applies that constraint to the physical downlink control channel (PDCCH) scheduling the first system-information block (SIB1). It argues that a control resource set wider than the smallest maximum bandwidth of low-tier devices would prevent those devices accessing the cell, even if the wider transmission improved coverage for other equipment.",
+      "tdoc_id": "R1-2609858",
+      "passage": "From our perspective, coverage technique should not only extend coverage of PDCCH but also support the coexistence of all device types. In particular, if the number of PRBs for CORESET for SIB1-PDCCH monitoring is larger than the smallest maximum channel bandwidth of the lowest-tier devices, intra-slot PDCCH repetition is supported for SIB1-PDCCH. More discussion can be found in our companion contribution [1]."
+    },
+    {
+      "claim": "Apple proposes intra-slot control-channel repetition when the initial control resource set exceeds that lower-tier bandwidth. Samsung, meanwhile, supports full-band control resources and studies coarser frequency-domain resource indications for wide control bandwidths. These are different parts of the same design problem: how to use a large carrier efficiently while preserving the common entry path needed before the network knows which device has arrived.",
+      "tdoc_id": "R1-2609858",
+      "passage": "Proposal 5: If the number of PRBs for CORESET for SIB1-PDCCH monitoring is larger than the smallest maximum channel bandwidth of the lowest-tier devices, intra-slot PDCCH repetition is supported for SIB1-PDCCH."
+    },
+    {
+      "claim": "Apple proposes intra-slot control-channel repetition when the initial control resource set exceeds that lower-tier bandwidth. Samsung, meanwhile, supports full-band control resources and studies coarser frequency-domain resource indications for wide control bandwidths. These are different parts of the same design problem: how to use a large carrier efficiently while preserving the common entry path needed before the network knows which device has arrived.",
+      "tdoc_id": "R1-2609604",
+      "passage": "Proposal 10. Support full-band control resources in 6GR (as UEs are already required to support full-band PDSCH reception), i.e., Option 1 for the maximum number of RBs in a 6GR PDCCH CORESET (RAN1#126bis agreement)."
+    },
+    {
+      "claim": "Apple proposes intra-slot control-channel repetition when the initial control resource set exceeds that lower-tier bandwidth. Samsung, meanwhile, supports full-band control resources and studies coarser frequency-domain resource indications for wide control bandwidths. These are different parts of the same design problem: how to use a large carrier efficiently while preserving the common entry path needed before the network knows which device has arrived.",
+      "tdoc_id": "R1-2609604",
+      "passage": "Proposal 11. Study bitmap with larger granularity (e.g., 12 or 24RBs) or RIV-like indication with 6RB granularity for 200MHz or 400MHz CORESET BW. "
+    },
+    {
+      "claim": "Apple's bandwidth paper questions whether 6G should retain the explicit common-grid offset used by New Radio (NR). It reports that the corresponding offset is rarely nonzero in its observed deployments and proposes making the first resource block of a single carrier the common-grid origin. Its motivation includes reducing mandatory SIB1 signaling. This is a proposal to remove a configuration degree of freedom, based on deployment evidence, rather than a claim that all legacy grid rules can simply disappear.",
+      "tdoc_id": "R1-2609857",
+      "passage": "In 3GPP 5G specification perspectives, the frequency offset from PointA to the first usable RB of the carrier channel bandwidth (offsetToCarrier) is separately configured for DL and UL in FrequencyInfoDL and FrequencyInfoUL, respectively. Furthermore, the configuration is mandatory and the offsetToCarrier field bitwidth is 12 bits. From 5G deployment perspectives, we analyze our 5G FR1 field data from 398 distinct carriers worldwide obtained during the last two months, and observe that:"
+    },
+    {
+      "claim": "Apple's bandwidth paper questions whether 6G should retain the explicit common-grid offset used by New Radio (NR). It reports that the corresponding offset is rarely nonzero in its observed deployments and proposes making the first resource block of a single carrier the common-grid origin. Its motivation includes reducing mandatory SIB1 signaling. This is a proposal to remove a configuration degree of freedom, based on deployment evidence, rather than a claim that all legacy grid rules can simply disappear.",
+      "tdoc_id": "R1-2609857",
+      "passage": "Setting this offset parameter to zero is reasonable since offsetToCarrier was designed to support deployments with mixed numerologies in a carrier. However, such deployments have never been commercialized. Therefore, although offsetToCarrier is specified in 3GPP specification and the field is mandatory, the non-zero value is rarely configured in the while it consumes mandatory 24 bits in SIB1. As SIB1 coverage is of importance in the new 6G band e.g., 7GHz, removing this unnecessary mandatory offset configuration and potentially some other parameters with efficient 6G design could reduce SIB1 size to improve SIB1 coverage.    "
+    },
+    {
+      "claim": "Apple's bandwidth paper questions whether 6G should retain the explicit common-grid offset used by New Radio (NR). It reports that the corresponding offset is rarely nonzero in its observed deployments and proposes making the first resource block of a single carrier the common-grid origin. Its motivation includes reducing mandatory SIB1 signaling. This is a proposal to remove a configuration degree of freedom, based on deployment evidence, rather than a claim that all legacy grid rules can simply disappear.",
+      "tdoc_id": "R1-2609857",
+      "passage": "Proposal 1: For a single-carrier operation, the first RB of channel bandwidth of the carrier is the CRB0 of the common RB grid. "
+    },
+    {
+      "claim": "The decisions should be judged together. A wider control region may help one coverage condition while additional configuration bits or a wider minimum receiver burden another. The relevant evaluation needs the actual system-information size, the control repetition rule and the lowest-bandwidth receiver in the same setup. A gain measured only for a wideband receiver would leave the initial-access question unanswered.",
+      "tdoc_id": "R1-2609858",
+      "passage": "From our perspective, coverage technique should not only extend coverage of PDCCH but also support the coexistence of all device types. In particular, if the number of PRBs for CORESET for SIB1-PDCCH monitoring is larger than the smallest maximum channel bandwidth of the lowest-tier devices, intra-slot PDCCH repetition is supported for SIB1-PDCCH. More discussion can be found in our companion contribution [1]."
+    },
+    {
+      "claim": "The decisions should be judged together. A wider control region may help one coverage condition while additional configuration bits or a wider minimum receiver burden another. The relevant evaluation needs the actual system-information size, the control repetition rule and the lowest-bandwidth receiver in the same setup. A gain measured only for a wideband receiver would leave the initial-access question unanswered.",
+      "tdoc_id": "R1-2609857",
+      "passage": "Setting this offset parameter to zero is reasonable since offsetToCarrier was designed to support deployments with mixed numerologies in a carrier. However, such deployments have never been commercialized. Therefore, although offsetToCarrier is specified in 3GPP specification and the field is mandatory, the non-zero value is rarely configured in the while it consumes mandatory 24 bits in SIB1. As SIB1 coverage is of importance in the new 6G band e.g., 7GHz, removing this unnecessary mandatory offset configuration and potentially some other parameters with efficient 6G design could reduce SIB1 size to improve SIB1 coverage.    "
+    },
+    {
+      "claim": "An uplink wake-up signal lets a device request activity that a sleeping network has stopped providing continuously. The cost is a receiving path that listens for requests, device transmission and response monitoring, and the means to deliver the request configuration. Samsung therefore asks whether the additional energy-saving gain comes from the request itself or from a sparse broadcast configuration that would also work without it.",
+      "tdoc_id": "R1-2609626",
+      "passage": "The main motivation of UL WUS is to enable UE-triggered on-demand requests for NES-related BS operation, so that UE performance degradation arising from NES operation can be compensated without sacrificing the NES gain. Under NES operation, transmission of DL common signals may be extended or suspended for BS power saving, which may degrade UE performance. "
+    },
+    {
+      "claim": "An uplink wake-up signal lets a device request activity that a sleeping network has stopped providing continuously. The cost is a receiving path that listens for requests, device transmission and response monitoring, and the means to deliver the request configuration. Samsung therefore asks whether the additional energy-saving gain comes from the request itself or from a sparse broadcast configuration that would also work without it.",
+      "tdoc_id": "R1-2609626",
+      "passage": "The introduction of UL WUS itself may reduce the intended NES gain. For example, additional UE power consumption for UL WUS transmission and response monitoring, as well as additional network signaling overhead, may offset the benefit expected from NES operation. Furthermore, if the UL WUS transmission procedure is complex, the associated complexity and overhead may outweigh the benefit of compensating for the UE performance degradation. In such a case, the need for UL WUs should be carefully evaluated. "
+    },
+    {
+      "claim": "An uplink wake-up signal lets a device request activity that a sleeping network has stopped providing continuously. The cost is a receiving path that listens for requests, device transmission and response monitoring, and the means to deliver the request configuration. Samsung therefore asks whether the additional energy-saving gain comes from the request itself or from a sparse broadcast configuration that would also work without it.",
+      "tdoc_id": "R1-2609626",
+      "passage": "The NES gain attributable to UL WUS depends on the baseline configuration and evaluation assumptions. In particular, sparse SSB transmission, longer SIB1 periodicity and reduced-TRxRU reception can provide NES gain without UL WUS. When these effects are separated, the additional NES gain of UL WUS is limited or negative for most evaluated use cases."
+    },
+    {
+      "claim": "One of Samsung's evaluated cases makes the baseline issue concrete. Compared with a 20-millisecond SIB1 baseline, it attributes 28 percentage points of a 30.1% no-request network-energy gain to extending periodic SIB1 transmission to 160 milliseconds. Those savings cannot all be credited to wake-up signaling. In a different synchronization-adaptation case, the request reduces modeled access latency from 246.5 to 50.5 milliseconds, but consumes additional network and device energy. The two results describe distinct use cases, not one combined operating point.",
+      "tdoc_id": "R1-2609626",
+      "passage": "For UE-initiated on-demand SIB1 in DS#1b, compared with the baseline with 20 ms SIB1, 28.0 percentage points of the 30.1% NES gain (Cat1, without request) can already be obtained by changing the SIB1 periodicity to 160 ms without UL WUS."
+    },
+    {
+      "claim": "One of Samsung's evaluated cases makes the baseline issue concrete. Compared with a 20-millisecond SIB1 baseline, it attributes 28 percentage points of a 30.1% no-request network-energy gain to extending periodic SIB1 transmission to 160 milliseconds. Those savings cannot all be credited to wake-up signaling. In a different synchronization-adaptation case, the request reduces modeled access latency from 246.5 to 50.5 milliseconds, but consumes additional network and device energy. The two results describe distinct use cases, not one combined operating point.",
+      "tdoc_id": "R1-2609626",
+      "passage": "For UE performance, UL WUS reduces the access latency from 246.5 ms to 50.5 ms under the assumption that two SSB bursts are needed for synchronization. This shows that UL WUS can mitigate the access latency increase caused by sparse SSB transmission. However, the latency benefit depends on the assumed synchronization procedure and the number of SSB bursts required by the UE. In addition, the UE energy saving gain is -0.3% at 2% access probability per I-DRX cycle."
+    },
+    {
+      "claim": "Ericsson also favors narrowing the use cases. It proposes concentrating on idle and inactive devices requesting synchronization or system information, rather than connected-mode requests that overlap with mechanisms already under network control. It rejects wake-up-based adaptation of random-access resources on the grounds that the network already knows load and activity, and that additional device requests add overhead and false-alarm risk. Neither paper supports treating a new wake-up channel as automatically energy efficient.",
+      "tdoc_id": "R1-2610788",
+      "passage": "Proposal 1\tThe deployment scenarios and potential use cases of UL WUS primarily target UEs in the Idle/Inactive mode."
+    },
+    {
+      "claim": "Ericsson also favors narrowing the use cases. It proposes concentrating on idle and inactive devices requesting synchronization or system information, rather than connected-mode requests that overlap with mechanisms already under network control. It rejects wake-up-based adaptation of random-access resources on the grounds that the network already knows load and activity, and that additional device requests add overhead and false-alarm risk. Neither paper supports treating a new wake-up channel as automatically energy efficient.",
+      "tdoc_id": "R1-2610788",
+      "passage": "Proposal 3\tFor Idle/Inactive mode, the following use cases can be considered for UL WUS: on-demand or adaptation of 6GR SS/PBCH, 6GR SIB1."
+    },
+    {
+      "claim": "Ericsson also favors narrowing the use cases. It proposes concentrating on idle and inactive devices requesting synchronization or system information, rather than connected-mode requests that overlap with mechanisms already under network control. It rejects wake-up-based adaptation of random-access resources on the grounds that the network already knows load and activity, and that additional device requests add overhead and false-alarm risk. Neither paper supports treating a new wake-up channel as automatically energy efficient.",
+      "tdoc_id": "R1-2610788",
+      "passage": "Proposal 6\tFor Connected mode, potential UL WUS use cases (identified in RAN1#126) are not further considered."
+    },
+    {
+      "claim": "Ericsson also favors narrowing the use cases. It proposes concentrating on idle and inactive devices requesting synchronization or system information, rather than connected-mode requests that overlap with mechanisms already under network control. It rejects wake-up-based adaptation of random-access resources on the grounds that the network already knows load and activity, and that additional device requests add overhead and false-alarm risk. Neither paper supports treating a new wake-up channel as automatically energy efficient.",
+      "tdoc_id": "R1-2610788",
+      "passage": "The network is best positioned to adapt PRACH resources based on its existing knowledge of system conditions, making UL WUS based adaptation inefficient due to the associated overhead, power consumption, and false alarms."
+    },
+    {
+      "claim": "The access and sleep discussions consequently share a prerequisite: the device needs enough timing and configuration to request the signals it lacks. A standalone cell that transmits nothing before the request creates a different feasibility problem from an assisted carrier. The next evaluation should preserve those deployment differences and compare the request against a practical sparse periodic baseline, with both network and device energy included.",
+      "tdoc_id": "R1-2609626",
+      "passage": "For UE-initiated on-demand SS/PBCH and SIB1 in DS#1a, the NES gains are 32.7%/14.7%/14.7% (Cat1/Cat2/Cat2.1) at 10% request probability per 160 ms, compared with the baseline with 160 ms SIB1. However, these gains assume that the UE can obtain UL WUS configuration and DL timing without any DL signal from the standalone cell, which remains a feasibility issue for DS#1a."
+    },
+    {
+      "claim": "The access and sleep discussions consequently share a prerequisite: the device needs enough timing and configuration to request the signals it lacks. A standalone cell that transmits nothing before the request creates a different feasibility problem from an assisted carrier. The next evaluation should preserve those deployment differences and compare the request against a practical sparse periodic baseline, with both network and device energy included.",
+      "tdoc_id": "R1-2609626",
+      "passage": "Companies should report the BS category, baseline SIB1 periodicity, request probability and relevant configuration overhead together with the NES gain of UL WUS."
+    },
+    {
+      "claim": "The access and sleep discussions consequently share a prerequisite: the device needs enough timing and configuration to request the signals it lacks. A standalone cell that transmits nothing before the request creates a different feasibility problem from an assisted carrier. The next evaluation should preserve those deployment differences and compare the request against a practical sparse periodic baseline, with both network and device energy included.",
+      "tdoc_id": "R1-2610788",
+      "passage": "Proposal 7\t“DS#1a: prior to UL WUS, nothing transmitted on the standalone cell” is not further studied."
+    },
+    {
+      "claim": "The surface-acoustic-wave (SAW) filter discussion is about more than the minimum channel bandwidth. Removing filtering changes the protection offered to nearby bands and to the receiver. Nokia asks that a device be able to report implementation-specific uplink allocation restrictions and required power back-off. It argues that one worst-case back-off value across implementations could force the network to schedule every device against the most restrictive case.",
+      "tdoc_id": "R4-2630536",
+      "passage": "The Hybrid approach was proposed to allow additional power backoff for UL BW/RB allocation at a frequency edge of an operating edge where the protected band is close in the frequency domain. However, the current approach of specifying additional power backoff values (in terms of ∆MPR or A-MPR) means that the specified values would likely be the maximum required power backoff values among different UE implementations of all vendors participating in the discussion. Consequently, the NW needs to consider the maximum allowed power backoff among different UE implementations with SAW-less design when configuring the UL BW/RB allocation for each UE connection."
+    },
+    {
+      "claim": "The surface-acoustic-wave (SAW) filter discussion is about more than the minimum channel bandwidth. Removing filtering changes the protection offered to nearby bands and to the receiver. Nokia asks that a device be able to report implementation-specific uplink allocation restrictions and required power back-off. It argues that one worst-case back-off value across implementations could force the network to schedule every device against the most restrictive case.",
+      "tdoc_id": "R4-2630536",
+      "passage": "Proposal 2: The NW must have sufficient information from an UE on its required restrictions in UL BW/RB allocations to meet potential coexistence restrictions, regardless of whether LO retuning is supported by the UE."
+    },
+    {
+      "claim": "The surface-acoustic-wave (SAW) filter discussion is about more than the minimum channel bandwidth. Removing filtering changes the protection offered to nearby bands and to the receiver. Nokia asks that a device be able to report implementation-specific uplink allocation restrictions and required power back-off. It argues that one worst-case back-off value across implementations could force the network to schedule every device against the most restrictive case.",
+      "tdoc_id": "R4-2630536",
+      "passage": "Proposal 3: An UE should be able to inform the NW its required power backoff to meet potential coexistence restrictions according to its specific implementation."
+    },
+    {
+      "claim": "The surface-acoustic-wave (SAW) filter discussion is about more than the minimum channel bandwidth. Removing filtering changes the protection offered to nearby bands and to the receiver. Nokia asks that a device be able to report implementation-specific uplink allocation restrictions and required power back-off. It argues that one worst-case back-off value across implementations could force the network to schedule every device against the most restrictive case.",
+      "tdoc_id": "R4-2630536",
+      "passage": "Observation 7: SAW-less receivers may have difficulties meeting the out-of-band blocking requirements since SAW filters normally help attenuate out of band blocking signals."
+    },
+    {
+      "claim": "Ericsson proposes moving the local oscillator to improve the placement of distortion products. Its evaluated benefit is allocation-dependent: switching helps near the ends of the resource-block range, but not in the middle. If retuning takes long enough to require guard time, Ericsson says the network should control it. Coarser retuning regions could reduce how often that guard is needed, at the cost of more power back-off.",
+      "tdoc_id": "R4-2631947",
+      "passage": "Observation 1: Applying the LO switching is effective to reduce the back off power at the lower and upper range of RB start index."
+    },
+    {
+      "claim": "Ericsson proposes moving the local oscillator to improve the placement of distortion products. Its evaluated benefit is allocation-dependent: switching helps near the ends of the resource-block range, but not in the middle. If retuning takes long enough to require guard time, Ericsson says the network should control it. Coarser retuning regions could reduce how often that guard is needed, at the cost of more power back-off.",
+      "tdoc_id": "R4-2631947",
+      "passage": "Observation 2: Applying the LO switching is not effective in the middle range of RB start index."
+    },
+    {
+      "claim": "Ericsson proposes moving the local oscillator to improve the placement of distortion products. Its evaluated benefit is allocation-dependent: switching helps near the ends of the resource-block range, but not in the middle. If retuning takes long enough to require guard time, Ericsson says the network should control it. Coarser retuning regions could reduce how often that guard is needed, at the cost of more power back-off.",
+      "tdoc_id": "R4-2631947",
+      "passage": "Proposal-2: At least non-transparent LO switching scheme should be controlled by network if additional guard time is needed."
+    },
+    {
+      "claim": "Ericsson proposes moving the local oscillator to improve the placement of distortion products. Its evaluated benefit is allocation-dependent: switching helps near the ends of the resource-block range, but not in the middle. If retuning takes long enough to require guard time, Ericsson says the network should control it. Coarser retuning regions could reduce how often that guard is needed, at the cost of more power back-off.",
+      "tdoc_id": "R4-2631947",
+      "passage": "In WF[1], there is FFS on LO position and LO retuning granularity. In our opinion, LO retuning granularity and LO position needs to discuss together. If the LO would be retuned to centre of the RB allocation, the needed LO granularity can be one RB, but if the LO would be placed at centre of the a RB region with a larger RB allocation size, e.g. 20 RB, LO retuning may not be needed very often, only between the different RB regions and therefore a coarse LO retuning granularity will be possible. Coarser LO retuning granularity would be helpful to reduce the need of guard time but at a cost of higher back off power. In summary, dividing the RB allocation into several RB allocation regions where a fixed LO position within each RB region is a more feasible solution for non-transparent LO retuning scheme. "
+    },
+    {
+      "claim": "Apple's multi-radio-access-technology spectrum-sharing paper shows why the freedom to move resources is limited by existing deployments. Aligning 5G and 6G resource grids can require changing carrier positions or existing aggregated-carrier arrangements. Apple identifies license-block edges as a constraint and asks operators about the feasibility of adjusting existing carrier-aggregation positions. Its proposed synchronization-raster simplification also has to preserve alignment where the generations share spectrum.",
+      "tdoc_id": "R4-2630492",
+      "passage": "It seems relatively easier to accommodate this scenario as the RB alignment can be done either via shifting the center frequency of 5G carrier to different channel raster or shifting the center frequency of 6G carrier to different channel raster. One issue to be addressed is that if the grid shifting results in over spilling of operator’s spectrum license and some solutions are needed to address the potential interference issue to adjacent service or operator. "
+    },
+    {
+      "claim": "Apple's multi-radio-access-technology spectrum-sharing paper shows why the freedom to move resources is limited by existing deployments. Aligning 5G and 6G resource grids can require changing carrier positions or existing aggregated-carrier arrangements. Apple identifies license-block edges as a constraint and asks operators about the feasibility of adjusting existing carrier-aggregation positions. Its proposed synchronization-raster simplification also has to preserve alignment where the generations share spectrum.",
+      "tdoc_id": "R4-2630492",
+      "passage": "In 5G CA, the channel spacing for intra-band contiguous carrier aggregation can be adjusted to any multiple of least common multiple of channel raster, the enhanced channel raster if supported, and sub-carrier spacing less than the nominal channel spacing to optimize performance in a particular deployment scenario. There is no specification requirement to ensure one carrier’s RB grid to be aligned with another one’s. To ensure RB boundary alignment between 5G CA CCs and 6G single CC with large CBW, 5G CA component CC position in the field  might need to be adjusted. Given the SCC is configured via dedicated RRC signaling after the primary CC connection is established, which means the adjustment is feasible from specification perspective. The issue left is whether the adjustment is feasible from existing network deployment perspective. Operator/network vendor input is needed to understand the effort and interest to do so at first."
+    },
+    {
+      "claim": "Apple's multi-radio-access-technology spectrum-sharing paper shows why the freedom to move resources is limited by existing deployments. Aligning 5G and 6G resource grids can require changing carrier positions or existing aggregated-carrier arrangements. Apple identifies license-block edges as a constraint and asks operators about the feasibility of adjusting existing carrier-aggregation positions. Its proposed synchronization-raster simplification also has to preserve alignment where the generations share spectrum.",
+      "tdoc_id": "R4-2630492",
+      "passage": "Proposal 5: It is proposed to study ways to reduce the three sync raster points for bands below 3GHz in 5G to one point in 6G by shifting the channel by 5kHz in case of no MRSS or shifting the location of the actual SSB by 5kHz with respect to the specified sync raster point in case of MRSS."
+    },
+    {
+      "claim": "These are separate proposals, but they constrain the same act of scheduling a transmission. A filterless device may need a restricted allocation or a retuning guard; a shared-spectrum deployment may restrict where that allocation can move. Assessing component savings in isolation would miss the network information and scheduling freedom needed to realize them. Receiver blocking remains an additional check, not something a transmitter back-off calculation resolves.",
+      "tdoc_id": "R4-2630536",
+      "passage": "Proposal 2: The NW must have sufficient information from an UE on its required restrictions in UL BW/RB allocations to meet potential coexistence restrictions, regardless of whether LO retuning is supported by the UE."
+    },
+    {
+      "claim": "These are separate proposals, but they constrain the same act of scheduling a transmission. A filterless device may need a restricted allocation or a retuning guard; a shared-spectrum deployment may restrict where that allocation can move. Assessing component savings in isolation would miss the network information and scheduling freedom needed to realize them. Receiver blocking remains an additional check, not something a transmitter back-off calculation resolves.",
+      "tdoc_id": "R4-2630536",
+      "passage": "Observation 7: SAW-less receivers may have difficulties meeting the out-of-band blocking requirements since SAW filters normally help attenuate out of band blocking signals."
+    },
+    {
+      "claim": "These are separate proposals, but they constrain the same act of scheduling a transmission. A filterless device may need a restricted allocation or a retuning guard; a shared-spectrum deployment may restrict where that allocation can move. Assessing component savings in isolation would miss the network information and scheduling freedom needed to realize them. Receiver blocking remains an additional check, not something a transmitter back-off calculation resolves.",
+      "tdoc_id": "R4-2631947",
+      "passage": "Proposal-2: At least non-transparent LO switching scheme should be controlled by network if additional guard time is needed."
+    },
+    {
+      "claim": "These are separate proposals, but they constrain the same act of scheduling a transmission. A filterless device may need a restricted allocation or a retuning guard; a shared-spectrum deployment may restrict where that allocation can move. Assessing component savings in isolation would miss the network information and scheduling freedom needed to realize them. Receiver blocking remains an additional check, not something a transmitter back-off calculation resolves.",
+      "tdoc_id": "R4-2630492",
+      "passage": "Proposal 3: Operator input is needed to help understand the effort of adjusting 5G CA CC for Scenario 3."
+    },
+    {
+      "claim": "The measurement-gap debate asks how much freedom a device should have to retune its receiver while remaining connected. Nokia reports that its practical link adaptation treats interruption-related failures as evidence of poor channel conditions. The resulting reduction in transmission rate can persist beyond the short interruption. Its simulations also examine how an interrupted initial transmission can harm later retransmissions through the accumulated decoding state.",
       "tdoc_id": "R4-2630391",
-      "passage": "3GPP TSG-RAN WG4 Meeting #121\tR4-2630391\nCalgary, Canada, 16 - 20 November 2026\nSource:\tNokia\nTitle:\tSimulations of 6G measurements with and without gaps \nAgenda item:\t8.6.1\nDocument for:\tDiscussion"
+      "passage": "Observation 5: S1-O1 and S1-O2 throughput loss is largely explained by MCS shift caused by OLLA not able to distinguish between interruptions and errors caused by channel conditions."
     },
     {
-      "claim": "Verified document identity and attribution: R4-2631565; database title: Simulation results of 6G MG design; database source: Ericsson. The original header establishes meeting, location, dates and discussion status, not a meeting outcome.",
+      "claim": "The measurement-gap debate asks how much freedom a device should have to retune its receiver while remaining connected. Nokia reports that its practical link adaptation treats interruption-related failures as evidence of poor channel conditions. The resulting reduction in transmission rate can persist beyond the short interruption. Its simulations also examine how an interrupted initial transmission can harm later retransmissions through the accumulated decoding state.",
+      "tdoc_id": "R4-2630391",
+      "passage": "Observation 10: BLER of uninterrupted retransmissions is increased to >80% for MCSs with large coding rate if the first transmission is interrupted."
+    },
+    {
+      "claim": "Ericsson finds that short interruptions known to the network perform well in its evaluated traffic scenarios. It also reports that a sufficiently short symbol-level autonomous interruption can approach that performance, while longer autonomous interruptions perform worse. The result supports comparing timing visibility and duration together, rather than choosing between an always-good autonomous design and an always-good configured gap.",
       "tdoc_id": "R4-2631565",
-      "passage": "3GPP TSG-RAN WG4 Meeting #121\tR4-2631565\nCalgary, Canada, Nov. 16 - 20, 2026\nAgenda item:\t\t\t8.6.1\nSource:\tEricsson\nTitle:\tSimulation results of 6G MG\nDocument for:\tDiscussion"
+      "passage": "Observation 1: S2-O1 (MGRP=80ms, VIL=0.5ms) achieves the highest average DL/UL UE throughput among the evaluated gap-based and gapless solutions under full-buffer, FTP3 and cloud gaming traffic."
     },
     {
-      "claim": "Verified document identity and attribution: R4-2630453; database title: On 6G MG design study; database source: Apple. The original header establishes meeting, location, dates and discussion status, not a meeting outcome.",
-      "tdoc_id": "R4-2630453",
-      "passage": "3GPP TSG-RAN WG4 Meeting #121\tR4-2630453\nCalgary, Canada, Nov. 16 - 20, 2026\nAgenda item:\t8.6.1\nSource:\tApple\nTitle:\tOn 6G MG design study\nDocument for:\tDiscussion"
-    },
-    {
-      "claim": "Verified document identity and attribution: R4-2632068; database title: Views on measurement gap design for 6GR; database source: Qualcomm Incorporated. The original header establishes meeting, location, dates and discussion status, not a meeting outcome.",
-      "tdoc_id": "R4-2632068",
-      "passage": "3GPP TSG-RAN WG4 #121\tR4-2632068\nCalgary, Canada, Nov. 16 - 20 2026\t\nAgenda item:\t8.6.1\nSource:\tQualcomm Incorporated\nTitle:\tViews on measurement gap design for 6GR\nDocument for:\tDiscussion"
-    },
-    {
-      "claim": "A planned measurement gap removes the device from scheduling, whereas the August autonomous-blackout simulation leaves it schedulable during two 1 ms interruptions every 40 ms. This supports the operational baseline and the earlier evaluation conditions.",
-      "tdoc_id": "R4-2611989",
-      "passage": "The interruptions model reproduces the scenario where a UE performs measurements that disrupt normal data reception — as opposed to what happens with periodic planned gaps (where the UE is simply removed from the scheduler). For the sake of these simulations, there are 2 x 1 ms Interruptions every 40 ms. UE autonomous interruptions generate in the simulator a receive-side “blackout”: The UE e.g., misses DL transport blocks during the Interruptions window, without being removed from the scheduler."
-    },
-    {
-      "claim": "Qualcomm defines autonomous timing, shared knowledge of timing, and interruption-free measurement as distinct scenarios. Gapless does not imply interruption-free.",
-      "tdoc_id": "R4-2632068",
-      "passage": "Three scenarios are primarily under consideration:\nScenario 1: UE autonomous interruption\nOption 1: UE autonomous interruption without time-domain restriction\nThe interruption location is unknown without any time-domain restriction\nOption 2: UE autonomous interruption with time-domain restriction\nThe interruption location is unknown with some time-domain restriction\nScenario 2: Interruption aware to both network and UE\nOption 1: Network controlled interruption\nOption 2: Interruption suggested or indicated by UE\nScenario 3: Gap-less measurement without interruption"
-    },
-    {
-      "claim": "Qualcomm describes device-autonomous downlink/uplink interruption while retuning the radio and the resulting network scheduling uncertainty.",
-      "tdoc_id": "R4-2632068",
-      "passage": "S1-O1: UE-autonomous interruption without time-domain restriction, where the UE may interrupt DL and UL while retuning its RF to perform measurements without gaps. The UE determines when such interruptions occur, which may create network scheduling uncertainty because the network is not aware of the interruption timing. This can lead to throughput loss due to failed transmissions and retransmissions, possible MCS degradation, and potential synchronization impact if the UE misses critical control information. Although this option provides UE implementation flexibility, these drawbacks need to be considered."
-    },
-    {
-      "claim": "Nokia already preferred network-visible interruption timing in its August paper; this is a baseline position, not newly reached consensus.",
-      "tdoc_id": "R4-2611989",
-      "passage": "At RAN4#119, several contributions discussed the scenarios to study for 6G gap-less measurements, including UE autonomous interruption, interruption aware to both network and UE, and gap-less measurement without interruption. From the discussion, it is clear that interruption visibility to the network is a key aspect for the 6G design, since unknown interruption locations may impact scheduling, control-channel reliability, HARQ operation, link adaptation, and overall system throughput. In Nokia’s view, unrestricted UE autonomous interruption should not be used as a baseline design assumption for 6G gap-less measurements. Instead, RAN4 should focus the study on solutions where the network has more visibility to interruption locations, or where no interruption is caused, so that the network can reliably protect critical transmissions and coordinate measurement-related interruptions across UEs."
-    },
-    {
-      "claim": "The earlier Nokia evaluation identified feedback-driven link-adaptation errors and conservative transmission settings as a source of loss beyond interrupted resources.",
-      "tdoc_id": "R4-2611989",
-      "passage": "Figure 3 shows the evaluation of link adaptation impact on the results for the scenarios of Figure 1 and Figure 2. The results in Figure 3 show a comparison of the throughput gain achieved by removing interruptions, or using an ideal gain in comparison to the case of no-gaps with interruptions and realistic OLLA. The results with Ideal OLLA are generated by OLLA ignoring the contribution of interruptions on the BLER. The results show a significant throughput improvement when using ideal OLLA in comparison to realistic OLLA. Therefore, the simulations indicate that throughput degradation exceeds the resources directly affected by interruptions. The main reason is identified in the interaction with the link adaptation. Interruption-induced transmission failures are wrongly interpreted as channel degradation and drive OLLA towards lower operating points, resulting in reduced MCS and long-lasting throughput penalties. Separate analyses were therefore conducted to isolate OLLA effects. The results indicate that a significant contribution of the observed performance loss originates from incorrect OLLA adaptation rather than solely from retransmissions. These findings motivate network-controlled or network-aware interruption mechanisms in 6G."
-    },
-    {
-      "claim": "The November Nokia system model includes cross-slot scheduling, downlink control/data losses and uplink feedback errors; unrestricted S1-O1 can affect up to three transmission opportunities and is described as almost worst case.",
-      "tdoc_id": "R4-2630391",
-      "passage": "This contribution further evaluates S1-O1 and S1-O2 using cross-slot scheduling and models both DL control/data losses and UL ACK/NACK errors. For S1-O1, PDCCH is not protected; therefore, an interruption affecting PDCCH, PDSCH, and HARQ feedback can affect up to three TB transmission opportunities: one due to missing HARQ feedback, one due to interrupted PDSCH reception, and one due to loss of the scheduling DCI for the subsequent transmission. This yields almost worst-case scenario behaviour. Further losses which were not modeled here could stem from multi-slot or cross-carrier grants being lost by an interruption. For S1-O2, PDCCH is modeled as protected from interruption, subject to RAN1 agreement, resulting in up to two affected TB transmission opportunities under the same assumptions, i.e. 1 slot lost of PDSCH and 1 slot lost of HARQ feedback."
-    },
-    {
-      "claim": "For S1-O2 Nokia assumes protected control reception, subject to RAN1 agreement, but still permits data loss and lost feedback, affecting up to two transmission opportunities. This is a modeling assumption, not an agreed physical-layer mechanism.",
-      "tdoc_id": "R4-2630391",
-      "passage": "This contribution further evaluates S1-O1 and S1-O2 using cross-slot scheduling and models both DL control/data losses and UL ACK/NACK errors. For S1-O1, PDCCH is not protected; therefore, an interruption affecting PDCCH, PDSCH, and HARQ feedback can affect up to three TB transmission opportunities: one due to missing HARQ feedback, one due to interrupted PDSCH reception, and one due to loss of the scheduling DCI for the subsequent transmission. This yields almost worst-case scenario behaviour. Further losses which were not modeled here could stem from multi-slot or cross-carrier grants being lost by an interruption. For S1-O2, PDCCH is modeled as protected from interruption, subject to RAN1 agreement, resulting in up to two affected TB transmission opportunities under the same assumptions, i.e. 1 slot lost of PDSCH and 1 slot lost of HARQ feedback."
-    },
-    {
-      "claim": "Both Nokia autonomous scenarios assume a 0.5 ms interruption before and after each 40 ms measurement occasion, totaling a raw interruption ratio of 2.5%.",
-      "tdoc_id": "R4-2630391",
-      "passage": "Throughput loss is reported relative to the no-gaps/no-interruptions case. For S1-O1 and S1-O2, gap-less measurements are assumed with interruptions before and after an SMTC having 40 ms periodicity. Each interruption has a duration of 0.5 ms, corresponding to one slot, and the resulting raw interruption ratio is 2.5%."
-    },
-    {
-      "claim": "In the worked dependency example, one interrupted slot can lose present data, feedback for preceding data and a grant for following data, without a three-slot physical blackout.",
-      "tdoc_id": "R4-2630391",
-      "passage": "Under S1-O1, a one-slot interruption is not limited to that slot: besides the PDSCH TB in the interrupted slot, HARQ feedback for the preceding slot and DCI for the following slot may be affected, so one interruption can cause loss or unnecessary retransmission of multiple TBs. For both S1-O1 and S1-O2 the network is not aware of per-UE interruption timing on the serving cell. Comparing S1-O1 with S1-O2 under PLA, mean cell throughput for S1-O1 is about 12–16% lower than for S1-O2 for the same traffic and load, which illustrates the additional cost of unprotected PDCCH in the S1-O1 model."
-    },
-    {
-      "claim": "The reception/retransmission data unit described as a transport block in the article is what Nokia calls a PDSCH TB; its earlier, current and subsequent transmission opportunities are separately affected.",
-      "tdoc_id": "R4-2630391",
-      "passage": "Under S1-O1, a one-slot interruption is not limited to that slot: besides the PDSCH TB in the interrupted slot, HARQ feedback for the preceding slot and DCI for the following slot may be affected, so one interruption can cause loss or unnecessary retransmission of multiple TBs. For both S1-O1 and S1-O2 the network is not aware of per-UE interruption timing on the serving cell. Comparing S1-O1 with S1-O2 under PLA, mean cell throughput for S1-O1 is about 12–16% lower than for S1-O2 for the same traffic and load, which illustrates the additional cost of unprotected PDCCH in the S1-O1 model."
-    },
-    {
-      "claim": "Nokia describes outer-loop link adaptation selecting a more conservative modulation and coding scheme even when radio-channel conditions have not worsened. This supports the operational explanation of MCS and feedback-driven rate adjustment.",
-      "tdoc_id": "R4-2630391",
-      "passage": "In the previous meeting, system-level simulation results showed that interruption-induced loss of PDSCH transport blocks can reduce DL throughput beyond the loss associated with the required retransmissions. In particular, interruption-affected HARQ feedback may cause the gNB outer-loop link adaptation (OLLA) to select a more conservative modulation and coding scheme (MCS), even when the underlying radio-channel conditions have not degraded."
-    },
-    {
-      "claim": "Ordinary adaptation responds to interruption-affected feedback; ideal adaptation suppresses unjustified down-steps. The ideal case is an evaluation upper bound, explicitly not deployable.",
-      "tdoc_id": "R4-2630391",
-      "passage": "Two link-adaptation settings are considered for S1-O1 and S1-O2. With practical link adaptation (PLA), OLLA processes HARQ feedback normally, such that missing or unreliable feedback during an interruption may trigger an unwarranted MCS reduction. With ideal link adaptation (ILA), interruption-affected feedback does not cause an OLLA down-step not justified by channel behaviour. ILA is used only as an evaluation upper bound and does not represent a deployable feature. Mitigation is applied only to S1-O1 and S1-O2; Gap, NCSG with visible interruption lengths (VILs) of 0.5 ms and 1 ms, and the no-gaps/no-interruptions reference are evaluated with PLA only. A VIL of 0.5 ms was simulated in light of ongoing discussions to shorten the interruption length, which could be argued to also justify shortening the VIL of the NCSG."
-    },
-    {
-      "claim": "The reported numerical table in the article is the 84-device full-buffer evaluation and concerns mean downlink cell throughput relative to no gaps/no interruptions.",
-      "tdoc_id": "R4-2630391",
-      "passage": "Figure 1 shows mean DL cell throughput at 84 UEs in full-buffer traffic. PLA is practical link adaptation without ideal mitigation; and Figure 2 shows DL throughput loss (%) relative to the no gaps no interruptions reference at 84 UEs in full-buffer traffic.  ILA is ideal link adaptation for S1-O1 and S1-O2 only. Gap and both NCSG cases are PLA only. Colours are per scenario in the legend (PLA = full colour, ILA = lighter tint where shown)."
-    },
-    {
-      "claim": "For the 84-device full-buffer case, S1-O1 loses 38.9% with ordinary adaptation and 23.4% with ideal adaptation; S1-O2 loses 28.8% and 18.1% respectively. The same passage supports the approximately 15-point ideal-adaptation recovery cited for S1-O1.",
-      "tdoc_id": "R4-2630391",
-      "passage": "Loss (%) vs the 8.69 Mbps no-gap no interruption  reference: S1-O1 38.9% (PLA) / 23.4% (ILA); S1-O2 28.8% / 18.1%; Gap 13.6% (PLA only); NCSG 1.8% and 4.7% (PLA). ILA cuts S1-O1/S1-O2 loss by ~15 and ~11 percentage points vs PLA."
-    },
-    {
-      "claim": "Interpretation premise: protecting control reduces the reported loss under both adaptation models, and substantial residual losses remain even under ideal adaptation. These reported values support the article's inference that fixing adaptation alone does not collapse loss to the raw interruption ratio.",
-      "tdoc_id": "R4-2630391",
-      "passage": "Loss (%) vs the 8.69 Mbps no-gap no interruption  reference: S1-O1 38.9% (PLA) / 23.4% (ILA); S1-O2 28.8% / 18.1%; Gap 13.6% (PLA only); NCSG 1.8% and 4.7% (PLA). ILA cuts S1-O1/S1-O2 loss by ~15 and ~11 percentage points vs PLA."
-    },
-    {
-      "claim": "Interpretation premise: the raw interruption ratio is 2.5%, a duration measure, not a throughput-loss guarantee. Read with the measured loss values and dependency model, it supports distinguishing unavailable time from procedural and adaptation costs.",
-      "tdoc_id": "R4-2630391",
-      "passage": "Throughput loss is reported relative to the no-gaps/no-interruptions case. For S1-O1 and S1-O2, gap-less measurements are assumed with interruptions before and after an SMTC having 40 ms periodicity. Each interruption has a duration of 0.5 ms, corresponding to one slot, and the resulting raw interruption ratio is 2.5%."
-    },
-    {
-      "claim": "Interpretation premise: under practical adaptation, interruption-related missing or unreliable feedback is treated as failed reception, lowering transmission settings; removing that reaction does not itself repair affected transmissions.",
-      "tdoc_id": "R4-2630391",
-      "passage": "The larger loss for S1-O1 than for S1-O2 is consistent with DL BLER shifted upward and DL MCS shifted toward lower indices in the BLER and MCS CDFs. Under PLA, conservative OLLA after disturbed HARQ feedback adds loss beyond direct TB loss and retransmission the MCS distribution moves down because the network treats missing or unreliable feedback during interruptions as failed receptions. ILA largely restores MCS toward the Gap/NCSG/reference cluster while mean BLER for S1 can be similar or slightly higher than under PLA, which is consistent with suppressing erroneous OLLA down-steps rather than “improving BLER” in isolation."
-    },
-    {
-      "claim": "The August paper described its ideal-adaptation result as nearly aligning throughput with uninterrupted operation; the article contrasts that qualitative description with November's substantial ideal-case residual, without claiming a matched time trend.",
-      "tdoc_id": "R4-2611989",
-      "passage": "Figure 3: Not applying OLLA during Interruptions (Ideal OLLA) almost aligns throughput to the case without Interruptions. The impact due to resources directly affected by Interruptions is the difference between the two bars"
-    },
-    {
-      "claim": "Interpretation premise for the August/November comparison: the November evaluation explicitly models control, data and feedback dependencies, including multiple affected transmission opportunities.",
-      "tdoc_id": "R4-2630391",
-      "passage": "This contribution further evaluates S1-O1 and S1-O2 using cross-slot scheduling and models both DL control/data losses and UL ACK/NACK errors. For S1-O1, PDCCH is not protected; therefore, an interruption affecting PDCCH, PDSCH, and HARQ feedback can affect up to three TB transmission opportunities: one due to missing HARQ feedback, one due to interrupted PDSCH reception, and one due to loss of the scheduling DCI for the subsequent transmission. This yields almost worst-case scenario behaviour. Further losses which were not modeled here could stem from multi-slot or cross-carrier grants being lost by an interruption. For S1-O2, PDCCH is modeled as protected from interruption, subject to RAN1 agreement, resulting in up to two affected TB transmission opportunities under the same assumptions, i.e. 1 slot lost of PDSCH and 1 slot lost of HARQ feedback."
-    },
-    {
-      "claim": "Ericsson's full-buffer simulation has 30 devices and 80 ms repetition. Its network-controlled 0.5 ms visible interruption loses less than 0.5% against uninterrupted operation; its autonomous 0.5 ms interruption is comparable to a 6 ms gap at the same period despite the smaller raw interruption ratio.",
+      "claim": "Ericsson finds that short interruptions known to the network perform well in its evaluated traffic scenarios. It also reports that a sufficiently short symbol-level autonomous interruption can approach that performance, while longer autonomous interruptions perform worse. The result supports comparing timing visibility and duration together, rather than choosing between an always-good autonomous design and an always-good configured gap.",
       "tdoc_id": "R4-2631565",
-      "passage": "Table 2 compares the average DL/UL UE throughput of the gap-based and gapless measurement proposals for 30 UEs with full-buffer traffic. The “no gap no interruption” case represents operation without measurement-related interruptions. S2-O1 (MGRP=80ms, VIL=0.5ms) achieves the highest average DL/UL UE throughput among the evaluated proposals, with less than 0.5% loss relative to this reference case, owing to the short VIL and effective indication of UE interruptions to the NW. The UE-autonomous S1-O1 (MGRP=80ms, VIL=0.5ms) provides throughput comparable to MG (MGRP=80ms, MGL=6ms), despite a theoretical interruption ratio of only 1.25%, compared with 7.5% for the MG. Indicating UE interruptions to the NW enables more efficient scheduling across UEs and mitigates throughput loss. Increasing the VIL to 1ms in S1-O1 (MGRP=80ms) results in approximately 4.5% DL throughput loss. Symbol-level S1-O1 (MGRP=80ms, MGL=6 symbols), with an interruption duration equivalent to 140us plus 33us (MRTD), achieves throughput comparable to S2-O1 (MGRP=80ms, VIL=0.5ms)."
+      "passage": "Observation 2: S1-O1 (MGRP=80ms, MGL=6 symbols) achieves throughput comparable to S2-O1 (MGRP=80ms, VIL=0.5ms) under full-buffer, FTP3 and cloud gaming traffic."
     },
     {
-      "claim": "The favorable counterexample is Ericsson's six-symbol autonomous interruption in the full-buffer 30-device, 80 ms case, reported comparable to network-controlled interruption. The article does not generalize this to every traffic model.",
+      "claim": "Ericsson finds that short interruptions known to the network perform well in its evaluated traffic scenarios. It also reports that a sufficiently short symbol-level autonomous interruption can approach that performance, while longer autonomous interruptions perform worse. The result supports comparing timing visibility and duration together, rather than choosing between an always-good autonomous design and an always-good configured gap.",
       "tdoc_id": "R4-2631565",
-      "passage": "Table 2 compares the average DL/UL UE throughput of the gap-based and gapless measurement proposals for 30 UEs with full-buffer traffic. The “no gap no interruption” case represents operation without measurement-related interruptions. S2-O1 (MGRP=80ms, VIL=0.5ms) achieves the highest average DL/UL UE throughput among the evaluated proposals, with less than 0.5% loss relative to this reference case, owing to the short VIL and effective indication of UE interruptions to the NW. The UE-autonomous S1-O1 (MGRP=80ms, VIL=0.5ms) provides throughput comparable to MG (MGRP=80ms, MGL=6ms), despite a theoretical interruption ratio of only 1.25%, compared with 7.5% for the MG. Indicating UE interruptions to the NW enables more efficient scheduling across UEs and mitigates throughput loss. Increasing the VIL to 1ms in S1-O1 (MGRP=80ms) results in approximately 4.5% DL throughput loss. Symbol-level S1-O1 (MGRP=80ms, MGL=6 symbols), with an interruption duration equivalent to 140us plus 33us (MRTD), achieves throughput comparable to S2-O1 (MGRP=80ms, VIL=0.5ms)."
+      "passage": "Observation 3: S1-O1 (MGRP=80ms) with VIL=0.5ms or 1ms yields negative throughput gains under FTP3 and cloud gaming traffic, indicating lower throughput than the NR baseline MG (MGRP=40ms, MGL=6ms)."
     },
     {
-      "claim": "Interpretation premise: comparing the half-millisecond autonomous result with the six-symbol autonomous result changes throughput ordering in Ericsson's full-buffer model, supporting conditional study of shorter autonomous interruptions.",
-      "tdoc_id": "R4-2631565",
-      "passage": "Table 2 compares the average DL/UL UE throughput of the gap-based and gapless measurement proposals for 30 UEs with full-buffer traffic. The “no gap no interruption” case represents operation without measurement-related interruptions. S2-O1 (MGRP=80ms, VIL=0.5ms) achieves the highest average DL/UL UE throughput among the evaluated proposals, with less than 0.5% loss relative to this reference case, owing to the short VIL and effective indication of UE interruptions to the NW. The UE-autonomous S1-O1 (MGRP=80ms, VIL=0.5ms) provides throughput comparable to MG (MGRP=80ms, MGL=6ms), despite a theoretical interruption ratio of only 1.25%, compared with 7.5% for the MG. Indicating UE interruptions to the NW enables more efficient scheduling across UEs and mitigates throughput loss. Increasing the VIL to 1ms in S1-O1 (MGRP=80ms) results in approximately 4.5% DL throughput loss. Symbol-level S1-O1 (MGRP=80ms, MGL=6 symbols), with an interruption duration equivalent to 140us plus 33us (MRTD), achieves throughput comparable to S2-O1 (MGRP=80ms, VIL=0.5ms)."
+      "claim": "Apple adds an implementation qualification: a device's measurement capability depends on the active serving-cell configuration and radio-component state, not just a nominal band combination. It proposes choosing symbol- or slot-level interruption case by case and postponing the affected-frequency granularity until the radio architecture is clearer. A capability claim that ignores which chains and tuner states are in use could promise measurements the current configuration cannot deliver.",
+      "tdoc_id": "R4-2630453",
+      "passage": "Observation 1: even if UE supports gap-less measurement based on the CA/DC band-combination, UE may have different measurement performance between gap-less measurement in a CA mode and gap-based measurement on single carrier due to the different RF components status, e.g., tuner states for antenna."
     },
     {
-      "claim": "Nokia's link-level test models symbol interruptions by puncturing affected resource elements and giving their bits zero decoding reliability. The shorter symbol duration is a different granularity from the whole-slot blackout.",
+      "claim": "Apple adds an implementation qualification: a device's measurement capability depends on the active serving-cell configuration and radio-component state, not just a nominal band combination. It proposes choosing symbol- or slot-level interruption case by case and postponing the affected-frequency granularity until the radio architecture is clearer. A capability claim that ignores which chains and tuner states are in use could promise measurements the current configuration cannot deliver.",
+      "tdoc_id": "R4-2630453",
+      "passage": "Proposal 9: RAN4 to consider both symbol and slot level interruption in 6G RRM; and whether to use symbol or slot level interruption in detailed requirement design shall be decided in a case-by-case manner based on two main factors: interruption length and synchronization condition."
+    },
+    {
+      "claim": "Apple adds an implementation qualification: a device's measurement capability depends on the active serving-cell configuration and radio-component state, not just a nominal band combination. It proposes choosing symbol- or slot-level interruption case by case and postponing the affected-frequency granularity until the radio architecture is clearer. A capability claim that ignores which chains and tuner states are in use could promise measurements the current configuration cannot deliver.",
+      "tdoc_id": "R4-2630453",
+      "passage": "Proposal 11: RAN4 to decide frequency-domain granularity for serving cell interruption after RF architecture is concluded for 6G. At this stage, at least band group or FR dependent interruption granularity can be assumed."
+    },
+    {
+      "claim": "This connects directly to oscillator retuning in filterless designs, without making the two procedures identical. In each case, an implementation-level transition can create a scheduling-visible absence. The relevant contract is what the network knows about affected carriers and timing, and how its feedback handling responds. Reporting only the fraction of receiver time lost would not capture those dependencies.",
+      "tdoc_id": "R4-2631947",
+      "passage": "Proposal-2: At least non-transparent LO switching scheme should be controlled by network if additional guard time is needed."
+    },
+    {
+      "claim": "This connects directly to oscillator retuning in filterless designs, without making the two procedures identical. In each case, an implementation-level transition can create a scheduling-visible absence. The relevant contract is what the network knows about affected carriers and timing, and how its feedback handling responds. Reporting only the fraction of receiver time lost would not capture those dependencies.",
+      "tdoc_id": "R4-2630453",
+      "passage": "Proposal 11: RAN4 to decide frequency-domain granularity for serving cell interruption after RF architecture is concluded for 6G. At this stage, at least band group or FR dependent interruption granularity can be assumed."
+    },
+    {
+      "claim": "This connects directly to oscillator retuning in filterless designs, without making the two procedures identical. In each case, an implementation-level transition can create a scheduling-visible absence. The relevant contract is what the network knows about affected carriers and timing, and how its feedback handling responds. Reporting only the fraction of receiver time lost would not capture those dependencies.",
       "tdoc_id": "R4-2630391",
-      "passage": "We also performed link level simulations to consider effects of symbol level interruptions. Interruptions were modelled by puncturing the interrupted resource elements at the receiver, i.e. as setting the IQ = 0 after FFT stage and setting the LLRs to 0 after the soft demodulation stage. This result in the decoder considering that all interrupted bits have zero reliability. Interruption lengths were adaptable with a 13-symbol interruption indicating a full slot interruption. Interruptions lengths studied were aligned with the RF discussion RAN4#120, i.e. interruptions of 35 us, 70 us, 140 us, [210] us are modelled as 1, 3, 5, and 7 OFDM symbols. "
+      "passage": "Observation 5: S1-O1 and S1-O2 throughput loss is largely explained by MCS shift caused by OLLA not able to distinguish between interruptions and errors caused by channel conditions."
     },
     {
-      "claim": "Nokia's link-level result avoids control and demodulation-reference symbols, uses practical channel estimation and reports nearly 100% block error at MCS 13 and above for a one-symbol interruption at 20 dB SNR. The population is interrupted blocks only.",
-      "tdoc_id": "R4-2630391",
-      "passage": "Figure 11 shows results for practical channel estimation, with interruptions avoiding DMRS and PDCCH symbols. This figure shows BLER level at 20 dB SNR for each MCS, only for the interrupted transport blocks. From the results of this figure, we can notice that above a certain MCS the BLER approaches 100%. For 1 symbol interruption, MCS 13 and above experience close to 100 % BLER. For 3 symbol interruptions, the limit is MCS=7. For 5 symbol the limit is MCS=6, while for 7 symbols, the limit is MCS=2."
+      "claim": "Artificial intelligence and machine learning (AI/ML) appear in two quite different tasks here: compressing channel-state information (CSI) and predicting measurements that a device would otherwise make. In the compression case, a device encoder and network decoder have to interpret the same representation. Apple proposes limiting a lightweight applicability check to parameters that determine compatibility, including pairing identity, port configuration, subbands and payload size. It argues against adding unrelated inference settings to that check.",
+      "tdoc_id": "R1-2609841",
+      "passage": "Since the purpose of Option B is a lightweight applicability check, the parameters should be limited to those that determine whether the UE-side encoder is compatible with the NW-side decoder, i.e., the configurations that impact the scalability of the encoder. Based on this principle, we have the following views on the candidate parameters:"
     },
     {
-      "claim": "Interpretation premise: interrupted blocks can fail despite an interruption limited to one symbol, even with control and channel-estimation symbols preserved; preserving most symbols cannot be assumed to preserve throughput.",
-      "tdoc_id": "R4-2630391",
-      "passage": "Figure 11 shows results for practical channel estimation, with interruptions avoiding DMRS and PDCCH symbols. This figure shows BLER level at 20 dB SNR for each MCS, only for the interrupted transport blocks. From the results of this figure, we can notice that above a certain MCS the BLER approaches 100%. For 1 symbol interruption, MCS 13 and above experience close to 100 % BLER. For 3 symbol interruptions, the limit is MCS=7. For 5 symbol the limit is MCS=6, while for 7 symbols, the limit is MCS=2."
+      "claim": "Artificial intelligence and machine learning (AI/ML) appear in two quite different tasks here: compressing channel-state information (CSI) and predicting measurements that a device would otherwise make. In the compression case, a device encoder and network decoder have to interpret the same representation. Apple proposes limiting a lightweight applicability check to parameters that determine compatibility, including pairing identity, port configuration, subbands and payload size. It argues against adding unrelated inference settings to that check.",
+      "tdoc_id": "R1-2609841",
+      "passage": "Pairing ID, Tx port configuration (N1, N2, and portMappingMethod for more than 32 ports), subband configuration and payload size configuration should be included. These are the parameters that identify the dataset/model configuration that the encoder was trained for, and they are consistent with the metadata proposed for dataset exchange in Section 2.1 and with the candidate UE data collection configuration agreed in RAN1 125."
     },
     {
-      "claim": "Interpretation premise for withholding a cross-company ranking: Ericsson's favorable short-autonomy result concerns system throughput at 30 devices and an 80 ms repetition period.",
-      "tdoc_id": "R4-2631565",
-      "passage": "Table 2 compares the average DL/UL UE throughput of the gap-based and gapless measurement proposals for 30 UEs with full-buffer traffic. The “no gap no interruption” case represents operation without measurement-related interruptions. S2-O1 (MGRP=80ms, VIL=0.5ms) achieves the highest average DL/UL UE throughput among the evaluated proposals, with less than 0.5% loss relative to this reference case, owing to the short VIL and effective indication of UE interruptions to the NW. The UE-autonomous S1-O1 (MGRP=80ms, VIL=0.5ms) provides throughput comparable to MG (MGRP=80ms, MGL=6ms), despite a theoretical interruption ratio of only 1.25%, compared with 7.5% for the MG. Indicating UE interruptions to the NW enables more efficient scheduling across UEs and mitigates throughput loss. Increasing the VIL to 1ms in S1-O1 (MGRP=80ms) results in approximately 4.5% DL throughput loss. Symbol-level S1-O1 (MGRP=80ms, MGL=6 symbols), with an interruption duration equivalent to 140us plus 33us (MRTD), achieves throughput comparable to S2-O1 (MGRP=80ms, VIL=0.5ms)."
+      "claim": "Artificial intelligence and machine learning (AI/ML) appear in two quite different tasks here: compressing channel-state information (CSI) and predicting measurements that a device would otherwise make. In the compression case, a device encoder and network decoder have to interpret the same representation. Apple proposes limiting a lightweight applicability check to parameters that determine compatibility, including pairing identity, port configuration, subbands and payload size. It argues against adding unrelated inference settings to that check.",
+      "tdoc_id": "R1-2609841",
+      "passage": "CSI-RS resource information and reportConfigType are not needed, since they do not impact the encoder compatibility, and the CSI-RS resources and report type are determined when the CSI-ReportConfig is provided for inference after the applicability is confirmed. Several companies expressed the same view in the FL summary."
     },
     {
-      "claim": "Interpretation premise for withholding a cross-company ranking: Nokia's system example is evaluated with 84 devices in full-buffer traffic.",
-      "tdoc_id": "R4-2630391",
-      "passage": "Figure 1 shows mean DL cell throughput at 84 UEs in full-buffer traffic. PLA is practical link adaptation without ideal mitigation; and Figure 2 shows DL throughput loss (%) relative to the no gaps no interruptions reference at 84 UEs in full-buffer traffic.  ILA is ideal link adaptation for S1-O1 and S1-O2 only. Gap and both NCSG cases are PLA only. Colours are per scenario in the legend (PLA = full colour, ILA = lighter tint where shown)."
+      "claim": "Samsung reports degradation when the network-side encoder assumption associated with an exchanged dataset differs from the device's encoder backbone. It proposes sharing that assumption as additional information, as well as aligning the pairing framework with deployment conditions. A standardized exchange format would therefore be insufficient if the parties still attach different model assumptions to the exchanged values.",
+      "tdoc_id": "R1-2609578",
+      "passage": "Observation#3: For Option 4-1 of Direction A, performance degradation is observed when the assumed NW-side encoder backbone associated with the dataset is different from the UE-side encoder backbone. "
     },
     {
-      "claim": "Interpretation premise for withholding a cross-company ranking: Nokia's autonomous interruptions repeat around a 40 ms measurement occasion.",
-      "tdoc_id": "R4-2630391",
-      "passage": "Throughput loss is reported relative to the no-gaps/no-interruptions case. For S1-O1 and S1-O2, gap-less measurements are assumed with interruptions before and after an SMTC having 40 ms periodicity. Each interruption has a duration of 0.5 ms, corresponding to one slot, and the resulting raw interruption ratio is 2.5%."
+      "claim": "Samsung reports degradation when the network-side encoder assumption associated with an exchanged dataset differs from the device's encoder backbone. It proposes sharing that assumption as additional information, as well as aligning the pairing framework with deployment conditions. A standardized exchange format would therefore be insufficient if the parties still attach different model assumptions to the exchanged values.",
+      "tdoc_id": "R1-2609578",
+      "passage": "Proposal#5: For Option 4-1 of Direction A, consider NW-side sharing the encoder backbone assumption associated with the dataset as additional information. "
     },
     {
-      "claim": "Apple argues for device flexibility when measurement operations compete and the device cannot perform them all simultaneously.",
-      "tdoc_id": "R4-2630453",
-      "passage": "For instance, in 5G deactivated SCell measurement, the measCycleSCell is configured for the measurement periodicity but no deterministic time offset of the measurement occasions is configured to UE, and therefore UE would have flexibility to perform the deactivated SCell measurement on an SMTC occasion within measCycleSCell. Another example is: when inter-frequency measurement without MG with interruption is colliding with intra-frequency measurement without MG without interruption in time domain, it can be up to UE implementation to decide when to perform intra-frequency or inter-frequency measurement if UE cannot perform all these measurements simultaneously. This means the visible interruption on gap-less inter-frequency measurement will become invisible or UE specific interruption in this case, as shown in the following figure. "
+      "claim": "Samsung reports degradation when the network-side encoder assumption associated with an exchanged dataset differs from the device's encoder backbone. It proposes sharing that assumption as additional information, as well as aligning the pairing framework with deployment conditions. A standardized exchange format would therefore be insufficient if the parties still attach different model assumptions to the exchanged values.",
+      "tdoc_id": "R1-2609578",
+      "passage": "Proposal#3: Consider a unified pairing ID for Direction A and Direction C with the pairing ID consisting of two parts. "
     },
     {
-      "claim": "Apple's autonomous-measurement position is bounded: candidate locations adjoin configured measurement occasions, interruption length and aggregate ratio are bounded, and existing exclusions remain. It does not propose disappearance at arbitrary times.",
-      "tdoc_id": "R4-2630453",
-      "passage": "In our view, the question is not the existing NR use of UE autonomous interruption, but how its impact is bounded if it is used in more cases in 6G. It should be noted that such UE specific interruption is not an unrestricted interruption. Taking the collision case in Figure 1 as an example, UE doesn’t create interruptions at new positions, since the interruption is caused by the RF switching for the configured gap-less inter-frequency measurement, and therefore it remains associated with the configured measurement occasions (SMTC) of that layer, in the same way as in NR, e.g., for deactivated SCC measurement, UE is “only allowed to cause interruptions on PCell or activated SCell(s) immediately before and immediately after an SMTC” (TS 38.133 clause 8.2.2.2.3). When UE cannot perform all intra- and inter-frequency measurements in the same occasion, UE only decides which of the configured occasions are used for which layer. Thus, network can still rely on the following information:\nCandidate interruption positions: adjacent to the configured SMTC occasions of the inter-frequency layer, i.e., the interruption doesn’t occur away from these configured occasions;\nMaximum length of each interruption;\nMaximum interruption ratio over time: since UE only uses a subset of the configured occasions for the inter-frequency layer, the number of interruptions doesn’t exceed that of the fully visible interruption case;\nExisting exclusion rules: e.g., no interruption during DRX ON duration when no SMTC occasion occurs around it (TS 38.133 clause 8.2.2.2.19)."
+      "claim": "RAN4's non-collocated cell-prediction study has a different dependency. The model must learn something about a target site from measurements at another site. Nokia says that correlated line-of-sight states do not establish the joint cross-site received-power correlation needed for that task. It also questions whether companies can reproduce one map-based ray-tracing setup, and proposes waiting for RAN1 guidance while giving other prediction cases priority.",
+      "tdoc_id": "R4-2631857",
+      "passage": "Option 2 (The LOS/NLOS state of TRP-UE links modelled according to TR 37.885 clause 6.2 is considered with the urban grid deployment scenario specified in TR 38.914 clause 4.11): LOS/NLOS modelling alone does not establish the joint cross-site SS-RSRP correlation required for AI-RRM Sub-case 2. In particular, having geometry-based LOS/NLOS states does not necessarily create the cross-site channel correlation needed for AI-RRM Sub-case 2. "
     },
     {
-      "claim": "Apple says the network knows the configured candidate occasions but not which subset the device uses, and can choose deterministic timing when needed.",
-      "tdoc_id": "R4-2630453",
-      "passage": "What network doesn’t know is which subset of the configured occasions UE uses, and the impact on scheduled control and data transmissions is then bounded by the interruption ratio and length limits as in NR today. If network wants to protect particular transmissions, it can schedule them away from the configured occasions of that layer, and if network needs fully deterministic timing, it can configure S2-O1 or MG instead. In our view, this association with the configured measurement occasions is an inherent property of measurement-related interruption, e.g., as already specified in NR for deactivated SCC measurement, and it is different from the time-domain restriction in S1-O2, which requires UE to place the RF switching to avoid specific serving cell channels. We are fine to state this association explicitly in the requirements during the WI phase."
+      "claim": "RAN4's non-collocated cell-prediction study has a different dependency. The model must learn something about a target site from measurements at another site. Nokia says that correlated line-of-sight states do not establish the joint cross-site received-power correlation needed for that task. It also questions whether companies can reproduce one map-based ray-tracing setup, and proposes waiting for RAN1 guidance while giving other prediction cases priority.",
+      "tdoc_id": "R4-2631857",
+      "passage": "Map-based ray tracing (TR 38.901 clause 8) is not suitable as a common evaluation assumption for AI-RRM Sub-case 2, since cross-company reproducibility would require alignment on maps, site and UE placements, propagation assumptions, and calibration, which is not a trivial task."
     },
     {
-      "claim": "Apple explicitly scopes autonomous measurement to device indication, network authorization per measurement configuration, and quantitative limits. This establishes the bounded-autonomy alternative as Apple's proposal, not an adopted rule.",
-      "tdoc_id": "R4-2630453",
-      "passage": "Also, S1-O1 is not intended for general and unconditional RRM measurements. In our view, the applicability of S1-O1 is bounded by the following conditions:\nUE indication: UE indicates that it supports or needs gap-less measurement with interruption for the target layer, e.g., per-MO or per-band indication based on the current serving cell(s) (see sections 2.2 and 2.3), similar to NeedForInterruptionInfoNR-r18 in NR (TS 38.133 clause 8.2.2.2.19);\nNetwork control: as agreed in RAN4#119, “After receiving UE reported gap related capability or other indication, the MG configuration, including gap-less measurement, should be explicitly under network control”, i.e., network decides for each target measurement whether to configure MG, a network configured pattern (S2-O1), or gap-less measurement with UE autonomous interruption, and S1-O1 is network-authorized per measurement configuration;\nQuantitative bounds: a maximum interruption ratio, with NR as the starting point, and a maximum length of each interruption, for each applicable scenario."
+      "claim": "RAN4's non-collocated cell-prediction study has a different dependency. The model must learn something about a target site from measurements at another site. Nokia says that correlated line-of-sight states do not establish the joint cross-site received-power correlation needed for that task. It also questions whether companies can reproduce one map-based ray-tracing setup, and proposes waiting for RAN1 guidance while giving other prediction cases priority.",
+      "tdoc_id": "R4-2631857",
+      "passage": "RAN4 to wait for RAN1 reply to RAN4 LS (R4-2621658) on channel model aspects for AI RRM Sub-case 2. In the meantime, RAN4 to prioritize discussions on other agreed 6G AI-RRM Sub-Case(s)."
     },
     {
-      "claim": "Apple compares two 0.5 ms interruptions every 640 ms (about 0.16%) with the same interruptions every 40 ms (2.5%), arguing that length, ratio and applicable scenarios must be considered together.",
-      "tdoc_id": "R4-2630453",
-      "passage": "In our view, the throughput impact of UE autonomous interruption depends on the interruption amount, which scales with the measurement periodicity, e.g., with one slot of 0.5 ms interrupted before and after each occasion, the interruption ratio is about 0.16% for a 640 ms measCycleSCell, while it’s already 2.5% for a 40 ms SMTC. In the evaluations presented so far, the assumed interruption was about one slot before and after each 40 ms or 80 ms occasion, and it was also shown that reducing the interruption mitigates the throughput degradation. Thus, the maximum interruption, including the maximum interruption ratio and the length of each interruption, is the key bound for S1-O1, and the bound and the applicable scenarios can be decided together in the WI phase."
+      "claim": "The connection is not that both tasks need the same model. Both need a stated boundary between what is exchanged or assumed and what performance is promised. Compression needs an encoder that the intended decoder can use. Measurement prediction needs a channel relationship that survives the evaluation conditions. An attractive accuracy result in a matched setup does not establish either interoperability across implementations or generalization across deployments.",
+      "tdoc_id": "R1-2609578",
+      "passage": "Observation#3: For Option 4-1 of Direction A, performance degradation is observed when the assumed NW-side encoder backbone associated with the dataset is different from the UE-side encoder backbone. "
     },
     {
-      "claim": "Interpretation premise: Apple's sparse and frequent examples differ in repetition, so frequent-blackout results alone do not establish the acceptability of sparse autonomous operation.",
-      "tdoc_id": "R4-2630453",
-      "passage": "In our view, the throughput impact of UE autonomous interruption depends on the interruption amount, which scales with the measurement periodicity, e.g., with one slot of 0.5 ms interrupted before and after each occasion, the interruption ratio is about 0.16% for a 640 ms measCycleSCell, while it’s already 2.5% for a 40 ms SMTC. In the evaluations presented so far, the assumed interruption was about one slot before and after each 40 ms or 80 ms occasion, and it was also shown that reducing the interruption mitigates the throughput degradation. Thus, the maximum interruption, including the maximum interruption ratio and the length of each interruption, is the key bound for S1-O1, and the bound and the applicable scenarios can be decided together in the WI phase."
+      "claim": "The connection is not that both tasks need the same model. Both need a stated boundary between what is exchanged or assumed and what performance is promised. Compression needs an encoder that the intended decoder can use. Measurement prediction needs a channel relationship that survives the evaluation conditions. An attractive accuracy result in a matched setup does not establish either interoperability across implementations or generalization across deployments.",
+      "tdoc_id": "R1-2609841",
+      "passage": "Since the purpose of Option B is a lightweight applicability check, the parameters should be limited to those that determine whether the UE-side encoder is compatible with the NW-side decoder, i.e., the configurations that impact the scalability of the encoder. Based on this principle, we have the following views on the candidate parameters:"
     },
     {
-      "claim": "Apple says protecting control leaves data and feedback vulnerable, and that full procedural protection would require known timing. This agrees with Nokia's dependency mechanism without establishing identical scope preferences.",
-      "tdoc_id": "R4-2630453",
-      "passage": "Regarding the impact of missed DCI on subsequent procedures, e.g., a missed UL grant leading to a missing PUSCH, we think such procedural impact is not specific to S1-O1. Under S1-O2, UE may receive the PDCCH but still lose the scheduled PDSCH, or interrupt the slot of the associated PUSCH/PUCCH, and the following HARQ procedure is affected as well. Fully protecting a procedure would require protecting the PDCCH together with all its dependent PDSCH/PUSCH/PUCCH resources, which needs network-known interruption timing, i.e., what S2-O1 provides. Thus, the procedural impact under both S1 options is mainly determined by how often and how long UE interrupts. This is also how NR bounds UE autonomous interruption today, i.e., TS 38.133 bounds the amount of interruption instead of its position relative to specific channels, e.g.,"
+      "claim": "The connection is not that both tasks need the same model. Both need a stated boundary between what is exchanged or assumed and what performance is promised. Compression needs an encoder that the intended decoder can use. Measurement prediction needs a channel relationship that survives the evaluation conditions. An attractive accuracy result in a matched setup does not establish either interoperability across implementations or generalization across deployments.",
+      "tdoc_id": "R4-2631857",
+      "passage": "In AI-RRM Sub-case 2, the AI/ML model is trained to predict L3 cell-level measurements of non-collocated cell(s) on a target frequency layer, which are not on the same site as measured cell(s). The cross-site correlation learned by the model is determined by the channel model realization used for training, e.g., cross-site correlation. If the model is insufficiently generalized, it may perform well only for the realization it was trained on and degrade under different realizations, deployments, or UE speeds. This may lead to frequent model switching or fallback to legacy measurements, thereby losing the expected gains. Therefore, RAN4 should consider generalization aspects when selecting channel model for AI RRM Sub-case 2."
     },
     {
-      "claim": "Apple identifies radio-switching complexity when carrier receive timing differs and the device tries to avoid each control channel. This is an implementation tradeoff asserted by Apple, not a measured complexity figure.",
-      "tdoc_id": "R4-2630453",
-      "passage": "On the other hand, the adjustment of interruption position on time domain will need adaptive RF component control, which will cause high complexity for UE implementation. For instance, the RTDs among carriers of CA can differ in different CA scenarios (collocated and non-collocated CA) or async/sync DC, UE needs to adjust the RF behaviour based on the different timing of different carriers to avoid interruption to PDCCH for any kind of CA scenarios. In addition, if the interruption is from DL measurement to UL, to avoid impact on UL control channel, UE also needs to consider the Rx-Tx difference across the different carriers. To us, it’s too complicated to standardize option 2 as a generic solution for gap-less measurement with interruption. For instance, if UE has async DC and needs to perform gap-less measurement on PSCC, since the RTD can be up to 500 us, it will require UE to adapt the RF adjustment timing to different RTD conditions, and therefore it will cause high complexity for UE implementation on RF control."
+      "claim": "Non-terrestrial network (NTN) proposals reach beyond extending terrestrial coverage. Apple supports full network pre-compensation of feeder-link Doppler for a transparent satellite payload. Its argument is that residual feeder-link effects can increase the frequency error a device must handle, while coupling uplink frequency correction to timing-drift parameters can introduce quantization error into the frequency loop. This places the correction at a specific part of the link rather than treating all observed frequency error as a device problem.",
+      "tdoc_id": "R1-2609880",
+      "passage": "In a transparent payload case, how the network pre-compensates the feeder link Doppler remains an open issue. In Alternative 1, the feeder link Doppler is fully pre-compensated by the network. In Alternative 2, the feeder link Doppler is pre-compensated by the network in a way that, over the downlink on the service link, the observed time drift rate matches the observed frequency error. In our view, Alternative 1 should be supported for the following reasons:"
     },
     {
-      "claim": "Apple prefers autonomous interruption without time-domain restriction as a baseline and is open to constrained autonomy in limited scenarios.",
-      "tdoc_id": "R4-2630453",
-      "passage": "According to the above analysis, considering both the benefit and complexity, we prefer to consider the autonomous interruption without time-domain restriction as baseline. For the option 2, we are open to solution and applicability scenario discussion, and in our view option 2 can only be applied for limited scenarios, e.g., UE autonomous interruption with time-domain restriction can be considered for the following scenarios:"
+      "claim": "Non-terrestrial network (NTN) proposals reach beyond extending terrestrial coverage. Apple supports full network pre-compensation of feeder-link Doppler for a transparent satellite payload. Its argument is that residual feeder-link effects can increase the frequency error a device must handle, while coupling uplink frequency correction to timing-drift parameters can introduce quantization error into the frequency loop. This places the correction at a specific part of the link rather than treating all observed frequency error as a device problem.",
+      "tdoc_id": "R1-2609880",
+      "passage": "Second, if the feeder-link delay variation is not pre-compensated in the downlink, leaving a residual feeder-link Doppler component under Alternative 2 would nearly double the worst-case downlink frequency offset experienced by the UE, significantly increasing initial cell search complexity and latency."
     },
     {
-      "claim": "Apple proposes limiting control-protected autonomy at least to synchronized cases; it argues that receive timing is then bounded sufficiently to determine the protected position.",
-      "tdoc_id": "R4-2630453",
-      "passage": "Regarding S1-O2 (UE autonomous interruption with time-domain restriction), we think it can be FFS after concluding the S1-O1 and S2-O1 in Rel-21 WI, and the scenario for this option shall at least be limited to synchronized case between victim and aggressor carriers. Only in the synchronized case is the receive timing difference between carriers bounded to a small part of the slot, e.g., up to 33us for FR1 inter-band CA, so that a protected control channel position can be determined at all, while in the asynchronous case it cannot (see Figure 2)."
+      "claim": "Non-terrestrial network (NTN) proposals reach beyond extending terrestrial coverage. Apple supports full network pre-compensation of feeder-link Doppler for a transparent satellite payload. Its argument is that residual feeder-link effects can increase the frequency error a device must handle, while coupling uplink frequency correction to timing-drift parameters can introduce quantization error into the frequency loop. This places the correction at a specific part of the link rather than treating all observed frequency error as a device problem.",
+      "tdoc_id": "R1-2609880",
+      "passage": "Third, Alternative 1 keeps the UE uplink frequency pre-compensation cleanly decoupled from Common TA drift rate (relying solely on satellite ephemeris and UE GNSS position), avoiding the propagation of Common TA drift rate quantization errors into the carrier frequency loop."
     },
     {
-      "claim": "Qualcomm argues that nominal saved symbol time assumes the device would otherwise have been scheduled in it; partial traffic load and scheduling another device can reduce the system benefit.",
-      "tdoc_id": "R4-2632068",
-      "passage": "These values represent an upper bound on UE-level throughput benefit because they assume that the UE would otherwise be scheduled throughout every affected resource. The exact symbol-level interruption may be more than this due to the placement of the interruption and any timing mis-alignment. Furthermore, with partial traffic loading, the gain scales approximately with the scheduling probability; for example, at 50% utilization, the reduction for the 30 kHz case is about 0.45 percent. From a system perspective, the network may instead schedule another UE in the affected slot, further reducing the benefit of preserving uninterrupted symbols for the same UE."
+      "claim": "Apple also supports feedback disabling or a sufficient number of parallel retransmission processes to address long satellite round trips. More processes can keep data moving while feedback travels, but require larger buffers; its proposal considers up to 32 for the geostationary case. This is another explicit allocation of complexity: removing feedback and adding parallel state have different effects on reliability handling and memory, and the paper does not present them as one interchangeable feature.",
+      "tdoc_id": "R1-2609880",
+      "passage": "Proposal 4: RAN1 to support at least the solution of “HARQ feedback disabling” and the solution of “sufficient number of HARQ processes”. "
     },
     {
-      "claim": "Qualcomm identifies required physical-layer support, precise timing knowledge and more complex within-slot scheduling; it proposes focusing first on slot granularity and revisiting symbols if justified.",
-      "tdoc_id": "R4-2632068",
-      "passage": "In addition, symbol-level interruption granularity may require RAN1 to define suitable physical-layer or slot-design mechanisms for identifying and using the symbols available before and after the interruption. It would also add significant network scheduling complexity, since the scheduler would need precise symbol-level knowledge of the interruption timing and would need to adapt control and data scheduling within the affected slot. Therefore, although symbol-level granularity reduces nominal UE interruption time, its system-level benefit may be modest and traffic-dependent, particularly at higher SCS, and should be weighed against the additional specification and implementation complexity. We therefore propose to focus first on slot-level granularity, consistent with 5G-NR, and revisit symbol-level granularity only if the expected system-level benefit justifies the additional complexity."
+      "claim": "Apple also supports feedback disabling or a sufficient number of parallel retransmission processes to address long satellite round trips. More processes can keep data moving while feedback travels, but require larger buffers; its proposal considers up to 32 for the geostationary case. This is another explicit allocation of complexity: removing feedback and adding parallel state have different effects on reliability handling and memory, and the paper does not present them as one interchangeable feature.",
+      "tdoc_id": "R1-2609880",
+      "passage": "In the observations of Solution 4 (sufficient number of HARQ processes), increasing the number of HARQ processes can resolve HARQ stalling when the RTT is very large. For HARQ process number, 32 HARQ processes are necessary at least for GEO scenario to improve the user throughput. On the other hand, the number of HARQ processes more than 32 requires larger buffer sizes, and the worthy of increasing HARQ processes seems unnecessary. Hence, we have the following proposal.   "
     },
     {
-      "claim": "Interpretation premise: saved receiver time does not directly equal added useful system throughput, because another device can use unavailable resources and the affected device need not be scheduled throughout.",
-      "tdoc_id": "R4-2632068",
-      "passage": "These values represent an upper bound on UE-level throughput benefit because they assume that the UE would otherwise be scheduled throughout every affected resource. The exact symbol-level interruption may be more than this due to the placement of the interruption and any timing mis-alignment. Furthermore, with partial traffic loading, the gain scales approximately with the scheduling probability; for example, at 50% utilization, the reduction for the 30 kHz case is about 0.45 percent. From a system perspective, the network may instead schedule another UE in the affected slot, further reducing the benefit of preserving uninterrupted symbols for the same UE."
+      "claim": "Apple also supports feedback disabling or a sufficient number of parallel retransmission processes to address long satellite round trips. More processes can keep data moving while feedback travels, but require larger buffers; its proposal considers up to 32 for the geostationary case. This is another explicit allocation of complexity: removing feedback and adding parallel state have different effects on reliability handling and memory, and the paper does not present them as one interchangeable feature.",
+      "tdoc_id": "R1-2609880",
+      "passage": "Proposal 5: RAN1 to consider up to 32 HARQ processes at least for GEO scenario. "
     },
     {
-      "claim": "Interpretation premise for the final evaluation recommendation: applicability depends on interruption duration and repetition, with generic protection further constrained by carrier timing.",
-      "tdoc_id": "R4-2630453",
-      "passage": "In our view, the throughput impact of UE autonomous interruption depends on the interruption amount, which scales with the measurement periodicity, e.g., with one slot of 0.5 ms interrupted before and after each occasion, the interruption ratio is about 0.16% for a 640 ms measCycleSCell, while it’s already 2.5% for a 40 ms SMTC. In the evaluations presented so far, the assumed interruption was about one slot before and after each 40 ms or 80 ms occasion, and it was also shown that reducing the interruption mitigates the throughput degradation. Thus, the maximum interruption, including the maximum interruption ratio and the length of each interruption, is the key bound for S1-O1, and the bound and the applicable scenarios can be decided together in the WI phase."
+      "claim": "On coexistence, Ericsson's victim-network paper emphasizes the combined effects of satellite elevation, slant range and antenna pattern. It argues that a handheld antenna's effective polarization varies as both the device and interfering satellite geometry change, so a fixed polarization-loss assumption is not representative of the case it studies. Its proposed performance metric considers both average and lower-tail throughput loss. These remain company assumptions and proposals.",
+      "tdoc_id": "R4-2631693",
+      "passage": "Observation 2\tThe combined effect of SAN elevation angle, slant range and SAN antenna pattern plays a critical role on how the victim NTN UE is placed in the network."
     },
     {
-      "claim": "Interpretation premise for the final evaluation recommendation: the same duration causes different procedural exposure depending on control-channel protection and feedback dependencies.",
-      "tdoc_id": "R4-2630391",
-      "passage": "This contribution further evaluates S1-O1 and S1-O2 using cross-slot scheduling and models both DL control/data losses and UL ACK/NACK errors. For S1-O1, PDCCH is not protected; therefore, an interruption affecting PDCCH, PDSCH, and HARQ feedback can affect up to three TB transmission opportunities: one due to missing HARQ feedback, one due to interrupted PDSCH reception, and one due to loss of the scheduling DCI for the subsequent transmission. This yields almost worst-case scenario behaviour. Further losses which were not modeled here could stem from multi-slot or cross-carrier grants being lost by an interruption. For S1-O2, PDCCH is modeled as protected from interruption, subject to RAN1 agreement, resulting in up to two affected TB transmission opportunities under the same assumptions, i.e. 1 slot lost of PDSCH and 1 slot lost of HARQ feedback."
+      "claim": "On coexistence, Ericsson's victim-network paper emphasizes the combined effects of satellite elevation, slant range and antenna pattern. It argues that a handheld antenna's effective polarization varies as both the device and interfering satellite geometry change, so a fixed polarization-loss assumption is not representative of the case it studies. Its proposed performance metric considers both average and lower-tail throughput loss. These remain company assumptions and proposals.",
+      "tdoc_id": "R4-2631693",
+      "passage": "Observation 3\tThe effective polarization at the handheld NTN UE can vary with time and frequency, so a fixed 3 dB polarization loss is not a representative assumption of an idealized CP to LP mismatch."
     },
     {
-      "claim": "Interpretation premise for the final evaluation recommendation: short-autonomy results can approach network-controlled operation under Ericsson's stated full-buffer conditions. A matched evaluation is needed before extending that claim.",
-      "tdoc_id": "R4-2631565",
-      "passage": "Table 2 compares the average DL/UL UE throughput of the gap-based and gapless measurement proposals for 30 UEs with full-buffer traffic. The “no gap no interruption” case represents operation without measurement-related interruptions. S2-O1 (MGRP=80ms, VIL=0.5ms) achieves the highest average DL/UL UE throughput among the evaluated proposals, with less than 0.5% loss relative to this reference case, owing to the short VIL and effective indication of UE interruptions to the NW. The UE-autonomous S1-O1 (MGRP=80ms, VIL=0.5ms) provides throughput comparable to MG (MGRP=80ms, MGL=6ms), despite a theoretical interruption ratio of only 1.25%, compared with 7.5% for the MG. Indicating UE interruptions to the NW enables more efficient scheduling across UEs and mitigates throughput loss. Increasing the VIL to 1ms in S1-O1 (MGRP=80ms) results in approximately 4.5% DL throughput loss. Symbol-level S1-O1 (MGRP=80ms, MGL=6 symbols), with an interruption duration equivalent to 140us plus 33us (MRTD), achieves throughput comparable to S2-O1 (MGRP=80ms, VIL=0.5ms)."
+      "claim": "On coexistence, Ericsson's victim-network paper emphasizes the combined effects of satellite elevation, slant range and antenna pattern. It argues that a handheld antenna's effective polarization varies as both the device and interfering satellite geometry change, so a fixed polarization-loss assumption is not representative of the case it studies. Its proposed performance metric considers both average and lower-tail throughput loss. These remain company assumptions and proposals.",
+      "tdoc_id": "R4-2631693",
+      "passage": "Observation 4\tA handheld device may be held in arbitrary and continuously changing orientations, and they receive aggregate interference from multiple beams from multiple satellites who are also moving. Under these conditions the polarization state at the UE antenna ports is effectively random and time varying."
+    },
+    {
+      "claim": "On coexistence, Ericsson's victim-network paper emphasizes the combined effects of satellite elevation, slant range and antenna pattern. It argues that a handheld antenna's effective polarization varies as both the device and interfering satellite geometry change, so a fixed polarization-loss assumption is not representative of the case it studies. Its proposed performance metric considers both average and lower-tail throughput loss. These remain company assumptions and proposals.",
+      "tdoc_id": "R4-2631693",
+      "passage": "Proposal 6\tRAN4 to adopt – “the average throughput loss and 5%-ile throughput loss should be less than 5%.” as the performance metric for NTN DL to NTN DL co-existence study."
+    },
+    {
+      "claim": "RAN1's compensation design and RAN4's protection study therefore need explicit deployment descriptions before their results can be combined. A device-frequency-error assumption does not define the distribution of aggregate interference, and a coexistence loss metric does not specify how the device obtains timing. The Calgary agenda has to preserve those separate dependencies while deciding which assumptions belong in common requirements and which remain implementation choices.",
+      "tdoc_id": "R1-2609880",
+      "passage": "Proposal 1: For the feeder link in a transparent payload case, UE assumes that the feeder link Doppler is fully pre-compensated by the network.  "
+    },
+    {
+      "claim": "RAN1's compensation design and RAN4's protection study therefore need explicit deployment descriptions before their results can be combined. A device-frequency-error assumption does not define the distribution of aggregate interference, and a coexistence loss metric does not specify how the device obtains timing. The Calgary agenda has to preserve those separate dependencies while deciding which assumptions belong in common requirements and which remain implementation choices.",
+      "tdoc_id": "R4-2631693",
+      "passage": "Observation 2\tThe combined effect of SAN elevation angle, slant range and SAN antenna pattern plays a critical role on how the victim NTN UE is placed in the network."
+    },
+    {
+      "claim": "RAN1's compensation design and RAN4's protection study therefore need explicit deployment descriptions before their results can be combined. A device-frequency-error assumption does not define the distribution of aggregate interference, and a coexistence loss metric does not specify how the device obtains timing. The Calgary agenda has to preserve those separate dependencies while deciding which assumptions belong in common requirements and which remain implementation choices.",
+      "tdoc_id": "R4-2631693",
+      "passage": "Observation 4\tA handheld device may be held in arbitrary and continuously changing orientations, and they receive aggregate interference from multiple beams from multiple satellites who are also moving. Under these conditions the polarization state at the UE antenna ports is effectively random and time varying."
     }
   ],
   "coverage_gaps": [
-    "Original simulation parameter tables and graphical curves are absent from the Nokia R4-2630391 and Ericsson R4-2631565 raw extraction. The analysis uses explicit textual evaluation conditions and results, confines quantitative comparison to Nokia's own reported full-buffer case, and does not rank Nokia against Ericsson or infer missing receiver, channel or scheduler settings.",
-    "Ericsson R4-2631565 conclusion Observation 2 generalizes six-symbol performance to all traffic models, while its cloud-gaming body compares that option with a conventional gap. The article uses only the explicit full-buffer-body result; cloud-gaming claims and ambiguous scenario labels are excluded.",
-    "Nokia R4-2630391 has inconsistent numerical summaries in its later retransmission discussion. Those figures and the retransmission-combining result are not used to explain the residual system loss.",
-    "Referenced October way-forward and topic-summary documents R4-2621632 and R4-2621595 are absent from the snapshot. No October consensus or November outcome is inferred from the incoming papers.",
-    "The August Nokia baseline is historical research, not a new candidate. The November candidates support the new protected-control comparison, shorter-interruption counterexample, bounded-autonomy case and Qualcomm scheduling qualification.",
-    "Full-buffer traffic is used operationally to mean traffic is available to send throughout; generic channel and coding terms are explained in prose from the procedures modeled, without claiming those explanations are verbatim source definitions."
-  ]
+    "This is a pre-meeting survey; no Calgary company proposal is presented as adopted.",
+    "Complete channel-coding, sensing and Release-20 work-item coverage is deferred rather than inferred from titles.",
+    "Numerical results are attributed to their company evaluation and are not pooled across different assumptions."
+  ],
+  "source_metadata": {
+    "R1-2609858": {
+      "title": "Transmission for downlink control channels",
+      "source": "Apple",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_127/Docs/R1-2609858.zip",
+      "wg_name": "RAN1"
+    },
+    "R1-2609626": {
+      "title": "Discussion on Uplink WUS and operation",
+      "source": "Samsung",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_127/Docs/R1-2609626.zip",
+      "wg_name": "RAN1"
+    },
+    "R4-2631947": {
+      "title": "On Smallest max CBW related SAW-less design",
+      "source": "Ericsson",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_121/Docs/R4-2631947.zip",
+      "wg_name": "RAN4"
+    },
+    "R4-2631857": {
+      "title": "AI-RRM Sub-Case 2: FR1 L3 frequency domain (within the same FR) cell-level prediction (inter-cell, non-collocated)",
+      "source": "Nokia",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_121/Docs/R4-2631857.zip",
+      "wg_name": "RAN4"
+    },
+    "R1-2609604": {
+      "title": "Discussion on downlink transmission scheme(s) for downlink control channels",
+      "source": "Samsung",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_127/Docs/R1-2609604.zip",
+      "wg_name": "RAN1"
+    },
+    "R1-2609857": {
+      "title": "Bandwidth operation in initial access and idle mode",
+      "source": "Apple",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_127/Docs/R1-2609857.zip",
+      "wg_name": "RAN1"
+    },
+    "R1-2610788": {
+      "title": "Uplink WUS and operation",
+      "source": "Ericsson",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_127/Docs/R1-2610788.zip",
+      "wg_name": "RAN1"
+    },
+    "R4-2630536": {
+      "title": "6GR – Smallest max CBW related to SAW-less design",
+      "source": "Nokia",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_121/Docs/R4-2630536.zip",
+      "wg_name": "RAN4"
+    },
+    "R4-2630492": {
+      "title": "On 6GR multi-RAT spectrum sharing",
+      "source": "Apple",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_121/Docs/R4-2630492.zip",
+      "wg_name": "RAN4"
+    },
+    "R4-2630391": {
+      "title": "Simulations of 6G measurements with and without gaps",
+      "source": "Nokia",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_121/Docs/R4-2630391.zip",
+      "wg_name": "RAN4"
+    },
+    "R4-2631565": {
+      "title": "Simulation results of 6G MG design",
+      "source": "Ericsson",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_121/Docs/R4-2631565.zip",
+      "wg_name": "RAN4"
+    },
+    "R4-2630453": {
+      "title": "On 6G MG design study",
+      "source": "Apple",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_121/Docs/R4-2630453.zip",
+      "wg_name": "RAN4"
+    },
+    "R1-2609841": {
+      "title": "On remaining details for inter-vendor training collaboration for two-sided AI/ML models",
+      "source": "Apple",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_127/Docs/R1-2609841.zip",
+      "wg_name": "RAN1"
+    },
+    "R1-2609578": {
+      "title": "Views on Inter-vendor training collaboration for two-sided AI/ML models",
+      "source": "Samsung",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_127/Docs/R1-2609578.zip",
+      "wg_name": "RAN1"
+    },
+    "R1-2609880": {
+      "title": "On NTN specific requirement and design",
+      "source": "Apple",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_127/Docs/R1-2609880.zip",
+      "wg_name": "RAN1"
+    },
+    "R4-2631693": {
+      "title": "On victim TN DL co-existence considerations",
+      "source": "Ericsson",
+      "url": "https://www.3gpp.org/ftp/tsg_ran/WG4_Radio/TSGR4_121/Docs/R4-2631693.zip",
+      "wg_name": "RAN4"
+    }
+  }
 }

@@ -19,4 +19,4 @@ Push to `main`. GitHub Actions builds and deploys to GitHub Pages automatically.
 
 ## Weekly roundup
 
-Saturday cron researches Friday’s 3gppedia extractions and locally commits a technical analysis when the evidence supports a useful argument. Weak angles are held for a later week. You review and push. See [operation guide](docs/weekly-roundup.md).
+Saturday cron researches Friday’s 3gppedia extractions and locally commits a broad RAN1/RAN4 report covering several important technical developments. The writer surveys both agendas, explains company positions and technical dependencies, and holds publication when the evidence cannot support broad coverage. You review and push. See [operation guide](docs/weekly-roundup.md).
